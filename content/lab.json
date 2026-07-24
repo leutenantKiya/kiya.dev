@@ -1,0 +1,90 @@
+[
+  {
+    "name": "JustPush-Refactory",
+    "type": "tool",
+    "year": "2025",
+    "stack": ["TypeScript", "Docker"],
+    "purpose": "Deployment automation focused on making pushing code reliable and simple",
+    "status": "done",
+    "repo": "https://github.com/leutenantKiya/JustPush-Refactory",
+    "demo": null,
+    "insight": "Deployment tooling is UX design — the happy path has to be one action"
+  },
+  {
+    "name": "Aily Telegram Bot",
+    "type": "bot",
+    "year": "2026",
+    "stack": ["Python", "Docker"],
+    "purpose": "Containerized Telegram bot automation",
+    "status": "done",
+    "repo": "https://github.com/leutenantKiya/telegramBot",
+    "demo": null,
+    "insight": "Bots are conversational UIs — flow design matters more than the API calls"
+  },
+  {
+    "name": "PaxPatronage",
+    "type": "site",
+    "year": "2026",
+    "stack": ["PHP", "JavaScript", "CSS"],
+    "purpose": "Crowd-fundraising platform built LAMP-style from scratch",
+    "status": "done",
+    "repo": "https://github.com/leutenantKiya/PaxPatronage-crowd-fundraising",
+    "demo": null,
+    "insight": "No framework — auth, campaigns, and payments modeled by hand"
+  },
+  {
+    "name": "Banker's Algorithm Visualizer",
+    "type": "visualization",
+    "year": "2025",
+    "stack": ["JavaScript"],
+    "purpose": "Interactive visualization of the OS deadlock-avoidance algorithm",
+    "status": "done",
+    "repo": "https://github.com/leutenantKiya/SO_Bankers_Alghoritm",
+    "demo": null,
+    "insight": "An algorithm you can poke teaches faster than one you read"
+  },
+  {
+    "name": "Hydrostatic Pressure Prediction",
+    "type": "experiment",
+    "year": "2025",
+    "stack": ["Python", "Jupyter"],
+    "purpose": "ML regression modeling of a physical system",
+    "status": "done",
+    "repo": "https://github.com/leutenantKiya/Hydrostatic-Pressure-Prediction-ML-Regression",
+    "demo": null,
+    "insight": "Physics gives you a ground truth most ML datasets never have"
+  },
+  {
+    "name": "Face Recognition",
+    "type": "experiment",
+    "year": "2025",
+    "stack": ["Python", "OpenCV"],
+    "purpose": "Classical face detection with Haar cascades, before deep learning",
+    "status": "archived",
+    "repo": null,
+    "demo": null,
+    "insight": "Classical CV still wins when you have one webcam and no GPU"
+  },
+  {
+    "name": "PKM Company Profile",
+    "type": "site",
+    "year": "2025",
+    "stack": ["Vue"],
+    "purpose": "Company-profile website build",
+    "status": "done",
+    "repo": "https://github.com/leutenantKiya/PKM---company-profile",
+    "demo": null,
+    "insight": "Client-style work: the constraint is their content, not your stack"
+  },
+  {
+    "name": "Social Media Summer Project",
+    "type": "site",
+    "year": "2025",
+    "stack": ["PHP"],
+    "purpose": "Auth, profiles, and a timeline built from scratch",
+    "status": "archived",
+    "repo": null,
+    "demo": null,
+    "insight": "Sessions and auth by hand once — then you understand every framework"
+  }
+]

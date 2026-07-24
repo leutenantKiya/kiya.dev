@@ -1,0 +1,88 @@
+import { CaseStudy } from "@/components/work/CaseStudy";
+
+export const metadata = {
+  title: "Arbor — Pay-per-second streaming | Kiya",
+  description:
+    "Case study: a streaming platform where the meter only runs while a film plays, and filmmakers are settled on-chain per second watched.",
+};
+
+<CaseStudy slug="arbor">
+
+## Video Preview
+
+<div className="my-6 overflow-hidden rounded-xl border border-line shadow-2xl">
+  <iframe
+    className="aspect-video w-full"
+    src="https://www.youtube-nocookie.com/embed/A1_m2YBdv2Y"
+    title="Arbor — Pay-per-second streaming preview"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+  />
+</div>
+
+**In ten seconds:** streaming subscriptions charge for time you never watch, and card
+networks can't settle an $0.08 charge for three minutes of viewing. Arbor sells prepaid
+viewing hours that only tick down during playback, then settles filmmakers on-chain,
+pro-rata by seconds watched. React + TypeScript, Solidity, Postgres. Built in 7 days
+by a 3-person team for the Encode Club UXMaxx Hackathon — [live demo](https://arbor-watch.vercel.app).
+
+## Problem
+
+Subscriptions punish light viewers: you pay for a month whether you watch two films or
+twenty. The obvious alternative — pay per view — breaks on traditional payment rails,
+because processor fees exceed a micro-charge. And independent filmmakers, whose work
+the big platforms mostly ignore, get opaque, delayed, aggregated payouts with no
+visibility into what actually earned.
+
+## Solution
+
+Think *prepaid mobile data, but for cinema*. Viewers buy flexible time packages
+(2.5h / 5h / 10h) and the meter runs **only while the film plays**. Pausing, browsing,
+and trailers are always free. When a session ends, every filmmaker whose work was
+watched is settled on-chain — instantly, transparently, pro-rata by seconds watched.
+
+The blockchain is deliberately invisible. Sign in with Google; a Particle Universal
+Account is created silently; every transaction is gasless. No seed phrases, no
+"connect wallet", no crypto vocabulary anywhere in the interface. Crypto is the
+enabler, never the product.
+
+## Architecture
+
+The core design decision is a hybrid ledger — on-chain is reserved for the money
+moments, everything in between lives in Postgres:
+
+```text
+Sign in with Google   →  Universal Account created silently (Particle)
+Buy a time package    →  gasless USDC purchase → ArborVault.sol (on-chain)
+Watch films           →  seconds debited in a server-side ledger, only while playing
+Pause / browse        →  free, always
+Session ends          →  batch settlement: filmmakers paid on-chain, pro-rata
+Gift time             →  viewing hours sent via a single-use claim link
+```
+
+Transactions are never streamed per second — that would be economically absurd on any
+chain. Instead the Postgres ledger tracks balances, playback sessions, debit events,
+gift claims, and settlements; `ArborVault.sol` handles package purchases in and batch
+filmmaker settlements out. Filmmakers get a Studio view with live per-second earnings
+and an on-chain settlement proof they can verify on a block explorer.
+
+## Decisions & tradeoffs
+
+- **Why a blockchain at all?** A prepaid balance with programmable micro-debits and
+  instant multi-party payouts is only economical with account abstraction. If a card
+  network could settle $0.08 cheaply, Arbor wouldn't need a chain — the write-up says
+  so out loud, which is the honest version of a Web3 pitch.
+- **Anti-anxiety metering.** A countdown timer makes people anxious; a calm remaining-time
+  gauge, plus the guarantee that pausing is always free, makes prepaid time feel safe
+  rather than extractive.
+- **Licensed-safe catalog.** All demo content is legally redistributable — Blender
+  Foundation open movies and public-domain classics — so the demo can actually stream
+  real films.
+
+## Status
+
+Hackathon MVP, deployed on testnet with mock USDC. The live demo streams the real
+catalog with the full purchase → watch → settle loop. No production usage metrics —
+it was built in seven days and is presented as exactly that.
+
+</CaseStudy>

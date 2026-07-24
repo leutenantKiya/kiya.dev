@@ -1,0 +1,146 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  --bg: #0a0a0b;
+  --surface: #111113;
+  --surface-2: #1a1a1d;
+  --text: #ededef;
+  --text-2: #9e9ea6;
+  --line: #26262b;
+  --accent: #4ade80;
+  --accent-muted: #166534;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"],
+html[data-theme="light"],
+html.light {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --text: #0f172a;
+  --text-2: #64748b;
+  --line: #e2e8f0;
+  --accent: #16a34a;
+  --accent-muted: #dcfce7;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"],
+html[data-theme="dark"],
+html.dark {
+  --bg: #0a0a0b;
+  --surface: #111113;
+  --surface-2: #1a1a1d;
+  --text: #ededef;
+  --text-2: #9e9ea6;
+  --line: #26262b;
+  --accent: #4ade80;
+  --accent-muted: #166534;
+  color-scheme: dark;
+}
+
+@theme {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+/* Single entrance stagger on load — sections rise in sequence (plan §5 motion budget) */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-rise {
+  animation: rise 400ms ease both;
+}
+
+/* Lab marquee — two rows drifting in opposite directions, pause on hover */
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 24s linear infinite;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 15s linear infinite;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}

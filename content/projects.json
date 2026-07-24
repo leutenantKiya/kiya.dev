@@ -1,0 +1,56 @@
+[
+  {
+    "slug": "arbor",
+    "title": "Arbor",
+    "tagline": "Pay-per-second streaming for independent cinema",
+    "summary": "Streaming subscriptions charge for time you never watch. Arbor sells prepaid viewing hours that only tick down while a film plays — filmmakers get paid per second watched, settled on-chain.",
+    "year": "2026",
+    "status": "Live MVP · testnet",
+    "stack": ["React", "TypeScript", "Solidity", "Postgres", "Particle Network"],
+    "repo": "https://github.com/leutenantKiya/Arbor",
+    "demo": "https://arbor-watch.vercel.app",
+    "role": "3-person team · 7 days · Encode Club UXMaxx Hackathon",
+    "preview": "/arbor.png",
+    "video": "https://www.youtube.com/embed/A1_m2YBdv2Y"
+  },
+  {
+    "slug": "lazy-builder",
+    "title": "Lazy Builder",
+    "tagline": "Figma-like canvas + Notion-like docs → real React code",
+    "summary": "Design tools and code live in separate worlds, and translating between them loses information. Lazy Builder links an infinite canvas to a rich-text editor and exports a runnable React + Vite project.",
+    "year": "2026",
+    "status": "Working prototype",
+    "stack": ["React 19", "TypeScript", "Yjs CRDT", "TipTap", "WebSockets"],
+    "repo": "https://github.com/leutenantKiya/lazy_builder",
+    "demo": null,
+    "role": "Solo project",
+    "preview": "/lazybuilder.png"
+  },
+  {
+    "slug": "nutrify",
+    "title": "Nutrify",
+    "tagline": "Point a camera at food, get calories, macros, and a verdict",
+    "summary": "Logging food by hand is why diet apps fail. Nutrify identifies a meal from a photo, estimates the portion, computes calories and macros, and says whether it fits your goal — cut, bulk, or maintain.",
+    "year": "2026",
+    "status": "Functional ML pipeline",
+    "stack": ["Flutter", "FastAPI", "Python", "Multi-model ML"],
+    "repo": "https://github.com/leutenantKiya/Nutrify-Food-Recognition-And-Daily-Food-Scheduler",
+    "demo": null,
+    "role": "University team project",
+    "preview": "/nutrify.png",
+    "video" : "https://youtu.be/wYNaFmtoohQ"
+  },
+  {
+    "slug": "aily",
+    "title": "AILY",
+    "tagline": "Intent-routed chatbot service for e-commerce",
+    "summary": "Most store questions are routine, but answering them still takes staff. AILY parses natural-language messages and routes them to one of eleven handlers — search, cart, checkout, tracking — automatically.",
+    "year": "2026",
+    "status": "Team project · architecture-focused",
+    "stack": ["Python", "FastAPI", "Java", "JavaFX", "SQL"],
+    "repo": "https://github.com/leutenantKiya/AILY-Ecommerce-chatbotService",
+    "demo": null,
+    "role": "University team project",
+    "preview": "https://picsum.photos/seed/aily/1200/750"
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "org": "Encode Club — UXMaxx Hackathon",
+    "role": "Builder, 3-person team",
+    "start": "2026",
+    "end": "2026",
+    "type": "hackathon",
+    "summary": "Built Arbor, a pay-per-second streaming platform for independent cinema, in 7 days.",
+    "highlights": [
+      "Invisible-Web3 UX: Google login, silent Universal Account creation, gasless transactions",
+      "Hybrid ledger: off-chain per-second metering, on-chain batch settlement",
+      "Shipped a live testnet MVP with a real licensed-safe film catalog"
+    ],
+    "stack": ["React", "TypeScript", "Solidity", "Postgres"]
+  },
+  {
+    "org": "University team projects",
+    "role": "Developer",
+    "start": "2025",
+    "end": "2026",
+    "type": "education",
+    "summary": "Team-built products across coursework: an NLP chatbot service, an ML nutrition app, and client-style web builds.",
+    "highlights": [
+      "AILY — intent-routed e-commerce chatbot (FastAPI NLP + JavaFX client)",
+      "Nutrify — food-recognition ML pipeline in a Flutter app",
+      "PKM — company-profile site build (Vue)"
+    ],
+    "stack": ["Python", "FastAPI", "Java", "Flutter", "Vue"]
+  }
+]

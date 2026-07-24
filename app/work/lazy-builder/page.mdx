@@ -1,0 +1,72 @@
+import { CaseStudy } from "@/components/work/CaseStudy";
+
+export const metadata = {
+  title: "Lazy Builder — Visual builder that exports real React | Kiya",
+  description:
+    "Case study: a Figma-like canvas linked to a Notion-like editor, with real-time CRDT collaboration, exporting runnable React + Vite projects.",
+};
+
+<CaseStudy slug="lazy-builder">
+
+**In ten seconds:** design tools and code live in separate worlds, and translating
+between them loses information. Lazy Builder is a Figma-style infinite canvas glued to
+a Notion-style rich-text editor — cross-linked both ways — that exports a clean,
+runnable React + Vite project. React 19, TypeScript, Yjs CRDT sync over WebSockets.
+
+## Problem
+
+Three separate frictions, one root cause:
+
+1. **Figma → code is lossy.** Designers hand off mockups; developers re-interpret them;
+   context dies in the gap.
+2. **Low-code builders are closed ecosystems.** They generate proprietary output you
+   can't maintain outside the tool.
+3. **Docs live somewhere else.** The *why* behind a component sits in Notion or
+   Confluence, disconnected from the thing it describes.
+
+## Solution
+
+Two linked surfaces in one workspace:
+
+- **Canvas (Figma-like):** an infinite canvas with pan and zoom, ten UI primitives
+  (Frame, Card, Box, Text, Button, and friends), drag, resize, snap, grouping, and
+  layers.
+- **Editor (Notion-like):** a TipTap rich-text editor with slash commands, code
+  blocks — and **reference pills** that link straight to canvas nodes. Click a pill,
+  jump to the component. Canvas nodes can carry inline docs visible in the sidebar.
+
+When you're done: **export** → `src/components/*.tsx`, `App.tsx`, `vite.config.ts`,
+`package.json`. A real project you own, not an embed.
+
+## Architecture
+
+```text
+client (React 19 + Vite)
+├─ editor    TipTap + Yjs binding — collaborative rich text, slash commands
+├─ canvas    CanvasNode types as an IR → rendered, manipulated, then compiled
+└─ workspace shell: sidebar, surface tabs, cross-surface navigation
+
+server (Node + tsx)
+└─ y-websocket relay — minimal WebSocket server syncing Yjs documents
+```
+
+Both surfaces share one collaboration layer: Yjs CRDTs synced through a deliberately
+thin WebSocket relay. The canvas node model doubles as an intermediate representation —
+the same data that renders the canvas compiles to React source at export time.
+
+## Decisions & tradeoffs
+
+- **CRDTs over server state.** Yjs makes multi-user editing conflict-free without the
+  server understanding the document at all — the relay just moves bytes, which keeps
+  the backend nearly stateless.
+- **An IR, not screenshots.** Exporting real code requires the canvas to *be* a
+  component tree from the start, not a drawing that gets reverse-engineered later.
+- **Docs as a first-class surface.** The editor isn't a side panel; it's half the
+  product, because the missing context between design and code is the actual problem.
+
+## Status
+
+Working prototype, solo project. Canvas, editor, cross-linking, collaboration, and
+export all function; file-by-file documentation lives in the repo's `DOCS.md`.
+
+</CaseStudy>

@@ -1,0 +1,77 @@
+import { CaseStudy } from "@/components/work/CaseStudy";
+
+export const metadata = {
+  title: "Nutrify — Food recognition & nutrition scheduler | Kiya",
+  description:
+    "Case study: photo → multi-model ML pipeline → calories, macros, and a verdict against your daily goal. Flutter + FastAPI.",
+};
+
+<CaseStudy slug="nutrify">
+
+<div className="my-6 overflow-hidden rounded-xl border border-line shadow-2xl">
+  <iframe
+    className="aspect-video w-full"
+    src="https://www.youtube-nocookie.com/embed/A1_m2YBdv2Y"
+    title="Arbor — Pay-per-second streaming preview"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+  />
+</div>
+
+**In ten seconds:** logging food by hand is why diet apps fail. Nutrify identifies a
+meal from a photo, estimates the portion, computes calories and macros, and tells you
+whether it fits your goal — cut, bulk, or maintain. Flutter app, FastAPI backend,
+multi-model ML pipeline running locally.
+
+## Problem
+
+Calorie tracking works — if you do it. Manual logging is tedious enough that most
+people quit within weeks. The friction isn't knowledge; it's data entry.
+
+## Solution
+
+Point the camera at your food. Nutrify detects what's on the plate, classifies it,
+estimates the portion size, and computes calories and macronutrients. It then compares
+those numbers against your daily target and answers the question you actually have:
+*does this meal fit my goal?*
+
+A Gemini-powered chat assistant handles follow-up questions; the recognition pipeline
+itself runs locally and needs no API key.
+
+## Architecture
+
+```text
+Flutter app (camera + UI)
+        │  photo
+        ▼
+FastAPI backend — ML orchestration
+├─ detection model        what items are in the frame
+├─ classification model   which food each item is
+├─ portion estimation     how much of it there is
+├─ nutrition database     calories + macros per unit
+└─ recommendation engine  verdict vs. daily target (cut / bulk / maintain)
+```
+
+Three parts with clean seams: Flutter owns capture and presentation, FastAPI owns
+orchestration, and the pipeline composes multiple specialized models rather than
+betting everything on one end-to-end network. Trained on three public Kaggle food
+datasets; notebooks in the repo are generated from the Python training scripts.
+
+## Decisions & tradeoffs
+
+- **Pipeline over monolith.** Detection, classification, and portion estimation are
+  separate stages — each can be improved or swapped independently, and failures are
+  diagnosable per stage.
+- **Local inference.** The recognition path has no external API dependency, so the
+  core feature works without keys, quotas, or per-request cost. Only the optional chat
+  assistant calls out.
+- **Verdict, not dashboard.** The end of the pipeline is a recommendation against the
+  user's goal, not a wall of numbers — the product insight is that people want an
+  answer, not a spreadsheet.
+
+## Status
+
+University team project at capstone scale. Functional pipeline end-to-end; no
+published accuracy benchmarks or usage metrics, and it's presented as exactly that.
+
+</CaseStudy>

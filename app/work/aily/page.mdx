@@ -1,0 +1,59 @@
+import { CaseStudy } from "@/components/work/CaseStudy";
+
+export const metadata = {
+  title: "AILY — Intent-routed e-commerce chatbot | Kiya",
+  description:
+    "Case study: an NLP service that routes customer messages to eleven specialized handlers. FastAPI + JavaFX + JDBC.",
+};
+
+<CaseStudy slug="aily">
+
+**In ten seconds:** most store questions are routine, but answering them still takes
+staff. AILY parses natural-language messages and routes each one to the right
+handler — product search, cart, checkout, order tracking — and answers automatically.
+Python NLP service, Java desktop client, SQL storage.
+
+## Problem
+
+E-commerce support is dominated by a small set of repetitive intents: where is my
+order, do you have X, how do I pay. Humans answering those don't scale, and generic
+chatbots that try to handle everything in one blob fail unpredictably.
+
+## Solution
+
+A pipeline with one job per stage:
+
+```text
+User / Admin input
+  → FastAPI endpoint  (role-separated: /aily/user/…  /aily/admin/…)
+  → key validation    (id + public key per role; invalid → rejected)
+  → NLP processing
+  → intent router
+  → one of 11 handlers
+  → response
+```
+
+Eleven specialized handlers, each owning one intent family: FAQ, product search,
+product detail, cart, checkout, order status, order processing, logistics tracking,
+store profile, admin product CRUD, and a fallback for anything unparseable. User and
+admin traffic enter through separate authenticated endpoints — an admin managing the
+catalog goes through the same NLP front door as a customer asking about shipping.
+
+## Decisions & tradeoffs
+
+- **Router + handlers over one model.** Decomposing by intent makes each handler
+  small, testable, and independently replaceable — and the fallback handler makes the
+  failure mode explicit instead of hallucinated.
+- **Cross-language by contract.** The Python NLP service and the JavaFX client meet at
+  a plain HTTP API — each side uses the language that suits it (Python for NLP, Java
+  for the coursework's desktop requirements).
+- **Key-per-role auth.** Simple id + public-key validation separates user and admin
+  capabilities at the entry point, before any intent logic runs.
+
+## Status
+
+University team project, presented architecture-first: the intent-router design is the
+substance here. The repo shows a staged build plan with substantial Java and Python
+implementation; no deployment or usage metrics.
+
+</CaseStudy>
