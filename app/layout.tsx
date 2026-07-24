@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kiya — Product Engineer",
+  title: "Kiya —Portfolio",
   description:
     "Product engineer building complete products: interfaces, systems, and the complexity hidden in between.",
 };
