@@ -1,5 +1,8 @@
-import { artifacts, type Artifact } from "@/lib/lab";
-import { about } from "@/lib/about";
+"use client";
+
+import { getLabEntries, type Artifact } from "@/lib/lab";
+import { getAbout } from "@/lib/about";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 const statusColor: Record<Artifact["status"], string> = {
   active: "bg-accent",
@@ -13,9 +16,7 @@ function LabTile({ artifact }: { artifact: Artifact }) {
 
   return (
     <Wrapper
-      {...(href
-        ? { href, target: "_blank", rel: "noopener noreferrer" }
-        : {})}
+      {...(href ? { href, target: "_blank", rel: "noopener noreferrer" } : {})}
       className="group flex w-72 shrink-0 flex-col rounded-lg border border-line bg-bg p-4 transition-colors duration-150 hover:border-text-2 hover:bg-surface"
     >
       <div className="flex items-center gap-2 font-mono text-xs text-text-2">
@@ -52,9 +53,6 @@ function LabTile({ artifact }: { artifact: Artifact }) {
   );
 }
 
-/** One auto-scrolling row. The track holds the tiles twice so the -50%
- *  translate loops seamlessly. Pauses on hover; static + scrollable when
- *  reduced-motion is requested. */
 function MarqueeRow({
   items,
   direction,
@@ -78,15 +76,18 @@ function MarqueeRow({
 }
 
 export function LabIndex() {
-  const half = Math.ceil(artifacts.length / 2);
-  const rowA = artifacts.slice(0, half);
-  const rowB = artifacts.slice(half);
+  const { lang } = useLanguage();
+  const labEntries = getLabEntries(lang);
+  const aboutData = getAbout(lang);
+
+  const half = Math.ceil(labEntries.length / 2);
+  const rowA = labEntries.slice(0, half);
+  const rowB = labEntries.slice(half);
 
   return (
     <div className="mt-6">
-      <p className="mb-4 text-sm text-text-2">{about.labLine}</p>
+      <p className="mb-4 text-sm text-text-2">{aboutData.labLine}</p>
 
-      {/* Full-bleed within the content column; hover any row to freeze it */}
       <div className="flex flex-col gap-3">
         <MarqueeRow items={rowA} direction="left" />
         <MarqueeRow items={rowB} direction="right" />

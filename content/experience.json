@@ -1,30 +1,105 @@
 [
   {
+    "org": "Practicum Teaching Assistant",
+    "role": "Teaching Assistant",
+    "role_id": "Asisten Praktikum",
+    "start": "2025",
+    "end": "present",
+    "type": "work",
+    "summary": "Teaching assistant for the Computer Technology Practicum and Programming Algorithm courses.",
+    "summary_id": "Asisten pengajar untuk praktikum Teknologi Komputer dan mata kuliah Algoritma Pemrograman.",
+    "highlights": [
+      "Guide students through C and Python fundamentals in weekly lab sessions",
+      "Coach algorithmic problem solving — decomposition, tracing, and debugging",
+      "Run introductory web development material and review student submissions"
+    ],
+    "highlights_id": [
+      "Membimbing mahasiswa memahami dasar C dan Python dalam sesi lab mingguan",
+      "Melatih pemecahan masalah algoritmik — dekomposisi, penelusuran, dan debugging",
+      "Menyampaikan materi pengenalan pengembangan web dan mengulas tugas mahasiswa"
+    ],
+    "stack": ["C", "Python", "JavaScript", "HTML", "CSS"]
+  },
+  {
     "org": "Encode Club — UXMaxx Hackathon",
     "role": "Builder, 3-person team",
+    "role_id": "Developer, Tim 3 Orang",
     "start": "2026",
     "end": "2026",
     "type": "hackathon",
     "summary": "Built Arbor, a pay-per-second streaming platform for independent cinema, in 7 days.",
+    "summary_id": "Membangun Arbor, platform streaming bayar-per-detik untuk bioskop independen, dalam 7 hari.",
     "highlights": [
       "Invisible-Web3 UX: Google login, silent Universal Account creation, gasless transactions",
       "Hybrid ledger: off-chain per-second metering, on-chain batch settlement",
       "Shipped a live testnet MVP with a real licensed-safe film catalog"
+    ],
+    "highlights_id": [
+      "UX Web3 Transparan: Login Google, pembuatan Universal Account otomatis, transaksi bebas gas",
+      "Buku besar hibrida: perhitungan per-detik off-chain, penyelesaian batch on-chain",
+      "Peluncuran MVP testnet langsung dengan katalog film berlisensi aman"
     ],
     "stack": ["React", "TypeScript", "Solidity", "Postgres"]
   },
   {
     "org": "University team projects",
     "role": "Developer",
+    "role_id": "Pengembang Utama",
     "start": "2025",
     "end": "2026",
     "type": "education",
-    "summary": "Team-built products across coursework: an NLP chatbot service, an ML nutrition app, and client-style web builds.",
+    "summary": "Team-built products across coursework: an NLP chatbot service and an ML nutrition app.",
+    "summary_id": "Produk berbasis tim selama perkuliahan: layanan chatbot NLP dan aplikasi nutrisi ML.",
     "highlights": [
       "AILY — intent-routed e-commerce chatbot (FastAPI NLP + JavaFX client)",
-      "Nutrify — food-recognition ML pipeline in a Flutter app",
-      "PKM — company-profile site build (Vue)"
+      "Nutrify — food-recognition ML pipeline in a Flutter app"
     ],
-    "stack": ["Python", "FastAPI", "Java", "Flutter", "Vue"]
+    "highlights_id": [
+      "AILY — chatbot e-commerce perutean niat (FastAPI NLP + klien JavaFX)",
+      "Nutrify — alur ML pengenalan makanan dalam aplikasi Flutter"
+    ],
+    "stack": ["Python", "FastAPI", "Java", "Flutter"]
+  },
+  {
+    "org": "IoT smart lighting (freelance)",
+    "role": "IoT Developer",
+    "role_id": "Pengembang IoT",
+    "start": "2025",
+    "end": "2025",
+    "type": "project",
+    "summary": "Built a smart lighting automation system on ESP32, connected to Sinric Pro and controllable by voice through Google Assistant.",
+    "summary_id": "Membangun sistem otomasi pencahayaan pintar berbasis ESP32, terhubung ke Sinric Pro dan dapat dikontrol suara melalui Google Assistant.",
+    "highlights": [
+      "Programmed ESP32 microcontrollers in C++ (Arduino framework) driving relay-switched lighting",
+      "Integrated Sinric Pro for cloud connectivity and real-time device state sync",
+      "Wired up Google Assistant so lights respond to hands-free voice commands"
+    ],
+    "highlights_id": [
+      "Memprogram mikrokontroler ESP32 dalam C++ (Arduino) untuk mengontrol sakelar relay",
+      "Mengintegrasikan Sinric Pro untuk konektivitas awan dan sinkronisasi status perangkat",
+      "Menghubungkan Google Assistant agar lampu merespons perintah suara bebas genggam"
+    ],
+    "stack": ["ESP32", "C++", "Arduino", "Sinric Pro"]
+  },
+  {
+    "org": "Smart Eco Wave — PKM 2025 (UKDW)",
+    "role": "Web Developer",
+    "role_id": "Pengembang Web",
+    "start": "2025",
+    "end": "2025",
+    "type": "project",
+    "summary": "Designed and built the team profile and project showcase site for the Smart Eco Wave PKM 2025 initiative, deployed on the university domain.",
+    "summary_id": "Merancang dan membangun situs profil tim & showcase proyek untuk inisiatif PKM 2025 Smart Eco Wave di domain universitas.",
+    "highlights": [
+      "Built and deployed the site under smartecowave.fti.ukdw.ac.id",
+      "Presented PKM research milestones, team information, and project documentation for public and academic review",
+      "Built the layout mobile-first so the showcase reads on phones as well as desktop"
+    ],
+    "highlights_id": [
+      "Membangun dan mendeploy situs di bawah smartecowave.fti.ukdw.ac.id",
+      "Menampilkan pencapaian riset PKM, info tim, dan dokumentasi proyek untuk ulasan publik",
+      "Merancang tata letak utamakan-seluler agar mudah dibaca di ponsel maupun desktop"
+    ],
+    "stack": ["Vue"]
   }
 ]

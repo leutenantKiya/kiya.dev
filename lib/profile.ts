@@ -1,4 +1,5 @@
 import profileJson from "@/content/profile.json";
+import type { Lang } from "@/components/providers/LanguageProvider";
 
 export type Social = {
   platform: string;
@@ -18,13 +19,26 @@ export type Profile = {
   pills: string[];
   email: string;
   socials: Social[];
-  /** Path to combined resume/CV PDF in /public. Null until the file is added —
-   *  the sidebar button only renders when this is set. */
   resume: string | null;
   sections: Section[];
 };
 
-// Content lives in content/profile.json — edit there, types are enforced here.
 export const profile: Profile = profileJson;
-
 export const sections: Section[] = profile.sections;
+
+export function getProfile(lang: Lang): Profile {
+  const p = profileJson as Record<string, unknown>;
+  return {
+    ...profileJson,
+    title: lang === "id" && p.title_id ? (p.title_id as string) : profileJson.title,
+    bio: lang === "id" && p.bio_id ? (p.bio_id as string) : profileJson.bio,
+    sections: getSections(lang),
+  };
+}
+
+export function getSections(lang: Lang): Section[] {
+  return profileJson.sections.map((s) => ({
+    id: s.id,
+    label: lang === "id" && "label_id" in s ? (s as { label_id: string }).label_id : s.label,
+  }));
+}

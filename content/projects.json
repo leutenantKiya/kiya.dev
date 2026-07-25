@@ -3,7 +3,9 @@
     "slug": "arbor",
     "title": "Arbor",
     "tagline": "Pay-per-second streaming for independent cinema",
+    "tagline_id": "Layanan streaming bayar-per-detik untuk bioskop independen",
     "summary": "Streaming subscriptions charge for time you never watch. Arbor sells prepaid viewing hours that only tick down while a film plays — filmmakers get paid per second watched, settled on-chain.",
+    "summary_id": "Langganan streaming biasa menagih waktu yang tidak pernah Anda tonton. Arbor menjual jam menonton prabayar yang hanya berkurang saat film diputar — pembuat film dibayar per detik tontonan secara on-chain.",
     "year": "2026",
     "status": "Live MVP · testnet",
     "stack": ["React", "TypeScript", "Solidity", "Postgres", "Particle Network"],
@@ -17,7 +19,9 @@
     "slug": "lazy-builder",
     "title": "Lazy Builder",
     "tagline": "Figma-like canvas + Notion-like docs → real React code",
+    "tagline_id": "Kanvas seperti Figma + Dokumen seperti Notion → Kode React nyata",
     "summary": "Design tools and code live in separate worlds, and translating between them loses information. Lazy Builder links an infinite canvas to a rich-text editor and exports a runnable React + Vite project.",
+    "summary_id": "Alat desain dan kode berada di dunia yang terpisah. Lazy Builder menghubungkan kanvas tak terbatas dengan editor dokumen rich-text dan mengekspor proyek React + Vite yang siap dijalankan.",
     "year": "2026",
     "status": "Working prototype",
     "stack": ["React 19", "TypeScript", "Yjs CRDT", "TipTap", "WebSockets"],
@@ -30,7 +34,9 @@
     "slug": "nutrify",
     "title": "Nutrify",
     "tagline": "Point a camera at food, get calories, macros, and a verdict",
+    "tagline_id": "Arahkan kamera ke makanan, dapatkan estimasi kalori, makro, dan analisis",
     "summary": "Logging food by hand is why diet apps fail. Nutrify identifies a meal from a photo, estimates the portion, computes calories and macros, and says whether it fits your goal — cut, bulk, or maintain.",
+    "summary_id": "Pencatatan makanan secara manual membuat aplikasi diet sering ditinggalkan. Nutrify mengenali hidangan dari foto, mengestimasi porsi, menghitung kalori & makro, serta memberi saran sesuai target nutrisi Anda.",
     "year": "2026",
     "status": "Functional ML pipeline",
     "stack": ["Flutter", "FastAPI", "Python", "Multi-model ML"],
@@ -38,19 +44,28 @@
     "demo": null,
     "role": "University team project",
     "preview": "/nutrify.png",
-    "video" : "https://youtu.be/wYNaFmtoohQ"
+    "video" : "https://www.youtube.com/embed/wYNaFmtoohQ?si=8Qwdrf_caLgc57WZ"
   },
   {
     "slug": "aily",
     "title": "AILY",
     "tagline": "Intent-routed chatbot service for e-commerce",
+    "tagline_id": "Layanan chatbot e-commerce dengan perutean niat otomatis",
     "summary": "Most store questions are routine, but answering them still takes staff. AILY parses natural-language messages and routes them to one of eleven handlers — search, cart, checkout, tracking — automatically.",
+    "summary_id": "Sebagian besar pertanyaan toko bersifat rutin. AILY menganalisis pesan bahasa alami pengguna dan mengarahkannya ke salah satu dari 11 handler otomatis — pencarian, keranjang, pembayaran, hingga lacak pesanan.",
     "year": "2026",
     "status": "Team project · architecture-focused",
     "stack": ["Python", "FastAPI", "Java", "JavaFX", "SQL"],
     "repo": "https://github.com/leutenantKiya/AILY-Ecommerce-chatbotService",
     "demo": null,
     "role": "University team project",
-    "preview": "https://picsum.photos/seed/aily/1200/750"
+    "preview": "/AILY1.png",
+    "previews": [
+      "/AILY1.png",
+      "/AILY2.png",
+      "/AILY3.png",
+      "/AILY4.png",
+      "/AILY5.png"
+    ]
   }
 ]

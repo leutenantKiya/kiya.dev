@@ -1,4 +1,4 @@
-import { CaseStudy } from "@/components/work/CaseStudy";
+import { CaseStudy, En, Id } from "@/components/work/CaseStudy";
 
 export const metadata = {
   title: "AILY — Intent-routed e-commerce chatbot | Kiya",
@@ -8,6 +8,7 @@ export const metadata = {
 
 <CaseStudy slug="aily">
 
+<En>
 **In ten seconds:** most store questions are routine, but answering them still takes
 staff. AILY parses natural-language messages and routes each one to the right
 handler — product search, cart, checkout, order tracking — and answers automatically.
@@ -55,5 +56,39 @@ catalog goes through the same NLP front door as a customer asking about shipping
 University team project, presented architecture-first: the intent-router design is the
 substance here. The repo shows a staged build plan with substantial Java and Python
 implementation; no deployment or usage metrics.
+</En>
+
+<Id>
+**Dalam sepuluh detik:** sebagian besar pertanyaan pelanggan toko bersifat rutin, tetapi tetap membutuhkan staf untuk menjawabnya. AILY menganalisis pesan bahasa alami dan mengarahkan masing-masing pesan ke handler yang tepat — pencarian produk, keranjang, pembayaran, hingga pelacakan pesanan — dan menjawab secara otomatis. Layanan NLP Python, klien desktop Java, penyimpanan SQL.
+
+## Masalah
+
+Dukungan e-commerce didominasi oleh sekumpulan niat yang berulang: di mana pesanan saya, apakah stok X ada, bagaimana cara bayar. Penanganan manual oleh manusia kurang efisien, sementara chatbot generik serba-bisa sering kali tidak akurat.
+
+## Solusi
+
+Alur kerja dengan satu tugas khusus per tahap:
+
+```text
+Input Pengguna / Admin
+  → Endpoint FastAPI  (terpisah peran: /aily/user/…  /aily/admin/…)
+  → Validasi Kunci    (id + kunci publik per peran)
+  → Pemrosesan NLP
+  → Router Niat
+  → 1 dari 11 Handler Khusus
+  → Respons
+```
+
+Sebelas handler khusus menangani kelompok niat tertentu: FAQ, pencarian produk, detail produk, keranjang, pembayaran, status pesanan, pemrosesan pesanan, pelacakan logistik, profil toko, CRUD produk admin, serta fallback untuk pesan yang tak terurai.
+
+## Keputusan & Kompromi
+
+- **Router + handler dibanding satu model tunggal.** Memecah niat membuat setiap handler berukuran kecil, teruji, dan dapat diperbarui secara independen.
+- **Antar-bahasa berdasarkan kontrak API.** Layanan NLP Python dan klien JavaFX terhubung melalui HTTP API sederhana.
+
+## Status
+
+Proyek tim universitas dengan fokus utama pada arsitektur sistem.
+</Id>
 
 </CaseStudy>

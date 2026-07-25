@@ -41,6 +41,12 @@ html.dark {
   color-scheme: dark;
 }
 
+button,
+a,
+[role="button"] {
+  cursor: pointer;
+}
+
 @theme {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
@@ -125,6 +131,16 @@ body {
   display: flex;
   width: max-content;
   animation: marquee 24s linear infinite;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+}
+
+.marquee-track:hover,
+.group:hover > .marquee-track {
+  animation-play-state: paused !important;
 }
 
 @keyframes spin-slow {

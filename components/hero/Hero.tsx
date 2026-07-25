@@ -1,15 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { profile, sections } from "@/lib/profile";
+import { getProfile, getSections } from "@/lib/profile";
 import { LangToggle } from "@/components/ui/LangToggle";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { animate } from "animejs";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
 export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
+  const { lang } = useLanguage();
+  const profile = getProfile(lang);
+  const sections = getSections(lang);
+
   const headingRef = useRef<HTMLHeadingElement>(null);
   const imageRef = useRef(null);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     if (headingRef.current) {
@@ -61,27 +65,27 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
         </div>
       </nav>
 
-      {/* Main hero stage — heading, subtitle, and (mobile) bio, all ABOVE the figure */}
+      {/* Heading, subtitle, and (mobile) bio — kept above the figure so nothing overlaps the face */}
       <div className="relative z-10 flex flex-1 flex-col items-center justify-start pt-4 px-5 text-center">
-        {/* ENORMOUS "Hi, I'm Kiya" Header animated with animejs */}
+        {/* Big "Hi, I'm Kiya" heading, slides in via anime.js */}
         <h1
           ref={headingRef}
           className="relative z-10 text-5xl sm:text-8xl md:text-9xl lg:text-[11rem] font-extrabold tracking-tighter text-text leading-none"
         >
-          Hi, I&apos;m {profile.name}
+          {lang === "id" ? `Halo, Saya ${profile.name}` : `Hi, I'm ${profile.name}`}
         </h1>
 
         <p className="relative z-30 mt-4 font-mono text-sm sm:text-base lg:text-lg uppercase tracking-[0.25em] text-accent font-semibold">
           {profile.title}
         </p>
 
-        {/* Mobile bio — sits under the subtitle in the open top area, clear of the figure */}
+        {/* Mobile bio */}
         <p className="relative z-30 mt-5 max-w-[440px] text-sm leading-relaxed text-text-2 lg:hidden">
           {profile.bio}
         </p>
       </div>
 
-      {/* Portrait — fills the frame (transparent bg), grounded at the bottom */}
+      {/* Portrait */}
       {portraitSrc ? (
         <div
           ref={imageRef}
@@ -100,13 +104,13 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
         </div>
       )}
 
-      {/* Bottom scrim — grounds the figure and keeps corner text readable */}
+      {/* Bottom scrim */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-40 bg-gradient-to-t from-bg to-transparent"
       />
 
-      {/* Desktop bio — lower-left corner, never crosses the face (mobile uses the top copy) */}
+      {/* Desktop bio */}
       <p className="absolute bottom-8 left-12 z-30 hidden max-w-xs text-left text-sm leading-relaxed text-text-2 lg:block">
         {profile.bio}
       </p>

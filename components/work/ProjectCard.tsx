@@ -1,20 +1,33 @@
-import Link from "next/link";
-import type { Project } from "@/lib/projects";
+"use client";
 
-export function ProjectCard({ project }: { project: Project }) {
+import { useState } from "react";
+import Link from "next/link";
+import { getProject, type Project } from "@/lib/projects";
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { ProjectPreview } from "./ProjectPreview";
+
+export function ProjectCard({ project: rawProject }: { project: Project }) {
+  const { lang } = useLanguage();
+  const project = getProject(rawProject.slug, lang);
+  const [isHovered, setIsHovered] = useState(false);
+  const hasPreview = project.preview || (project.previews && project.previews.length > 0);
+
   return (
     <Link
       href={`/work/${project.slug}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       className="group relative block rounded-lg border border-line p-5 transition-colors duration-150 hover:border-text-2 hover:bg-surface focus-visible:outline-2 focus-visible:outline-accent"
     >
-      {/* Touch devices: inline thumbnail (no hover available) */}
-      {project.preview && (
-        <img
-          src={project.preview}
-          alt={`Preview of ${project.title}`}
-          loading="lazy"
-          className="mb-4 aspect-[8/5] w-full rounded-md border border-line object-cover object-top [@media(hover:hover)]:hidden"
-        />
+      {hasPreview && (
+        <div className="mb-4 aspect-[8/5] w-full rounded-md border border-line overflow-hidden [@media(hover:hover)]:hidden">
+          <ProjectPreview
+            preview={project.preview}
+            previews={project.previews}
+            alt={`Preview of ${project.title}`}
+            isHovered={isHovered}
+          />
+        </div>
       )}
 
       <div className="flex items-baseline justify-between gap-4">
@@ -43,17 +56,17 @@ export function ProjectCard({ project }: { project: Project }) {
         ))}
       </ul>
 
-      {/* Pointer devices: centered preview popover that stays safely within card boundaries */}
-      {project.preview && (
+      {hasPreview && (
         <div
           aria-hidden
           className="pointer-events-none absolute left-1/2 top-1/4 z-40 hidden w-80 max-w-[85%] -translate-x-1/2 -translate-y-1/2 scale-95 overflow-hidden rounded-lg border border-line bg-surface opacity-0 shadow-2xl shadow-black/80 transition-all duration-200 ease-out group-hover:scale-100 group-hover:opacity-100 [@media(hover:hover)]:block"
         >
-          <img
-            src={project.preview}
-            alt=""
-            loading="lazy"
-            className="aspect-[8/5] w-full object-cover object-top"
+          <ProjectPreview
+            preview={project.preview}
+            previews={project.previews}
+            alt={`Preview of ${project.title}`}
+            className="aspect-[8/5] w-full"
+            isHovered={isHovered}
           />
         </div>
       )}

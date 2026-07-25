@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { profile, sections } from "@/lib/profile";
+import { getProfile, getSections } from "@/lib/profile";
 import { LangToggle } from "@/components/ui/LangToggle";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
-/** Scroll-spy: tracks which home-page section is in the reading band.
- *  Returns null on pages without the sections (e.g. case studies). */
 function useActiveSection(): string | null {
+  const { lang } = useLanguage();
+  const sections = getSections(lang);
   const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
@@ -21,18 +23,18 @@ function useActiveSection(): string | null {
           if (entry.isIntersecting) setActive(entry.target.id);
         }
       },
-      // Narrow horizontal band around the upper third of the viewport —
-      // whichever section crosses it is "being read".
       { rootMargin: "-25% 0px -65% 0px" },
     );
     els.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [sections]);
 
   return active;
 }
 
 function CopyEmail() {
+  const { lang } = useLanguage();
+  const profile = getProfile(lang);
   const [copied, setCopied] = useState(false);
 
   async function copy() {
@@ -48,19 +50,25 @@ function CopyEmail() {
       className="font-mono text-xs text-text-2 transition-colors duration-150 hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
       aria-label={`Copy email address ${profile.email}`}
     >
-      {copied ? "copied ✓" : profile.email}
+      {copied ? (lang === "id" ? "tersalin ✓" : "copied ✓") : profile.email}
     </button>
   );
 }
 
 export function Sidebar({ portraitSrc }: { portraitSrc: string | null }) {
+  const { lang } = useLanguage();
+  const profile = getProfile(lang);
+  const sections = getSections(lang);
   const active = useActiveSection();
 
   return (
     <div className="flex h-full flex-col gap-8 p-8">
-      {/* Identity */}
+      <div className="flex flex-wrap items-center gap-2">
+        <ThemeToggle />
+        <LangToggle />
+      </div>
+
       <header>
-        {/* [PERSONAL PORTRAIT / PHOTO] — renders only when the image file exists */}
         {portraitSrc && (
           <img
             src={portraitSrc}
@@ -77,7 +85,6 @@ export function Sidebar({ portraitSrc }: { portraitSrc: string | null }) {
         <p className="mt-4 text-sm leading-relaxed text-text-2">{profile.bio}</p>
       </header>
 
-      {/* Tech pills */}
       <ul className="flex flex-wrap gap-1.5" aria-label="Core technologies">
         {profile.pills.map((pill) => (
           <li
@@ -89,7 +96,6 @@ export function Sidebar({ portraitSrc }: { portraitSrc: string | null }) {
         ))}
       </ul>
 
-      {/* Section nav */}
       <nav aria-label="Sections">
         <ul className="flex flex-col gap-1">
           {sections.map((section) => (
@@ -111,18 +117,16 @@ export function Sidebar({ portraitSrc }: { portraitSrc: string | null }) {
       </nav>
 
       <div className="mt-auto flex flex-col gap-4">
-        {/* Document row — renders only when the resume file exists */}
         {profile.resume && (
           <a
             href={profile.resume}
             download
             className="inline-flex w-fit items-center gap-2 rounded-md border border-line px-3 py-1.5 font-mono text-xs text-text transition-colors duration-150 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
           >
-            Resume ↓
+            {lang === "id" ? "Resume ↓" : "Resume ↓"}
           </a>
         )}
 
-        {/* Social row */}
         <div className="flex flex-col gap-2" aria-label="Contact links">
           {profile.socials.map((social) => (
             <a
@@ -141,4 +145,3 @@ export function Sidebar({ portraitSrc }: { portraitSrc: string | null }) {
     </div>
   );
 }
-

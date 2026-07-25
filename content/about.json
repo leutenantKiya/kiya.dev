@@ -1,9 +1,22 @@
 {
-  "paragraphs": [
-    "I'm Antonius Kiya Ananda Derron — Kiya — a product engineer based in Yogyakarta, Indonesia. I like building things end-to-end: the interface, the backend, the data model, and the awkward part in the middle that makes or breaks the product.",
-    "The pattern across my work is hiding complexity. Arbor hides a blockchain behind a Google login. Lazy Builder hides the design-to-code gap behind a linked canvas and editor. Nutrify hides nutrition math behind a camera. Hard systems, simple surfaces.",
-    "Outside the big projects I garden small tools — Telegram bots, automations, little utilities that quietly become part of someone's workflow. I'm currently looking for product-engineering work where shipping the whole thing, not just a layer of it, is the job."
-  ],
-  "contactLine": "Have a project, a role, or just a question? My inbox is open.",
-  "labLine": "Smaller things I've built — tools, bots, and experiments. Open a row for the story."
+  "paragraphs": {
+    "en": [
+      "I'm Antonius Kiya Ananda Derron — Kiya — a product engineer based in Yogyakarta, Indonesia. I like building things end-to-end: the interface, the backend, the data model, and the awkward part in the middle that makes or breaks the product.",
+      "The pattern across my work is hiding complexity. Arbor hides a blockchain behind a Google login. Lazy Builder hides the design-to-code gap behind a linked canvas and editor. Nutrify hides nutrition math behind a camera. Hard systems, simple surfaces.",
+      "Outside the big projects I garden small tools — Telegram bots, automations, little utilities that quietly become part of someone's workflow. I'm currently looking for product-engineering work where shipping the whole thing, not just a layer of it, is the job."
+    ],
+    "id": [
+      "Saya Antonius Kiya Ananda Derron — Kiya — seorang product engineer yang berdomisili di Yogyakarta, Indonesia. Saya suka membangun produk secara end-to-end: antarmuka, backend, model data, dan bagian krusial di antaranya yang menentukan keberhasilan sebuah produk.",
+      "Pola utama dalam karya saya adalah menyembunyikan kompleksitas. Arbor menyembunyikan blockchain di balik login Google. Lazy Builder menyembunyikan celah antara desain dan kode di balik kanvas dan editor yang saling terhubung. Nutrify menyembunyikan perhitungan nutrisi di balik kamera. Sistem rumit, antarmuka sederhana.",
+      "Di luar proyek-proyek besar, saya mengembangkan alat-alat kecil — bot Telegram, otomatisasi, dan utilitas kecil yang secara tenang menjadi bagian dari alur kerja seseorang. Saat ini saya sedang mencari pekerjaan product-engineering di mana membangun produk secara utuh adalah fokus utamanya."
+    ]
+  },
+  "contactLine": {
+    "en": "Have a project, a role, or just a question? My inbox is open.",
+    "id": "Punya proyek, penawaran posisi, atau sekadar pertanyaan? Pesan masuk saya selalu terbuka."
+  },
+  "labLine": {
+    "en": "Smaller things I've built — tools, bots, and experiments. Open a row for the story.",
+    "id": "Proyek-proyek kecil yang pernah saya buat — alat, bot, dan eksperimen. Buka baris untuk membaca ceritanya."
+  }
 }

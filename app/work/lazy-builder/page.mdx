@@ -1,4 +1,4 @@
-import { CaseStudy } from "@/components/work/CaseStudy";
+import { CaseStudy, En, Id } from "@/components/work/CaseStudy";
 
 export const metadata = {
   title: "Lazy Builder — Visual builder that exports real React | Kiya",
@@ -8,6 +8,7 @@ export const metadata = {
 
 <CaseStudy slug="lazy-builder">
 
+<En>
 **In ten seconds:** design tools and code live in separate worlds, and translating
 between them loses information. Lazy Builder is a Figma-style infinite canvas glued to
 a Notion-style rich-text editor — cross-linked both ways — that exports a clean,
@@ -68,5 +69,47 @@ the same data that renders the canvas compiles to React source at export time.
 
 Working prototype, solo project. Canvas, editor, cross-linking, collaboration, and
 export all function; file-by-file documentation lives in the repo's `DOCS.md`.
+</En>
+
+<Id>
+**Dalam sepuluh detik:** alat desain dan kode berada di dunia terpisah, dan penerjemahan di antaranya sering kehilangan informasi.
+Lazy Builder adalah kanvas tak terbatas bergaya Figma yang terhubung dengan editor teks bergaya Notion — terhubung dua arah — yang mengekspor proyek React + Vite yang bersih dan siap dijalankan. React 19, TypeScript, sinkronisasi Yjs CRDT melalui WebSockets.
+
+## Masalah
+
+Tiga kendala utama:
+1. **Figma → Kode tidak presisi.** Desainer memberikan maket; pengembang menafsirkan ulang; konteks hilang di tengah jalan.
+2. **Builder Low-code tertutup.** Menghasilkan output proprietary yang sulit dikembangkan di luar alat tersebut.
+3. **Dokumentasi terpisah.** Alasan di balik suatu komponen tersimpan di platform terpisah.
+
+## Solusi
+
+Dua area kerja terhubung dalam satu tampilan:
+- **Kanvas (bergaya Figma):** kanvas tak terbatas dengan fitur pan, zoom, drag, resize, grouping, dan layer.
+- **Editor (bergaya Notion):** editor teks TipTap dengan slash commands, blok kode, dan **pill referensi** yang langsung menuju elemen kanvas.
+
+Setelah selesai: **ekspor** → `src/components/*.tsx`, `App.tsx`, `vite.config.ts`, `package.json`. Proyek nyata yang sepenuhnya Anda miliki.
+
+## Arsitektur
+
+```text
+klien (React 19 + Vite)
+├─ editor    TipTap + Yjs — teks kaya kolaboratif & slash commands
+├─ canvas    CanvasNode sebagai IR → dirender, dimanipulasi, lalu dikompilasi
+└─ shell workspace: navigasi antar tampilan
+
+server (Node + tsx)
+└─ y-websocket relay — server WebSocket minimal untuk sinkronisasi dokumen Yjs
+```
+
+## Keputusan & Kompromi
+
+- **CRDT dibanding state server.** Yjs membuat pengeditan multi-pengguna bebas konflik tanpa beban server.
+- **IR nyata, bukan sekadar gambar.** Mengimpor kode nyata membutuhkan kanvas yang memang berstruktur pohon komponen sejak awal.
+
+## Status
+
+Prototip berfungsi penuh, proyek solo. Kanvas, editor, tautan silang, kolaborasi, dan ekspor berfungsi penuh.
+</Id>
 
 </CaseStudy>

@@ -18,9 +18,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kiya —Portfolio",
+  title: "Kiya — Portfolio",
   description:
     "Product engineer building complete products: interfaces, systems, and the complexity hidden in between.",
+  icons: {
+    icon: "/me.png",
+    shortcut: "/me.png",
+    apple: "/me.png",
+  },
 };
 
 const themeScript = `
@@ -52,7 +57,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script
+          id="theme-script"
+          dangerouslySetInnerHTML={{ __html: themeScript }}
+        />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
         <ThemeProvider>

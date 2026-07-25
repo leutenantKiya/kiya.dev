@@ -1,7 +1,9 @@
 {
   "name": "Kiya",
   "title": "Product Engineer",
+  "title_id": "Product Engineer",
   "bio": "I build complete products — the interface people touch, the systems underneath, and the complexity hidden in between. From a streaming platform that meters payment by the second to a canvas tool that exports real React code, I care most about making hard systems feel simple.",
+  "bio_id": "Saya membangun produk lengkap — antarmuka yang digunakan pengguna, sistem di baliknya, dan kompleksitas di antaranya. Dari platform streaming dengan pembayaran per detik hingga alat kanvas yang mengekspor kode React nyata, fokus utama saya adalah membuat sistem rumit terasa sederhana.",
   "pills": [
     "TypeScript",
     "React",
@@ -18,23 +20,24 @@
       "platform": "GitHub",
       "handle": "leutenantKiya",
       "url": "https://github.com/leutenantKiya"
-    },{
+    },
+    {
       "platform": "LinkedIn",
       "handle": "Antonius Kiya Ananda Derron",
-      "url": "https://www.linkedin.com/in/antonius-kiya-255945290/"  
-      },{
+      "url": "https://www.linkedin.com/in/antonius-kiya-255945290/"
+    },
+    {
       "platform": "Instagram",
       "handle": "@Gwkiyaco",
-      "url": "https://www.instagram.com/gwkiyaco?igsh=MTQ2bnJ2cGJhY3A4Ng=="  
-
+      "url": "https://www.instagram.com/gwkiyaco?igsh=MTQ2bnJ2cGJhY3A4Ng=="
     }
   ],
   "resume": null,
   "sections": [
-    { "id": "work", "label": "Work" },
-    { "id": "lab", "label": "Lab" },
-    { "id": "experience", "label": "Experience" },
-    { "id": "about", "label": "About" },
-    { "id": "contact", "label": "Contact" }
+    { "id": "work", "label": "Work", "label_id": "Karya" },
+    { "id": "lab", "label": "Lab", "label_id": "Lab" },
+    { "id": "experience", "label": "Experience", "label_id": "Pengalaman" },
+    { "id": "about", "label": "About", "label_id": "Tentang" },
+    { "id": "contact", "label": "Contact", "label_id": "Kontak" }
   ]
 }

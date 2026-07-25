@@ -5,10 +5,12 @@
     "year": "2025",
     "stack": ["TypeScript", "Docker"],
     "purpose": "Deployment automation focused on making pushing code reliable and simple",
+    "purpose_id": "Otomasi deployment dengan fokus membuat proses push kode andal dan mudah",
     "status": "done",
     "repo": "https://github.com/leutenantKiya/JustPush-Refactory",
     "demo": null,
-    "insight": "Deployment tooling is UX design — the happy path has to be one action"
+    "insight": "Deployment tooling is UX design — the happy path has to be one action",
+    "insight_id": "Perkakas deployment adalah desain UX — alur ideal harus selesai dalam satu aksi"
   },
   {
     "name": "Aily Telegram Bot",
@@ -16,10 +18,12 @@
     "year": "2026",
     "stack": ["Python", "Docker"],
     "purpose": "Containerized Telegram bot automation",
+    "purpose_id": "Otomasi bot Telegram yang ter-containerize",
     "status": "done",
     "repo": "https://github.com/leutenantKiya/telegramBot",
     "demo": null,
-    "insight": "Bots are conversational UIs — flow design matters more than the API calls"
+    "insight": "Bots are conversational UIs — flow design matters more than the API calls",
+    "insight_id": "Bot adalah UI percakapan — desain alur jauh lebih penting daripada pemanggilan API"
   },
   {
     "name": "PaxPatronage",
@@ -27,10 +31,12 @@
     "year": "2026",
     "stack": ["PHP", "JavaScript", "CSS"],
     "purpose": "Crowd-fundraising platform built LAMP-style from scratch",
+    "purpose_id": "Platform penggalangan dana publik yang dibangun bergaya LAMP dari nol",
     "status": "done",
     "repo": "https://github.com/leutenantKiya/PaxPatronage-crowd-fundraising",
     "demo": null,
-    "insight": "No framework — auth, campaigns, and payments modeled by hand"
+    "insight": "No framework — auth, campaigns, and payments modeled by hand",
+    "insight_id": "Tanpa framework — autentikasi, kampanye, dan pembayaran dirancang manual"
   },
   {
     "name": "Banker's Algorithm Visualizer",
@@ -38,10 +44,12 @@
     "year": "2025",
     "stack": ["JavaScript"],
     "purpose": "Interactive visualization of the OS deadlock-avoidance algorithm",
+    "purpose_id": "Visualisasi interaktif algoritma pencegahan deadlock pada Sistem Operasi",
     "status": "done",
     "repo": "https://github.com/leutenantKiya/SO_Bankers_Alghoritm",
     "demo": null,
-    "insight": "An algorithm you can poke teaches faster than one you read"
+    "insight": "An algorithm you can poke teaches faster than one you read",
+    "insight_id": "Algoritma yang bisa dipraktikkan mengajarkan lebih cepat dibanding yang dibaca"
   },
   {
     "name": "Hydrostatic Pressure Prediction",
@@ -49,10 +57,12 @@
     "year": "2025",
     "stack": ["Python", "Jupyter"],
     "purpose": "ML regression modeling of a physical system",
+    "purpose_id": "Pemodelan regresi ML untuk sistem fisik",
     "status": "done",
     "repo": "https://github.com/leutenantKiya/Hydrostatic-Pressure-Prediction-ML-Regression",
     "demo": null,
-    "insight": "Physics gives you a ground truth most ML datasets never have"
+    "insight": "Physics gives you a ground truth most ML datasets never have",
+    "insight_id": "Fisika memberikan kebenaran acuan yang jarang dimiliki dataset ML biasa"
   },
   {
     "name": "Face Recognition",
@@ -60,10 +70,12 @@
     "year": "2025",
     "stack": ["Python", "OpenCV"],
     "purpose": "Classical face detection with Haar cascades, before deep learning",
+    "purpose_id": "Deteksi wajah klasik dengan Haar cascades sebelum era deep learning",
     "status": "archived",
     "repo": null,
     "demo": null,
-    "insight": "Classical CV still wins when you have one webcam and no GPU"
+    "insight": "Classical CV still wins when you have one webcam and no GPU",
+    "insight_id": "CV klasik tetap unggul saat Anda hanya punya satu webcam tanpa GPU"
   },
   {
     "name": "PKM Company Profile",
@@ -71,20 +83,11 @@
     "year": "2025",
     "stack": ["Vue"],
     "purpose": "Company-profile website build",
+    "purpose_id": "Pembuatan website profil perusahaan",
     "status": "done",
     "repo": "https://github.com/leutenantKiya/PKM---company-profile",
     "demo": null,
-    "insight": "Client-style work: the constraint is their content, not your stack"
-  },
-  {
-    "name": "Social Media Summer Project",
-    "type": "site",
-    "year": "2025",
-    "stack": ["PHP"],
-    "purpose": "Auth, profiles, and a timeline built from scratch",
-    "status": "archived",
-    "repo": null,
-    "demo": null,
-    "insight": "Sessions and auth by hand once — then you understand every framework"
+    "insight": "Client-style work: the constraint is their content, not your stack",
+    "insight_id": "Proyek gaya klien: batasan utamanya adalah konten mereka, bukan stack Anda"
   }
 ]

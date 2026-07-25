@@ -1,4 +1,4 @@
-import { CaseStudy } from "@/components/work/CaseStudy";
+import { CaseStudy, En, Id } from "@/components/work/CaseStudy";
 
 export const metadata = {
   title: "Arbor — Pay-per-second streaming | Kiya",
@@ -8,18 +8,7 @@ export const metadata = {
 
 <CaseStudy slug="arbor">
 
-## Video Preview
-
-<div className="my-6 overflow-hidden rounded-xl border border-line shadow-2xl">
-  <iframe
-    className="aspect-video w-full"
-    src="https://www.youtube-nocookie.com/embed/A1_m2YBdv2Y"
-    title="Arbor — Pay-per-second streaming preview"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-  />
-</div>
-
+<En>
 **In ten seconds:** streaming subscriptions charge for time you never watch, and card
 networks can't settle an $0.08 charge for three minutes of viewing. Arbor sells prepaid
 viewing hours that only tick down during playback, then settles filmmakers on-chain,
@@ -84,5 +73,52 @@ and an on-chain settlement proof they can verify on a block explorer.
 Hackathon MVP, deployed on testnet with mock USDC. The live demo streams the real
 catalog with the full purchase → watch → settle loop. No production usage metrics —
 it was built in seven days and is presented as exactly that.
+</En>
+
+<Id>
+**Dalam sepuluh detik:** langganan streaming menagih waktu yang tidak pernah Anda tonton, dan jaringan kartu
+pembayaran biasa tidak dapat memproses biaya mikro $0.08 untuk menonton tiga menit. Arbor menjual jam menonton
+prabayar yang hanya berkurang saat film diputar, lalu menyelesaikan pembayaran pembuat film secara on-chain secara
+proporsional per detik tontonan. React + TypeScript, Solidity, Postgres. Dibangun dalam 7 hari oleh tim 3 orang untuk
+Encode Club UXMaxx Hackathon — [demo langsung](https://arbor-watch.vercel.app).
+
+## Masalah
+
+Sistem langganan merugikan penonton kasual: Anda membayar penuh sebulan baik menonton 2 film maupun 20 film.
+Alternatif bayar-per-tonton gagal pada jaringan pembayaran tradisional karena biaya transaksi melampaui mikro-biaya.
+Selain itu, pembuat film independen menerima pembayaran yang buram, tertunda, dan tanpa transparansi.
+
+## Solusi
+
+Bayangkan *kuota data seluler, tetapi untuk bioskop*. Penonton membeli paket jam menonton (2.5j / 5j / 10j)
+dan durasi **hanya berkurang saat film diputar**. Menjeda, menjelajah, dan menonton trailer selalu gratis.
+Saat sesi berakhir, setiap pembuat film yang karyanya ditonton menerima pembayaran secara on-chain — instan, transparan, dan proporsional per detik.
+
+Teknologi blockchain dibuat sepenuhnya transparan. Masuk dengan Google; Universal Account Particle dibuat secara otomatis;
+setiap transaksi bebas biaya gas. Tanpa seed phrase, tanpa "connect wallet", dan tanpa istilah kripto di antarmuka.
+
+## Arsitektur
+
+Keputusan desain utama adalah buku besar hibrida — on-chain hanya untuk transaksi keuangan, sisanya berjalan di Postgres:
+
+```text
+Masuk dengan Google   →  Universal Account dibuat otomatis (Particle)
+Beli paket jam        →  Pembelian USDC bebas gas → ArborVault.sol (on-chain)
+Nonton film           →  Detik dipotong di buku besar server, hanya saat diputar
+Menjeda / jelajah     →  Selalu gratis
+Sesi selesai          →  Penyelesaian batch: pembuat film dibayar on-chain
+Kado jam tonton       →  Jam menonton dikirim via tautan klaim sekali pakai
+```
+
+## Keputusan & Kompromi
+
+- **Mengapa butuh blockchain?** Saldo prabayar dengan pemotongan mikro hanya ekonomis menggunakan Account Abstraction.
+- **Pengukur ramah pengguna.** Pengukur waktu dibuat tenang agar waktu prabayar terasa aman dan nyaman.
+- **Katalog berlisensi aman.** Semua konten demo dapat didistribusikan secara legal — film terbuka Blender Foundation & domain publik.
+
+## Status
+
+MVP Hackathon, dideploy pada testnet dengan mock USDC. Demo langsung menampilkan alur penuh pembelian → tonton → penyelesaian.
+</Id>
 
 </CaseStudy>

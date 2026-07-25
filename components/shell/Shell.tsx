@@ -7,11 +7,9 @@ import { Sidebar } from "@/components/sidebar/Sidebar";
 import { CursorJet } from "@/components/ui/CursorJet";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { LangToggle } from "@/components/ui/LangToggle";
-import { profile, sections } from "@/lib/profile";
+import { getSections } from "@/lib/profile";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 
-/** App shell with unified global sticky mobile burger navbar
- *  that persists across all pages and scrolls.
- */
 export function Shell({
   portraitSrc,
   jetSrc,
@@ -22,10 +20,11 @@ export function Shell({
   children: ReactNode;
 }) {
   const pathname = usePathname();
+  const { lang } = useLanguage();
+  const sections = getSections(lang);
   const [sidebarShown, setSidebarShown] = useState(pathname !== "/");
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Close dropdown menu automatically on route change
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
@@ -51,7 +50,6 @@ export function Shell({
 
   return (
     <>
-      {/* Desktop sidebar — fixed, slides in past the hero */}
       <aside
         aria-hidden={!sidebarShown}
         className={`fixed left-0 top-0 z-40 hidden h-dvh w-[340px] overflow-y-auto border-r border-line bg-bg transition-transform duration-300 ease-out lg:block ${
@@ -61,7 +59,6 @@ export function Shell({
         <Sidebar portraitSrc={portraitSrc} />
       </aside>
 
-      {/* Global Sticky Mobile Header & Burger Navbar — always present on mobile across all pages */}
       <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b border-line bg-bg/90 px-5 py-3.5 backdrop-blur lg:hidden">
         <Link
           href="/"
@@ -85,7 +82,6 @@ export function Shell({
           <ThemeToggle />
           <LangToggle />
 
-          {/* Sticky Burger Menu Button */}
           <button
             type="button"
             aria-label="Toggle navigation menu"
@@ -98,11 +94,12 @@ export function Shell({
         </div>
       </header>
 
-      {/* Mobile Full Dropdown Menu Overlay */}
       {menuOpen && (
         <div className="fixed inset-x-0 top-[57px] z-40 max-h-[calc(100vh-57px)] overflow-y-auto border-b border-line bg-bg/95 px-5 py-5 backdrop-blur shadow-2xl lg:hidden">
           <nav aria-label="Mobile Navigation">
-            <p className="font-mono text-xs uppercase tracking-widest text-text-2 mb-2">Navigation</p>
+            <p className="font-mono text-xs uppercase tracking-widest text-text-2 mb-2">
+              {lang === "id" ? "Navigasi" : "Navigation"}
+            </p>
             <ul className="flex flex-col gap-1">
               {sections.map((section) => (
                 <li key={section.id}>
@@ -118,7 +115,9 @@ export function Shell({
             </ul>
 
             <div className="mt-4 border-t border-line pt-4">
-              <p className="font-mono text-xs uppercase tracking-widest text-text-2 mb-2">Case Studies</p>
+              <p className="font-mono text-xs uppercase tracking-widest text-text-2 mb-2">
+                {lang === "id" ? "Studi Kasus" : "Case Studies"}
+              </p>
               <ul className="flex flex-col gap-1 text-sm text-text-2">
                 <li>
                   <Link

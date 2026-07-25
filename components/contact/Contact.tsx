@@ -3,9 +3,12 @@
 import { useState } from "react";
 import { profile } from "@/lib/profile";
 import { about } from "@/lib/about";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export function Contact() {
   const [copied, setCopied] = useState(false);
+  const { lang } = useTranslation();
+  const contactLine = about.contactLine[lang] ?? about.contactLine.en;
 
   async function copyEmail() {
     await navigator.clipboard.writeText(profile.email);
@@ -15,7 +18,7 @@ export function Contact() {
 
   return (
     <div className="mt-6">
-      <p className="text-sm leading-relaxed text-text-2">{about.contactLine}</p>
+      <p className="text-sm leading-relaxed text-text-2">{contactLine}</p>
 
       <div className="mt-5 flex flex-wrap items-center gap-3">
         <a

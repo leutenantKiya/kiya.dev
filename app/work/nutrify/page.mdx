@@ -1,4 +1,4 @@
-import { CaseStudy } from "@/components/work/CaseStudy";
+import { CaseStudy, En, Id } from "@/components/work/CaseStudy";
 
 export const metadata = {
   title: "Nutrify — Food recognition & nutrition scheduler | Kiya",
@@ -8,16 +8,7 @@ export const metadata = {
 
 <CaseStudy slug="nutrify">
 
-<div className="my-6 overflow-hidden rounded-xl border border-line shadow-2xl">
-  <iframe
-    className="aspect-video w-full"
-    src="https://www.youtube-nocookie.com/embed/A1_m2YBdv2Y"
-    title="Arbor — Pay-per-second streaming preview"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-  />
-</div>
-
+<En>
 **In ten seconds:** logging food by hand is why diet apps fail. Nutrify identifies a
 meal from a photo, estimates the portion, computes calories and macros, and tells you
 whether it fits your goal — cut, bulk, or maintain. Flutter app, FastAPI backend,
@@ -73,5 +64,44 @@ datasets; notebooks in the repo are generated from the Python training scripts.
 
 University team project at capstone scale. Functional pipeline end-to-end; no
 published accuracy benchmarks or usage metrics, and it's presented as exactly that.
+</En>
+
+<Id>
+**Dalam sepuluh detik:** mencatat makanan secara manual membuat aplikasi diet sering ditinggalkan. Nutrify mengenali hidangan dari foto, mengestimasi porsi, menghitung kalori & makro, serta memberi tahu apakah hidangan tersebut sesuai target Anda — cut, bulk, atau maintain. Aplikasi Flutter, backend FastAPI, alur ML multi-model yang berjalan secara lokal.
+
+## Masalah
+
+Pelacakan kalori terbukti efektif — jika dilakukan secara konsisten. Pencatatan manual cukup menyita waktu sehingga kebanyakan orang menyerah dalam hitungan minggu.
+
+## Solusi
+
+Arahkan kamera ke makanan Anda. Nutrify mendeteksi objek di piring, mengklasifikasikannya, mengestimasi ukuran porsi, serta menghitung kalori dan nutrisi makro. Kemudian membandingkannya dengan target harian Anda untuk menjawab pertanyaan utama: *apakah makanan ini sesuai dengan target saya?*
+
+Asisten percakapan berbasis Gemini menangani pertanyaan lanjutan; alur pengenalan utama berjalan secara lokal tanpa memerlukan API key eksternal.
+
+## Arsitektur
+
+```text
+Aplikasi Flutter (kamera + UI)
+        │  foto
+        ▼
+Backend FastAPI — Orkestrasi ML
+├─ model deteksi         objek apa saja di dalam bingkai
+├─ model klasifikasi     jenis makanan setiap objek
+├─ estimasi porsi        seberapa banyak jumlahnya
+├─ basis data nutrisi    kalori + makro per unit
+└─ mesin rekomendasi     analisis vs. target harian (cut / bulk / maintain)
+```
+
+## Keputusan & Kompromi
+
+- **Alur terpisah dibanding monolith.** Deteksi, klasifikasi, dan porsi adalah tahap terpisah yang mudah diperbarui secara independen.
+- **Inferensi lokal.** Proses pengenalan utama tidak memiliki ketergantungan API eksternal, sehingga fitur inti bekerja tanpa batas kuota.
+- **Keputusan langsung, bukan sekadar dasbor.** Hasil akhir memberikan saran konkret sesuai target pengguna, bukan sekadar tumpukan angka.
+
+## Status
+
+Proyek tim universitas skala tugas akhir. Alur berfungsi penuh dari hulu ke hilir.
+</Id>
 
 </CaseStudy>

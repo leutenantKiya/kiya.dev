@@ -40,9 +40,10 @@ export function CursorJet({ src }: { src: string }) {
       const wrap = wrapRef.current;
       const img = imgRef.current;
       if (wrap && img) {
-        // Wrapper carries position (every frame), image carries the flip
-        // (CSS-transitioned) so the mirror feels like a banking turn.
-        wrap.style.transform = `translate3d(${x - 48}px, ${y - 32}px, 0)`;
+        // Offset so the jet doesn't sit directly under the pointer
+        const offsetX = facing === 1 ? -90 : 30;
+        const offsetY = -55;
+        wrap.style.transform = `translate3d(${x + offsetX}px, ${y + offsetY}px, 0)`;
         img.style.transform = `scaleX(${facing})`;
       }
       raf = requestAnimationFrame(tick);
