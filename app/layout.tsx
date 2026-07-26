@@ -6,6 +6,7 @@ import { LanguageProvider } from "@/components/providers/LanguageProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Shell } from "@/components/shell/Shell";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
