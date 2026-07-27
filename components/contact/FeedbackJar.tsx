@@ -15,7 +15,13 @@ export interface FeedbackCardData {
 
 interface CustomBody extends Matter.Body {
   cardData?: FeedbackCardData;
+  /** Timestamp until which this card is ringed, so a freshly posted note is
+   *  easy to spot in the pile. */
+  highlightUntil?: number;
 }
+
+const CARD_W = 135;
+const CARD_H = 165;
 
 interface SelectedCardState {
   data: FeedbackCardData;
@@ -74,6 +80,8 @@ export default function FeedbackJar() {
   const [selectedCard, setSelectedCard] = useState<SelectedCardState | null>(null);
   const [isCardModalActive, setIsCardModalActive] = useState<boolean>(false);
   const [justPosted, setJustPosted] = useState<boolean>(false);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   // Form states
   const [category, setCategory] = useState<string>("Apresiasi");
@@ -93,54 +101,57 @@ export default function FeedbackJar() {
   const boundaryBodiesRef = useRef<Matter.Body[]>([]);
   const imageCache = useRef<Map<string, HTMLImageElement>>(new Map());
 
-  const [allDbCards, setAllDbCards] = useState<FeedbackCardData[]>([]);
+  const [totalNotes, setTotalNotes] = useState<number>(0);
+  const [isShuffling, setIsShuffling] = useState<boolean>(false);
 
-  // Get max allowed cards depending on device screen size (max 6 on mobile)
+  // How many cards actually fit on the board. The old fixed 6/10 overflowed:
+  // at 439x478 only ~6 cards fit, so a batch of 10 piled up past the top edge.
+  // Fill ratio 0.55 leaves gaps so it reads as a pile, not a tetris wall.
   const getBatchLimit = () => {
-    if (typeof window !== "undefined" && window.innerWidth < 640) {
-      return 6;
-    }
-    return 10;
+    const canvas = canvasRef.current;
+    const w = canvas?.width || containerRef.current?.clientWidth || 440;
+    const h = canvas?.height || containerRef.current?.clientHeight || 478;
+    const fits = Math.floor((w * h * 0.55) / (CARD_W * CARD_H));
+    return Math.max(3, Math.min(fits, 8));
   };
 
-  // Helper to shuffle & load a random batch of cards into the physics engine
-  const loadRandomBatch = (cardList: FeedbackCardData[]) => {
-    if (!cardList || cardList.length === 0) return;
-
-    // Clear existing physics bodies
+  // Put a batch of cards on the board, replacing whatever is there
+  const showBatch = (batch: FeedbackCardData[]) => {
     const { Composite } = Matter;
     if (engineRef.current) {
       cardBodiesRef.current.forEach((b) => Composite.remove(engineRef.current!.world, b));
     }
     cardBodiesRef.current = [];
 
-    // Shuffle list randomly
-    const shuffled = [...cardList].sort(() => Math.random() - 0.5);
-    const limit = getBatchLimit();
-    const batch = shuffled.slice(0, limit);
-
     setCards(batch);
 
     if (canvasRef.current && engineRef.current) {
-      const w = canvasRef.current.width;
-      const h = canvasRef.current.height;
-      loadCardsIntoPhysics(batch, w, h, engineRef.current);
+      loadCardsIntoPhysics(batch, canvasRef.current.width, canvasRef.current.height, engineRef.current);
     }
   };
 
-  // Initialize saved cards from Neon DB API
-  useEffect(() => {
-    fetch("/api/feedback")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success && Array.isArray(data.cards) && data.cards.length > 0) {
-          setAllDbCards(data.cards);
-          loadRandomBatch(data.cards);
-        }
-      })
-      .catch((err) => {
-        console.error("Failed to load feedback from API:", err);
+  // Ask the server for a fresh random handful. Randomising in SQL means we only
+  // ever download the doodles we are about to draw, instead of every note.
+  const fetchBatch = async () => {
+    setIsShuffling(true);
+    try {
+      const res = await fetch(`/api/feedback?limit=${getBatchLimit()}`, {
+        cache: "no-store",
       });
+      const data = await res.json();
+      if (data.success && Array.isArray(data.cards)) {
+        setTotalNotes(data.total ?? data.cards.length);
+        showBatch(data.cards);
+      }
+    } catch (err) {
+      console.error("Failed to load feedback from API:", err);
+    } finally {
+      setIsShuffling(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchBatch();
   }, []);
 
   // Modal animation sync
@@ -267,9 +278,10 @@ export default function FeedbackJar() {
       }
     });
 
-    const initialList = JSON.parse(localStorage.getItem("kiya_feedback_cards") || "[]");
-    const cardsToLoad = initialList.length > 0 ? initialList : cards;
-    loadCardsIntoPhysics(cardsToLoad, canvas.width, canvas.height, engine);
+    // The API fetch is the only source of cards; it calls showBatch once it
+    // resolves. Seeding from localStorage here raced with it and could show
+    // notes that were never actually stored.
+    loadCardsIntoPhysics(cards, canvas.width, canvas.height, engine);
 
     const runner = Runner.create();
     runnerRef.current = runner;
@@ -332,8 +344,12 @@ export default function FeedbackJar() {
     const floor = Bodies.rectangle(w / 2, h + 25, w * 2, 50, { isStatic: true, friction: 0.9 });
     const leftWall = Bodies.rectangle(-25, h / 2, 50, h * 2, { isStatic: true });
     const rightWall = Bodies.rectangle(w + 25, h / 2, 50, h * 2, { isStatic: true });
+    // Ceiling sits a card's height above the frame: new notes still fall in
+    // from off-screen, but a squeezed card can no longer escape upward and
+    // disappear for good.
+    const ceiling = Bodies.rectangle(w / 2, -CARD_H - 25, w * 2, 50, { isStatic: true });
 
-    const boundaries = [floor, leftWall, rightWall];
+    const boundaries = [floor, leftWall, rightWall, ceiling];
     boundaryBodiesRef.current = boundaries;
     Composite.add(engine.world, boundaries);
   };
@@ -351,10 +367,7 @@ export default function FeedbackJar() {
     const targetEngine = engineInstance || engineRef.current;
     if (!targetEngine) return;
 
-    const cardWidth = 135;
-    const cardHeight = 165;
-
-    const cardBody: CustomBody = Bodies.rectangle(pos.x, pos.y, cardWidth, cardHeight, {
+    const cardBody: CustomBody = Bodies.rectangle(pos.x, pos.y, CARD_W, CARD_H, {
       label: "card",
       friction: 0.85,
       frictionStatic: 1.0,
@@ -428,13 +441,13 @@ export default function FeedbackJar() {
     }
   };
 
-  const handleAddCard = (e: React.FormEvent) => {
+  const handleAddCard = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!author.trim() || !message.trim()) return;
+    if (!author.trim() || !message.trim() || isSaving) return;
 
     let drawingUrl: string | undefined = undefined;
     if (drawingCanvasRef.current && hasDrawn) {
-      drawingUrl = drawingCanvasRef.current.toDataURL();
+      drawingUrl = drawingCanvasRef.current.toDataURL("image/webp", 0.7);
     }
 
     const newCard: FeedbackCardData = {
@@ -446,26 +459,30 @@ export default function FeedbackJar() {
       drawingDataUrl: drawingUrl,
     };
 
-    const updated = [newCard, ...cards];
-    setCards(updated);
-    localStorage.setItem("kiya_feedback_cards", JSON.stringify(updated));
-
-    const updatedAll = [newCard, ...allDbCards];
-    setAllDbCards(updatedAll);
-
-    // Save to Neon DB API
-    fetch("/api/feedback", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newCard),
-    }).catch((err) => console.error("Failed to save card to API:", err));
-
-    if (canvasRef.current) {
-      const spawnX = canvasRef.current.width / 2 + (Math.random() * 60 - 30);
-      const spawnY = 80;
-      spawnCardPhysicsBody(newCard, { x: spawnX, y: spawnY });
+    // Wait for the write to land before claiming success — otherwise a failed
+    // insert still looked like it worked and the note vanished on reload.
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      const res = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newCard),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.success) {
+        throw new Error(data?.error || `Request failed (${res.status})`);
+      }
+    } catch (err) {
+      setSaveError(err instanceof Error ? err.message : String(err));
+      setIsSaving(false);
+      return;
     }
 
+    setTotalNotes((prev) => prev + 1);
+    dropNewCardOntoBoard(newCard);
+
+    setIsSaving(false);
     setAuthor("");
     setMessage("");
     setIsFormOpen(false);
@@ -479,6 +496,44 @@ export default function FeedbackJar() {
     return () => clearTimeout(timer);
   }, [justPosted]);
 
+  // The board is a corkboard, not a bottomless jar: it holds a fixed number of
+  // notes, so pinning a new one takes the oldest one down first. Without this
+  // the new card materialised inside an already-full pile and got squeezed out.
+  const dropNewCardOntoBoard = (card: FeedbackCardData) => {
+    const canvas = canvasRef.current;
+    const engine = engineRef.current;
+    if (!canvas || !engine) {
+      setCards((prev) => [card, ...prev]);
+      return;
+    }
+
+    const { Composite } = Matter;
+    const limit = getBatchLimit();
+
+    const evicted: FeedbackCardData[] = [];
+    while (cardBodiesRef.current.length >= limit) {
+      const oldest = cardBodiesRef.current.shift();
+      if (!oldest) break;
+      if (oldest.cardData) evicted.push(oldest.cardData);
+      Composite.remove(engine.world, oldest);
+    }
+
+    setCards((prev) => {
+      const kept = prev.filter((c) => !evicted.some((e) => e.id === c.id));
+      return [card, ...kept];
+    });
+
+    // Falls in from above the frame so it reads as dropping onto the board,
+    // instead of appearing in the middle of the stack.
+    spawnCardPhysicsBody(card, {
+      x: canvas.width / 2 + (Math.random() * 60 - 30),
+      y: -CARD_H / 2,
+    });
+
+    const body = cardBodiesRef.current[cardBodiesRef.current.length - 1];
+    if (body) body.highlightUntil = Date.now() + 2500;
+  };
+
   const handleShakeBoard = () => {
     const { Body } = Matter;
     cardBodiesRef.current.forEach((body) => {
@@ -489,7 +544,7 @@ export default function FeedbackJar() {
   };
 
   const handleShuffleCards = () => {
-    loadRandomBatch(allDbCards.length > 0 ? allDbCards : cards);
+    if (!isShuffling) fetchBatch();
   };
 
   const drawGridBackground = (ctx: CanvasRenderingContext2D, w: number, h: number) => {
@@ -549,6 +604,27 @@ export default function FeedbackJar() {
     ctx.stroke();
 
     ctx.shadowColor = "transparent";
+
+    // Accent ring on a just-posted note, fading out over its highlight window
+    if (body.highlightUntil) {
+      const remaining = body.highlightUntil - Date.now();
+      if (remaining > 0) {
+        ctx.save();
+        ctx.globalAlpha = Math.min(1, remaining / 2500);
+        ctx.strokeStyle = "#4ade80";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        if (typeof ctx.roundRect === "function") {
+          ctx.roundRect(-width / 2 - 3, -height / 2 - 3, width + 6, height + 6, 12);
+        } else {
+          ctx.rect(-width / 2 - 3, -height / 2 - 3, width + 6, height + 6);
+        }
+        ctx.stroke();
+        ctx.restore();
+      } else {
+        body.highlightUntil = undefined;
+      }
+    }
 
     // Top Square Doodle Image Canvas Box
     const imageSize = 119;
@@ -610,8 +686,6 @@ export default function FeedbackJar() {
     ctx.restore();
   };
 
-  const totalNotes = allDbCards.length || cards.length;
-
   return (
     <div className="w-full rounded-xl border border-line bg-surface p-4 sm:p-5">
       {/* Masthead */}
@@ -667,9 +741,10 @@ export default function FeedbackJar() {
             <button
               type="button"
               onClick={handleShuffleCards}
+              disabled={isShuffling}
               aria-label={lang === "id" ? "Tampilkan kartu lain" : "Show a different set"}
               title={lang === "id" ? "Tampilkan kartu lain" : "Show a different set"}
-              className="flex h-11 w-11 items-center justify-center rounded-md border border-line bg-bg text-text-2 transition-colors duration-150 hover:border-accent hover:text-accent sm:h-9 sm:w-9"
+              className="flex h-11 w-11 items-center justify-center rounded-md border border-line bg-bg text-text-2 transition-colors duration-150 hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50 sm:h-9 sm:w-9"
             >
               <ShuffleIcon />
             </button>
@@ -867,11 +942,30 @@ export default function FeedbackJar() {
                 </div>
               </div>
 
+              {saveError && (
+                <p
+                  role="alert"
+                  className="rounded-md border border-rose-500/40 bg-rose-500/10 px-3 py-2 font-mono text-xs text-rose-300"
+                >
+                  {lang === "id"
+                    ? "Gagal menyimpan. Coba lagi."
+                    : "Could not save. Try again."}{" "}
+                  <span className="text-rose-300/70">({saveError})</span>
+                </p>
+              )}
+
               <button
                 type="submit"
-                className="w-full rounded-md border border-accent bg-accent px-4 py-2.5 font-mono text-xs font-semibold text-bg transition-opacity hover:opacity-90 mt-2"
+                disabled={isSaving}
+                className="mt-2 w-full rounded-md border border-accent bg-accent px-4 py-2.5 font-mono text-xs font-semibold text-bg transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {lang === "id" ? "Terbitkan Kartu Doodle" : "Publish Doodle Card"}
+                {isSaving
+                  ? lang === "id"
+                    ? "Menyimpan…"
+                    : "Saving…"
+                  : lang === "id"
+                    ? "Tempel catatan"
+                    : "Pin the note"}
               </button>
             </form>
           </div>
