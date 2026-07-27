@@ -6,6 +6,7 @@ import { LangToggle } from "@/components/ui/LangToggle";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { animate } from "animejs";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { KineticText } from "../ui/kinetic-text";
 
 export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
   const { lang } = useLanguage();
@@ -68,12 +69,12 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
       {/* Heading, subtitle, and (mobile) bio — kept above the figure so nothing overlaps the face */}
       <div className="relative z-10 flex flex-1 flex-col items-center justify-start pt-4 px-5 text-center">
         {/* Big "Hi, I'm Kiya" heading, slides in via anime.js */}
-        <h1
+        <KineticText
+          key={lang}
           ref={headingRef}
           className="relative z-10 text-5xl sm:text-8xl md:text-9xl lg:text-[11rem] font-extrabold tracking-tighter text-text leading-none"
-        >
-          {lang === "id" ? `Halo, Saya ${profile.name}` : `Hi, I'm ${profile.name}`}
-        </h1>
+          text={lang === "id" ? `Halo, Saya ${profile.name}` : `Hi, I'm ${profile.name}`}
+        />
 
         <p className="relative z-30 mt-4 font-mono text-sm sm:text-base lg:text-lg uppercase tracking-[0.25em] text-accent font-semibold">
           {profile.title}

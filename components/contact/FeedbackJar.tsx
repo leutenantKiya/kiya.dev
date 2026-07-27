@@ -22,123 +22,45 @@ interface SelectedCardState {
   origin: { x: number; y: number; angle: number };
 }
 
-// Generate default preset doodle cards with cute initial drawings
-function createDefaultDoodles(lang: string): FeedbackCardData[] {
-  // Helper to create simple canvas doodle Data URLs for default cards
-  if (typeof window === "undefined") return [];
+// Inline icons, same stroke language as ThemeToggle (no emoji as controls)
+function ShuffleIcon() {
+  return (
+    <svg
+      className="h-4 w-4"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M16 3h5v5" />
+      <path d="M4 20 21 3" />
+      <path d="M21 16v5h-5" />
+      <path d="m15 15 6 6" />
+      <path d="M4 4l5 5" />
+    </svg>
+  );
+}
 
-  const createDoodleUrl = (drawFn: (ctx: CanvasRenderingContext2D) => void) => {
-    const canvas = document.createElement("canvas");
-    canvas.width = 200;
-    canvas.height = 180;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return "";
-    ctx.fillStyle = "#e2e8f0";
-    ctx.fillRect(0, 0, 200, 180);
-    ctx.lineWidth = 4;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.strokeStyle = "#0f172a";
-    drawFn(ctx);
-    return canvas.toDataURL();
-  };
-
-  const smileyUrl = createDoodleUrl((ctx) => {
-    // Face
-    ctx.beginPath();
-    ctx.arc(100, 85, 45, 0, Math.PI * 2);
-    ctx.stroke();
-    // Eyes
-    ctx.beginPath();
-    ctx.arc(82, 72, 6, 0, Math.PI * 2);
-    ctx.arc(118, 72, 6, 0, Math.PI * 2);
-    ctx.fillStyle = "#0f172a";
-    ctx.fill();
-    // Smile
-    ctx.beginPath();
-    ctx.arc(100, 85, 26, 0.2 * Math.PI, 0.8 * Math.PI);
-    ctx.stroke();
-  });
-
-  const heartUrl = createDoodleUrl((ctx) => {
-    ctx.strokeStyle = "#f43f5e";
-    ctx.fillStyle = "#f43f5e22";
-    ctx.lineWidth = 5;
-    ctx.beginPath();
-    ctx.moveTo(100, 130);
-    ctx.bezierCurveTo(40, 75, 40, 35, 100, 55);
-    ctx.bezierCurveTo(160, 35, 160, 75, 100, 130);
-    ctx.fill();
-    ctx.stroke();
-  });
-
-  const catUrl = createDoodleUrl((ctx) => {
-    // Cat ears
-    ctx.beginPath();
-    ctx.moveTo(55, 65);
-    ctx.lineTo(40, 25);
-    ctx.lineTo(80, 45);
-    ctx.lineTo(120, 45);
-    ctx.lineTo(160, 25);
-    ctx.lineTo(145, 65);
-    // Face outline
-    ctx.bezierCurveTo(175, 95, 175, 135, 100, 135);
-    ctx.bezierCurveTo(25, 135, 25, 95, 55, 65);
-    ctx.stroke();
-    // Eyes
-    ctx.beginPath();
-    ctx.arc(75, 80, 5, 0, Math.PI * 2);
-    ctx.arc(125, 80, 5, 0, Math.PI * 2);
-    ctx.fill();
-    // Mouth
-    ctx.beginPath();
-    ctx.arc(90, 100, 10, 0, Math.PI);
-    ctx.arc(110, 100, 10, 0, Math.PI);
-    ctx.stroke();
-  });
-
-  const greatWorkUrl = createDoodleUrl((ctx) => {
-    ctx.strokeStyle = "#38bdf8";
-    ctx.font = "bold 22px sans-serif";
-    ctx.fillStyle = "#38bdf8";
-    ctx.fillText("Great", 50, 70);
-    ctx.fillText("Work! 🚀", 50, 110);
-  });
-
-  return [
-    {
-      id: "preset_1",
-      category: "Apresiasi",
-      author: "@BitMantis",
-      message: lang === "id" ? "Portofolio keren banget!" : "Very cool portfolio!",
-      timestamp: lang === "id" ? "Hari ini" : "Today",
-      drawingDataUrl: smileyUrl,
-    },
-    {
-      id: "preset_2",
-      category: "Apresiasi",
-      author: "@Shubu",
-      message: lang === "id" ? "Fitur masukan yang bagus" : "Nice interactive feature",
-      timestamp: lang === "id" ? "Hari ini" : "Today",
-      drawingDataUrl: catUrl,
-    },
-    {
-      id: "preset_3",
-      category: "Saran",
-      author: "@Arsam",
-      message: lang === "id" ? "Website luar biasa" : "Awesome website",
-      timestamp: lang === "id" ? "Hari ini" : "Today",
-      drawingDataUrl: greatWorkUrl,
-    },
-    {
-      id: "preset_4",
-      category: "Apresiasi",
-      author: "@Bee",
-      message: lang === "id" ? "Sangat bagus!" : "That's nice!",
-      timestamp: lang === "id" ? "Hari ini" : "Today",
-      drawingDataUrl: heartUrl,
-    },
-  ];
+function TossIcon() {
+  return (
+    <svg
+      className="h-4 w-4"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M12 5v14" />
+      <path d="m8 9 4-4 4 4" />
+      <path d="m8 15 4 4 4-4" />
+    </svg>
+  );
 }
 
 export default function FeedbackJar() {
@@ -151,6 +73,7 @@ export default function FeedbackJar() {
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
   const [selectedCard, setSelectedCard] = useState<SelectedCardState | null>(null);
   const [isCardModalActive, setIsCardModalActive] = useState<boolean>(false);
+  const [justPosted, setJustPosted] = useState<boolean>(false);
 
   // Form states
   const [category, setCategory] = useState<string>("Apresiasi");
@@ -170,22 +93,55 @@ export default function FeedbackJar() {
   const boundaryBodiesRef = useRef<Matter.Body[]>([]);
   const imageCache = useRef<Map<string, HTMLImageElement>>(new Map());
 
-  // Initialize saved or default cards
-  useEffect(() => {
-    const saved = localStorage.getItem("kiya_feedback_cards");
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setCards(parsed.length > 0 ? parsed : createDefaultDoodles(lang));
-      } catch (e) {
-        setCards(createDefaultDoodles(lang));
-      }
-    } else {
-      const defaults = createDefaultDoodles(lang);
-      setCards(defaults);
-      localStorage.setItem("kiya_feedback_cards", JSON.stringify(defaults));
+  const [allDbCards, setAllDbCards] = useState<FeedbackCardData[]>([]);
+
+  // Get max allowed cards depending on device screen size (max 6 on mobile)
+  const getBatchLimit = () => {
+    if (typeof window !== "undefined" && window.innerWidth < 640) {
+      return 6;
     }
-  }, [lang]);
+    return 10;
+  };
+
+  // Helper to shuffle & load a random batch of cards into the physics engine
+  const loadRandomBatch = (cardList: FeedbackCardData[]) => {
+    if (!cardList || cardList.length === 0) return;
+
+    // Clear existing physics bodies
+    const { Composite } = Matter;
+    if (engineRef.current) {
+      cardBodiesRef.current.forEach((b) => Composite.remove(engineRef.current!.world, b));
+    }
+    cardBodiesRef.current = [];
+
+    // Shuffle list randomly
+    const shuffled = [...cardList].sort(() => Math.random() - 0.5);
+    const limit = getBatchLimit();
+    const batch = shuffled.slice(0, limit);
+
+    setCards(batch);
+
+    if (canvasRef.current && engineRef.current) {
+      const w = canvasRef.current.width;
+      const h = canvasRef.current.height;
+      loadCardsIntoPhysics(batch, w, h, engineRef.current);
+    }
+  };
+
+  // Initialize saved cards from Neon DB API
+  useEffect(() => {
+    fetch("/api/feedback")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.cards) && data.cards.length > 0) {
+          setAllDbCards(data.cards);
+          loadRandomBatch(data.cards);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load feedback from API:", err);
+      });
+  }, []);
 
   // Modal animation sync
   useEffect(() => {
@@ -494,6 +450,16 @@ export default function FeedbackJar() {
     setCards(updated);
     localStorage.setItem("kiya_feedback_cards", JSON.stringify(updated));
 
+    const updatedAll = [newCard, ...allDbCards];
+    setAllDbCards(updatedAll);
+
+    // Save to Neon DB API
+    fetch("/api/feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newCard),
+    }).catch((err) => console.error("Failed to save card to API:", err));
+
     if (canvasRef.current) {
       const spawnX = canvasRef.current.width / 2 + (Math.random() * 60 - 30);
       const spawnY = 80;
@@ -503,25 +469,27 @@ export default function FeedbackJar() {
     setAuthor("");
     setMessage("");
     setIsFormOpen(false);
+    setJustPosted(true);
   };
+
+  // Clear the "thanks" confirmation a few seconds after posting
+  useEffect(() => {
+    if (!justPosted) return;
+    const timer = setTimeout(() => setJustPosted(false), 4000);
+    return () => clearTimeout(timer);
+  }, [justPosted]);
 
   const handleShakeBoard = () => {
     const { Body } = Matter;
     cardBodiesRef.current.forEach((body) => {
       const forceX = (Math.random() - 0.5) * 0.08;
-      const forceY = -0.05 - Math.random() * 0.04;
+      const forceY = -0.05 - Math.random() * 2;
       Body.applyForce(body, body.position, { x: forceX, y: forceY });
     });
   };
 
-  const handleClearCards = () => {
-    const { Composite } = Matter;
-    if (engineRef.current) {
-      cardBodiesRef.current.forEach((b) => Composite.remove(engineRef.current!.world, b));
-    }
-    cardBodiesRef.current = [];
-    setCards([]);
-    localStorage.removeItem("kiya_feedback_cards");
+  const handleShuffleCards = () => {
+    loadRandomBatch(allDbCards.length > 0 ? allDbCards : cards);
   };
 
   const drawGridBackground = (ctx: CanvasRenderingContext2D, w: number, h: number) => {
@@ -642,52 +610,77 @@ export default function FeedbackJar() {
     ctx.restore();
   };
 
+  const totalNotes = allDbCards.length || cards.length;
+
   return (
     <div className="w-full rounded-xl border border-line bg-surface p-4 sm:p-5">
-      {/* Top Bar matching screenshot */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-4 border-b border-line pb-3">
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 rounded-md border border-line bg-bg px-2.5 py-1 font-mono text-xs text-text">
-            <span>📄</span>
-            <span className="font-bold">{cards.length}</span>
-            <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-          </div>
-          <span className="hidden text-xs text-text-2 sm:inline">
-            {lang === "id" ? "Papan kebenaran":"Board of Truth" }
-          </span>
-          <span className="hidden text-xs text-text-2 sm:inline">
-            - Please jangan aneh aneh 🥹
-          </span>
+      {/* Masthead */}
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-4 border-b border-line pb-4">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-widest text-accent">
+            {lang === "id" ? "Papan Apresiasi" : "Wall of Fame"}
+          </p>
+          <h3 className="mt-1.5 text-lg font-semibold tracking-tight text-text">
+            {totalNotes}{" "}
+            <span className="text-text-2">
+              {lang === "id"
+                ? totalNotes === 1
+                  ? "catatan"
+                  : "catatan"
+                : totalNotes === 1
+                  ? "note"
+                  : "notes"}
+            </span>
+          </h3>
+          <p className="mt-0.5 text-sm text-text-2">
+            {lang === "id"
+              ? "Coretan dan pesan yang ditinggalkan pengunjung."
+              : "Doodles and messages left by people who stopped by."}
+          </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="font-mono text-xs text-accent">
-            {lang === "id" ? "Terima kasih atas masukanmu! ❤️" : "Thanks for posting! ❤️"}
-          </span>
+          {justPosted && (
+            <span
+              role="status"
+              className="hidden font-mono text-xs text-accent sm:inline"
+            >
+              {lang === "id" ? "Catatanmu tertempel." : "Your note is up."}
+            </span>
+          )}
 
-          <button
-            type="button"
-            onClick={handleShakeBoard}
-            title={lang === "id" ? "Kocok Kartu" : "Shake Cards"}
-            className="rounded-md border border-line bg-bg p-2 font-mono text-xs text-text transition-colors duration-150 hover:border-accent hover:text-accent"
+          <div
+            role="group"
+            aria-label={lang === "id" ? "Aksi papan" : "Board actions"}
+            className="flex items-center gap-1"
           >
-            🔄
-          </button>
+            <button
+              type="button"
+              onClick={handleShakeBoard}
+              aria-label={lang === "id" ? "Kocok kartu" : "Toss the cards"}
+              title={lang === "id" ? "Kocok kartu" : "Toss the cards"}
+              className="flex h-11 w-11 items-center justify-center rounded-md border border-line bg-bg text-text-2 transition-colors duration-150 hover:border-accent hover:text-accent sm:h-9 sm:w-9"
+            >
+              <TossIcon />
+            </button>
+
+            <button
+              type="button"
+              onClick={handleShuffleCards}
+              aria-label={lang === "id" ? "Tampilkan kartu lain" : "Show a different set"}
+              title={lang === "id" ? "Tampilkan kartu lain" : "Show a different set"}
+              className="flex h-11 w-11 items-center justify-center rounded-md border border-line bg-bg text-text-2 transition-colors duration-150 hover:border-accent hover:text-accent sm:h-9 sm:w-9"
+            >
+              <ShuffleIcon />
+            </button>
+          </div>
 
           <button
             type="button"
             onClick={() => setIsFormOpen(true)}
-            className="rounded-md border border-accent bg-accent/10 px-3 py-1.5 font-mono text-xs font-semibold text-accent transition-colors duration-150 hover:bg-accent hover:text-bg"
+            className="min-h-11 rounded-md border border-accent bg-accent px-4 font-mono text-xs font-semibold text-bg transition-opacity duration-150 hover:opacity-90 sm:min-h-9"
           >
-            {lang === "id" ? "+ Tulis & Gambar Note" : "+ Draw & Post Note"}
-          </button>
-
-          <button
-            type="button"
-            onClick={handleClearCards}
-            className="rounded-md border border-line bg-bg px-2 py-1.5 font-mono text-xs text-text-2 hover:border-red-400 hover:text-red-400"
-          >
-            Reset
+            {lang === "id" ? "Tinggalkan catatan" : "Leave a note"}
           </button>
         </div>
       </div>
@@ -699,11 +692,27 @@ export default function FeedbackJar() {
       >
         <canvas ref={canvasRef} className="block h-full w-full cursor-grab active:cursor-grabbing" />
 
-        <div className="pointer-events-none absolute bottom-3 left-4 right-4 flex justify-between font-mono text-[11px] text-text-2/70">
-          <span>{lang === "id" ? "⚡ Drag kartu doodle secara bebas" : "⚡ Drag polaroid cards around"}</span>
-          <span>{lang === "id" ? "Klik = Baca & Perbesar Note 📖" : "Click = Read & Expand Note 📖"}</span>
-        </div>
+        {cards.length === 0 && (
+          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1 px-6 text-center">
+            <p className="text-sm text-text-2">
+              {lang === "id"
+                ? "Papannya masih kosong."
+                : "Nothing on the wall yet."}
+            </p>
+            <p className="font-mono text-xs text-text-2/70">
+              {lang === "id"
+                ? "Jadi yang pertama menempel catatan."
+                : "Be the first to pin something up."}
+            </p>
+          </div>
+        )}
       </div>
+
+      <p className="mt-2.5 font-mono text-xs text-text-2/70">
+        {lang === "id"
+          ? "Seret kartu untuk memindahkan · Klik untuk membaca"
+          : "Drag a card to move it · Click to read it"}
+      </p>
 
       {/* Form & Drawing Pad Modal */}
       {isFormOpen && (
@@ -763,13 +772,13 @@ export default function FeedbackJar() {
               {/* Drawing Pad Canvas */}
               <div>
                 <div className="flex items-center justify-between font-mono text-xs text-text-2 mb-1.5">
-                  <span>{lang === "id" ? "Kanvas Gambar Doodle 🎨" : "Doodle Drawing Canvas 🎨"}</span>
+                  <span>{lang === "id" ? "Kanvas coretan" : "Doodle canvas"}</span>
                   <button
                     type="button"
                     onClick={clearDrawingCanvas}
-                    className="text-[11px] text-text-2 hover:text-red-400"
+                    className="text-xs text-text-2 transition-colors hover:text-rose-400"
                   >
-                    🗑 Clear
+                    {lang === "id" ? "Hapus" : "Clear"}
                   </button>
                 </div>
 
