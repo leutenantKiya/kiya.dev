@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { safeGet, safeSet } from "@/lib/storage";
 
 export type Lang = "en" | "id";
 
@@ -27,7 +28,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
+    const stored = safeGet(STORAGE_KEY);
     if (stored === "en" || stored === "id") {
       setLangState(stored);
     }
@@ -39,7 +40,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const setLang = useCallback((next: Lang) => {
     setLangState(next);
-    window.localStorage.setItem(STORAGE_KEY, next);
+    safeSet(STORAGE_KEY, next);
   }, []);
 
   return (
