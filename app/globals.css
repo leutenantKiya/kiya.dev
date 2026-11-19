@@ -76,6 +76,88 @@ html.dark {
   color-scheme: dark;
 }
 
+/* Holiday palette: only used by the seasonal components, the base theme stays as is. */
+:root {
+  --xmas-red: #ef4444;
+  --xmas-gold: #fbbf24;
+  --xmas-green: #4ade80;
+  --snow: rgb(255 255 255 / 0.75);
+}
+
+html[data-theme="light"] {
+  --xmas-red: #dc2626;
+  --xmas-gold: #d97706;
+  --xmas-green: #16a34a;
+  --snow: rgb(148 163 184 / 0.7);
+}
+
+/* Holiday season: a 90s living room. Velvet red, old gold, cream, warm near-black. */
+html[data-season="christmas"][data-theme="dark"] {
+  --bg: #12070a;
+  --surface: #1c0c10;
+  --surface-2: #2a1217;
+  --text: #f6ead6;
+  --text-2: #c4a493;
+  --line: #3a1a20;
+  --accent: #ff5a5f;
+  --accent-muted: #5c1620;
+  --xmas-red: #ff4757;
+  --xmas-gold: #e8b85a;
+  --xmas-green: #3fae63;
+  --snow: rgb(255 244 228 / 0.8);
+}
+
+html[data-season="christmas"][data-theme="light"] {
+  --bg: #f6eddc;
+  --surface: #fffaf0;
+  --surface-2: #f0e2c8;
+  --text: #2a0f12;
+  --text-2: #7a4a43;
+  --line: #e2cdb0;
+  --accent: #b3132b;
+  --accent-muted: #f6d5d0;
+  --xmas-red: #b3132b;
+  --xmas-gold: #a87a1c;
+  --xmas-green: #1f4d2b;
+  --snow: rgb(179 19 43 / 0.25);
+}
+
+/* VHS-tape feel: film grain, faint scanlines, warm vignette. */
+@keyframes grain-shift {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 3%); }
+}
+
+.retro-grain {
+  position: fixed;
+  inset: -10%;
+  pointer-events: none;
+  z-index: 45;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain-shift 0.8s steps(4) infinite;
+}
+
+.retro-scan {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 44;
+  background:
+    repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.05) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at center, transparent 55%, rgb(60 8 14 / 0.35) 100%);
+}
+
+html[data-theme="light"] .retro-scan {
+  background:
+    repeating-linear-gradient(to bottom, rgb(120 40 30 / 0.035) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at center, transparent 60%, rgb(179 19 43 / 0.12) 100%);
+}
+
 button,
 a,
 [role="button"] {
@@ -194,6 +276,46 @@ body {
 ::selection {
   background: var(--color-accent);
   color: var(--color-bg);
+}
+
+/* Seasonal: music equaliser, garland bulbs, waving arm */
+@keyframes eq {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+.eq-bar {
+  transform-origin: bottom;
+  animation: eq 900ms ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.bulb {
+  animation: twinkle 1.8s ease-in-out infinite;
+  filter: drop-shadow(0 0 calc(4px + var(--beat, 0) * 14px) currentColor);
+}
+
+@keyframes garland-sway {
+  0%, 100% { transform: rotate(-0.6deg); }
+  50% { transform: rotate(0.6deg); }
+}
+
+.garland {
+  transform-origin: top center;
+  animation: garland-sway 6s ease-in-out infinite;
+}
+
+@keyframes hat-bob {
+  0%, 100% { transform: translate(-50%, 0) rotate(-14deg); }
+  50% { transform: translate(-50%, -2px) rotate(-8deg); }
+}
+
+.santa-hat {
+  animation: hat-bob 2.4s ease-in-out infinite;
 }
 
 @theme inline {

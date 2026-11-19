@@ -16,3 +16,7 @@ npm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# copyrighted track, local only
+public/audio/christmas.mp3
+.taste-skill/

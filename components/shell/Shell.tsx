@@ -9,6 +9,8 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { LangToggle } from "@/components/ui/LangToggle";
 import { getSections } from "@/lib/profile";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { SantaHat } from "@/components/seasonal/Garland";
+import { MusicToggle, SeasonToggle } from "@/components/seasonal/SeasonToggles";
 
 export function Shell({
   portraitSrc,
@@ -73,12 +75,14 @@ export function Shell({
               className="h-7 w-7 rounded-full border border-line object-cover object-top"
             />
           )}
-          <span>
+          <span className="relative">
+            <SantaHat />
             kiya<span className="text-accent">.dev</span>
           </span>
         </Link>
 
         <div className="flex items-center gap-2">
+          <MusicToggle />
           <ThemeToggle />
           <LangToggle />
 
@@ -89,7 +93,23 @@ export function Shell({
             onClick={() => setMenuOpen((v) => !v)}
             className="flex h-9 w-9 items-center justify-center rounded-md border border-line text-text transition-colors duration-150 hover:border-accent hover:text-accent"
           >
-            <span className="text-base leading-none">{menuOpen ? "✕" : "☰"}</span>
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+              <path
+                className="origin-center transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                style={{ transform: menuOpen ? "translateY(5px) rotate(45deg)" : "none" }}
+                d="M4 7h16"
+              />
+              <path
+                className="transition-opacity duration-200"
+                style={{ opacity: menuOpen ? 0 : 1 }}
+                d="M4 12h16"
+              />
+              <path
+                className="origin-center transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                style={{ transform: menuOpen ? "translateY(-5px) rotate(-45deg)" : "none" }}
+                d="M4 17h16"
+              />
+            </svg>
           </button>
         </div>
       </header>
@@ -113,6 +133,10 @@ export function Shell({
                 </li>
               ))}
             </ul>
+
+            <div className="mt-4 flex items-center gap-2 border-t border-line pt-4">
+              <SeasonToggle showLabel />
+            </div>
 
             <div className="mt-4 border-t border-line pt-4">
               <p className="font-mono text-xs uppercase tracking-widest text-text-2 mb-2">

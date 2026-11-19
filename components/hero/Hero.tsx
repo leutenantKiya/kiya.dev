@@ -7,6 +7,9 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { animate } from "animejs";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { KineticText } from "../ui/kinetic-text";
+import { Garland, SantaHat } from "@/components/seasonal/Garland";
+import { HeroTree } from "@/components/seasonal/Seasonal3D";
+import { MusicToggle, SeasonToggle } from "@/components/seasonal/SeasonToggles";
 
 export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
   const { lang } = useLanguage();
@@ -45,7 +48,8 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
         aria-label="Primary"
         className="hidden items-center justify-between px-12 py-5 lg:flex relative z-30"
       >
-        <span className="font-mono text-sm font-semibold tracking-tight text-text">
+        <span className="relative font-mono text-sm font-semibold tracking-tight text-text">
+          <SantaHat />
           kiya<span className="text-accent">.dev</span>
         </span>
         <div className="flex items-center gap-4">
@@ -63,11 +67,15 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
           </ul>
           <ThemeToggle />
           <LangToggle />
+          <SeasonToggle />
+          <MusicToggle />
         </div>
       </nav>
 
+      <Garland />
+
       {/* Heading, subtitle, and (mobile) bio — kept above the figure so nothing overlaps the face */}
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-start pt-4 px-5 text-center">
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-5 pt-14 text-center lg:pt-4">
         {/* Big "Hi, I'm Kiya" heading, slides in via anime.js */}
         <KineticText
           key={lang}
@@ -81,10 +89,12 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
         </p>
 
         {/* Mobile bio */}
-        <p className="relative z-30 mt-5 max-w-[440px] text-sm leading-relaxed text-text-2 lg:hidden">
+        <p className="relative z-30 mt-5 max-w-[440px] text-base leading-relaxed text-text [text-wrap:pretty] lg:hidden">
           {profile.bio}
         </p>
       </div>
+
+      <HeroTree />
 
       {/* Portrait */}
       {portraitSrc ? (
@@ -95,7 +105,7 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
           <img
             src={portraitSrc}
             alt={`Portrait of ${profile.name}`}
-            className="h-[42vh] sm:h-[52vh] md:h-[56vh] lg:h-[60vh] max-h-[680px] w-auto max-w-[90vw] object-contain object-bottom drop-shadow-2xl"
+            className="h-[48vh] sm:h-[52vh] md:h-[56vh] lg:h-[60vh] max-h-[680px] w-auto max-w-[90vw] object-contain object-bottom drop-shadow-2xl"
           />
         </div>
       ) : (
@@ -112,7 +122,7 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
       />
 
       {/* Desktop bio */}
-      <p className="absolute bottom-8 left-12 z-30 hidden max-w-xs text-left text-sm leading-relaxed text-text-2 lg:block">
+      <p className="absolute bottom-12 left-12 z-30 hidden max-w-sm text-left text-base leading-relaxed text-text [text-wrap:pretty] lg:block">
         {profile.bio}
       </p>
 
