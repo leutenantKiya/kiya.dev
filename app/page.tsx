@@ -1,9 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { sections } from "@/lib/profile";
-import { projects } from "@/lib/projects";
 import { AboutText } from "@/components/about/AboutText";
-import { ProjectCard } from "@/components/work/ProjectCard";
+import { WorkGrid } from "@/components/work/WorkGrid";
 import { LabIndex } from "@/components/lab/LabIndex";
 import { ExperienceTimeline } from "@/components/experience/ExperienceTimeline";
 import { Contact } from "@/components/contact/Contact";
@@ -32,11 +31,7 @@ export default function Home() {
             <SectionTitle sectionId={section.id} />
 
             {section.id === "work" ? (
-              <div className="mt-6 flex flex-col gap-4">
-                {projects.map((project) => (
-                  <ProjectCard key={project.slug} project={project} />
-                ))}
-              </div>
+              <WorkGrid />
             ) : section.id === "lab" ? (
               <LabIndex />
             ) : section.id === "experience" ? (
