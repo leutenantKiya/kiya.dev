@@ -70,14 +70,14 @@ const options: {
   },
 ];
 
-export function ThemeToggle() {
+export function ThemeToggle({ compact = false }: { compact?: boolean }) {
   const { theme, setTheme } = useTheme();
 
   return (
     <div
       role="group"
       aria-label="Theme mode"
-      className="inline-flex items-center rounded-md border border-line font-mono text-xs"
+      className={`inline-flex items-center border border-line font-mono text-xs ${compact ? "rounded-full" : "rounded-md"}`}
     >
       {options.map((option) => {
         const active = theme === option.value;
@@ -89,14 +89,14 @@ export function ThemeToggle() {
             aria-label={option.iconTitle}
             aria-pressed={active}
             onClick={() => setTheme(option.value)}
-            className={`flex items-center gap-1.5 px-2 py-1.5 transition-colors duration-150 first:rounded-l-md last:rounded-r-md focus-visible:outline-2 focus-visible:outline-accent ${
+            className={`flex items-center gap-1.5 px-2 py-1.5 transition-colors duration-150 first:rounded-l-[inherit] last:rounded-r-[inherit] focus-visible:outline-2 focus-visible:outline-accent ${
               active
                 ? "bg-surface-2 text-accent"
                 : "text-text-2 hover:text-text"
             }`}
           >
             {option.icon}
-            <span className="hidden sm:inline text-[11px]">{option.label}</span>
+            {!compact && <span className="hidden sm:inline text-[11px]">{option.label}</span>}
           </button>
         );
       })}

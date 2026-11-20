@@ -49,7 +49,7 @@ export function Garland() {
       aria-hidden
       viewBox={`0 0 ${width} 90`}
       preserveAspectRatio="none"
-      className="garland pointer-events-none absolute inset-x-0 top-0 z-20 h-12 w-full lg:top-[52px] lg:h-16"
+      className="garland pointer-events-none absolute inset-x-0 top-[68px] z-20 h-12 w-full lg:top-[76px] lg:h-16"
     >
       <path d={wire} fill="none" stroke="var(--text-2)" strokeOpacity="0.5" strokeWidth="1.2" vectorEffect="non-scaling-stroke" />
       {bulbs.map((b, i) => (

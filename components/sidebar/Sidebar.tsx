@@ -2,10 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getProfile, getSections } from "@/lib/profile";
-import { LangToggle } from "@/components/ui/LangToggle";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useLanguage } from "@/components/providers/LanguageProvider";
-import { MusicToggle, SeasonToggle } from "@/components/seasonal/SeasonToggles";
 
 function useActiveSection(): string | null {
   const { lang } = useLanguage();
@@ -64,13 +61,6 @@ export function Sidebar({ portraitSrc }: { portraitSrc: string | null }) {
 
   return (
     <div className="flex h-full flex-col gap-8 p-8">
-      <div className="flex flex-wrap items-center gap-2">
-        <ThemeToggle />
-        <LangToggle />
-        <SeasonToggle />
-        <MusicToggle />
-      </div>
-
       <header>
         {portraitSrc && (
           <img

@@ -1,20 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getProfile, getSections } from "@/lib/profile";
-import { LangToggle } from "@/components/ui/LangToggle";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { getProfile } from "@/lib/profile";
 import { animate } from "animejs";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { KineticText } from "../ui/kinetic-text";
-import { Garland, SantaHat } from "@/components/seasonal/Garland";
+import { Garland } from "@/components/seasonal/Garland";
 import { HeroTree } from "@/components/seasonal/Seasonal3D";
-import { MusicToggle, SeasonToggle } from "@/components/seasonal/SeasonToggles";
 
 export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
   const { lang } = useLanguage();
   const profile = getProfile(lang);
-  const sections = getSections(lang);
 
   const headingRef = useRef<HTMLHeadingElement>(null);
   const imageRef = useRef(null);
@@ -43,39 +39,10 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
       id="hero"
       className="relative flex h-dvh min-h-[720px] w-full flex-col justify-between border-b border-line bg-bg overflow-hidden select-none"
     >
-      {/* Desktop navbar */}
-      <nav
-        aria-label="Primary"
-        className="hidden items-center justify-between px-12 py-5 lg:flex relative z-30"
-      >
-        <span className="relative font-mono text-sm font-semibold tracking-tight text-text">
-          <SantaHat />
-          kiya<span className="text-accent">.dev</span>
-        </span>
-        <div className="flex items-center gap-4">
-          <ul className="flex items-center gap-4">
-            {sections.map((section) => (
-              <li key={section.id}>
-                <a
-                  href={`#${section.id}`}
-                  className="rounded px-1.5 py-1 text-sm text-text-2 transition-colors duration-150 hover:text-text focus-visible:outline-2 focus-visible:outline-accent"
-                >
-                  {section.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <ThemeToggle />
-          <LangToggle />
-          <SeasonToggle />
-          <MusicToggle />
-        </div>
-      </nav>
-
       <Garland />
 
       {/* Heading, subtitle, and (mobile) bio — kept above the figure so nothing overlaps the face */}
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-5 pt-14 text-center lg:pt-4">
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-5 pt-32 text-center lg:pt-28">
         {/* Big "Hi, I'm Kiya" heading, slides in via anime.js */}
         <KineticText
           key={lang}
