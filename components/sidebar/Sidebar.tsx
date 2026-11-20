@@ -5,6 +5,7 @@ import { getProfile, getSections } from "@/lib/profile";
 import { LangToggle } from "@/components/ui/LangToggle";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { MusicToggle, SeasonToggle } from "@/components/seasonal/SeasonToggles";
 
 function useActiveSection(): string | null {
   const { lang } = useLanguage();
@@ -66,6 +67,8 @@ export function Sidebar({ portraitSrc }: { portraitSrc: string | null }) {
       <div className="flex flex-wrap items-center gap-2">
         <ThemeToggle />
         <LangToggle />
+        <SeasonToggle />
+        <MusicToggle />
       </div>
 
       <header>
@@ -78,7 +81,7 @@ export function Sidebar({ portraitSrc }: { portraitSrc: string | null }) {
             className="mb-5 h-28 w-28 rounded-md border border-line object-cover object-top grayscale-[35%] transition-[filter] duration-300 hover:grayscale-0"
           />
         )}
-        <h1 className="text-xl font-semibold tracking-tight">{profile.name}</h1>
+        <p className="text-xl font-semibold tracking-tight">{profile.name}</p>
         <p className="mt-1 font-mono text-xs uppercase tracking-widest text-accent">
           {profile.title}
         </p>

@@ -22,12 +22,12 @@ export default function Home() {
     <>
       <Hero portraitSrc={portraitSrc} />
 
-      <div className="mx-auto max-w-[720px] px-5 py-12 lg:px-12">
+      <div className="mx-auto max-w-[880px] px-5 py-12 lg:px-12">
         {sections.map((section) => (
           <RevealSection
             key={section.id}
             id={section.id}
-            className="scroll-mt-16 border-b border-line py-16 first:pt-4 last:border-b-0"
+            className="scroll-mt-16 border-b border-line py-16 first:pt-8 last:border-b-0 lg:py-24"
           >
             <SectionTitle sectionId={section.id} />
 
