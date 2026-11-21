@@ -5,16 +5,17 @@ import { getExperiences, type Experience } from "@/lib/experience";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { useTranslation } from "@/hooks/useTranslation";
 
-type Lane = { id: string; en: string; id_: string; types: Experience["type"][]; bar: string };
+type Lane = { id: string; en: string; id_: string; short: [string, string]; types: Experience["type"][]; bar: string };
 
 // Things that run at the same time sit side by side, like a rundown: one lane per kind of work.
 const LANES: Lane[] = [
-  { id: "work", en: "Work", id_: "Kerja", types: ["work"], bar: "border-accent/60 bg-accent/10" },
-  { id: "study", en: "Study", id_: "Studi", types: ["education"], bar: "border-line bg-surface-2" },
-  { id: "projects", en: "Projects and events", id_: "Proyek dan acara", types: ["project", "hackathon", "organization"], bar: "border-line bg-surface" },
+  { id: "work", en: "Work", id_: "Kerja", short: ["Work", "Kerja"], types: ["work"], bar: "border-accent/60 bg-accent/10" },
+  { id: "study", en: "Study", id_: "Studi", short: ["Study", "Studi"], types: ["education"], bar: "border-line bg-surface-2" },
+  { id: "projects", en: "Projects and events", id_: "Proyek dan acara", short: ["Projects", "Proyek"], types: ["project", "hackathon", "organization"], bar: "border-line bg-surface" },
 ];
 
-const ROW = "8.5rem";
+// Row height comes from --row so phones get shorter years than desktop.
+const ROW = "var(--row)";
 
 type Entry = Experience & { key: string; from: number; to: number; ongoing: boolean };
 type Placed = Entry & { slot: number };
@@ -91,19 +92,20 @@ export function ExperienceTimeline() {
     <div className="mt-4">
       <p className="mb-8 max-w-[60ch] text-base text-text-2">{t("sectionExperience")}</p>
 
-      {/* tablet and up: the rundown grid, time running down, lanes across */}
-      <div className="hidden md:block">
-        <div className="grid gap-x-3" style={{ gridTemplateColumns: `3.5rem ${lanes.map((l) => `minmax(0, ${l.slotCount}fr)`).join(" ")}` }}>
+      {/* the rundown grid on every width: time running down, lanes across */}
+      <div className="exp-grid">
+        <div className="grid gap-x-1.5 sm:gap-x-3" style={{ gridTemplateColumns: `2.5rem ${lanes.map((l) => `minmax(0, ${l.slotCount}fr)`).join(" ")}` }}>
           <div />
           {lanes.map(({ lane }) => (
-            <p key={lane.id} className="pb-2 font-mono text-xs text-text-2">
-              {label(lane)}
+            <p key={lane.id} className="pb-2 font-mono text-[11px] text-text-2 sm:text-xs">
+              <span className="sm:hidden">{lane.short[lang === "id" ? 1 : 0]}</span>
+              <span className="hidden sm:inline">{label(lane)}</span>
             </p>
           ))}
 
           <div className="grid" style={{ gridTemplateRows: `repeat(${years.length}, ${ROW})` }}>
             {years.map((y) => (
-              <p key={y} className="border-t border-line pt-1.5 font-mono text-xs text-text-2">
+              <p key={y} className="border-t border-line pt-1.5 font-mono text-[11px] text-text-2 sm:text-xs">
                 {y}
               </p>
             ))}
@@ -113,7 +115,7 @@ export function ExperienceTimeline() {
             <ul
               key={lane.id}
               aria-label={label(lane)}
-              className="grid gap-1.5 border-t border-line pt-1.5"
+              className="grid gap-1 border-t border-line pt-1.5 sm:gap-1.5"
               style={{
                 gridTemplateRows: `repeat(${years.length}, ${ROW})`,
                 gridTemplateColumns: `repeat(${slotCount}, minmax(0, 1fr))`,
@@ -128,15 +130,15 @@ export function ExperienceTimeline() {
                       aria-pressed={active}
                       aria-controls="experience-details"
                       onClick={() => setSelected(e.key)}
-                      className={`flex h-full w-full flex-col justify-between overflow-hidden rounded-lg border p-3 text-left transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${lane.bar} ${
+                      className={`flex h-full w-full flex-col justify-between overflow-hidden rounded-lg border p-2 text-left sm:p-3 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${lane.bar} ${
                         active ? "ring-2 ring-accent" : "hover:border-text-2"
                       } ${e.ongoing ? "rounded-b-none border-b-2 border-b-accent" : ""}`}
                     >
                       <span>
-                        <span className="block text-sm font-semibold leading-snug text-text">{e.org}</span>
-                        <span className="mt-0.5 block text-xs text-text-2">{e.role}</span>
+                        <span className="line-clamp-4 block text-xs font-semibold leading-snug text-text [overflow-wrap:anywhere] sm:text-sm">{e.org}</span>
+                        <span className="mt-0.5 hidden text-xs text-text-2 sm:block">{e.role}</span>
                       </span>
-                      <span className="font-mono text-[11px] text-text-2">
+                      <span className="font-mono text-[10px] leading-tight text-text-2 sm:text-[11px]">
                         {span(e)}
                         {e.ongoing && " ↓"}
                       </span>
@@ -149,50 +151,10 @@ export function ExperienceTimeline() {
         </div>
 
         {current && (
-          <div id="experience-details" aria-live="polite" className="mt-6 rounded-xl border border-line bg-surface p-6">
+          <div id="experience-details" aria-live="polite" className="mt-6 rounded-xl border border-line bg-surface p-4 sm:p-6">
             <Details key={current.key} entry={current} />
           </div>
         )}
-      </div>
-
-      {/* phone: the same entries as a list by the year they started, newest first */}
-      <div className="md:hidden">
-        {[...years].reverse().map((y) => {
-          const started = entries.filter((e) => e.from === y);
-          if (started.length === 0) return null;
-          return (
-            <section key={y} aria-label={String(y)} className="mb-6">
-              <h3 className="mb-2 font-mono text-xs text-text-2">{y}</h3>
-              <ol className="flex flex-col gap-2">
-                {started.map((e) => (
-                  <li key={e.key} className="rounded-lg border border-line bg-surface p-4">
-                    <p className="font-mono text-[11px] text-text-2">
-                      {label(laneOf(e))} · {span(e)}
-                    </p>
-                    <p className="mt-1 text-base font-semibold tracking-tight text-text">{e.org}</p>
-                    <p className="font-mono text-xs text-accent">{e.role}</p>
-                    <p className="mt-2 text-sm leading-relaxed text-text-2">{e.summary}</p>
-                    <details className="group mt-1">
-                      <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 font-mono text-xs text-text-2 hover:text-accent [&::-webkit-details-marker]:hidden">
-                        <span aria-hidden className="inline-block transition-transform duration-200 group-open:rotate-90">
-                          ›
-                        </span>
-                        {lang === "id" ? "Detail" : "Details"}
-                      </summary>
-                      <ul className="mt-1 list-disc pl-5 text-sm text-text-2 marker:text-line">
-                        {e.highlights.map((h) => (
-                          <li key={h} className="mt-1">
-                            {h}
-                          </li>
-                        ))}
-                      </ul>
-                    </details>
-                  </li>
-                ))}
-              </ol>
-            </section>
-          );
-        })}
       </div>
     </div>
   );

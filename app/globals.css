@@ -273,6 +273,17 @@ body {
   animation: spin-slow 15s linear infinite;
 }
 
+/* Experience timeline: one year row is tall enough for a name, a role and the dates. */
+.exp-grid {
+  --row: 7.5rem;
+}
+
+@media (min-width: 640px) {
+  .exp-grid {
+    --row: 9rem;
+  }
+}
+
 ::selection {
   background: var(--color-accent);
   color: var(--color-bg);
