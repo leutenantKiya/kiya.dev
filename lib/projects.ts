@@ -15,6 +15,7 @@ export type Project = {
   preview: string | string[] | null;
   previews?: string[];
   video?: string | null;
+  files?: { name: string; kind: string; size: string }[];
 };
 
 export const projects: Project[] = projectsJson;

@@ -10,18 +10,24 @@
     "summary_id": "Asisten pengajar untuk praktikum Teknologi Komputer dan mata kuliah Algoritma Pemrograman.",
     "highlights": [
       "Guide students through C and Python fundamentals in weekly lab sessions",
-      "Coach algorithmic problem solving — decomposition, tracing, and debugging",
+      "Coach algorithmic problem solving, decomposition, tracing, and debugging",
       "Run introductory web development material and review student submissions"
     ],
     "highlights_id": [
       "Membimbing mahasiswa memahami dasar C dan Python dalam sesi lab mingguan",
-      "Melatih pemecahan masalah algoritmik — dekomposisi, penelusuran, dan debugging",
+      "Melatih pemecahan masalah algoritmik, dekomposisi, penelusuran, dan debugging",
       "Menyampaikan materi pengenalan pengembangan web dan mengulas tugas mahasiswa"
     ],
-    "stack": ["C", "Python", "JavaScript", "HTML", "CSS"]
+    "stack": [
+      "C",
+      "Python",
+      "JavaScript",
+      "HTML",
+      "CSS"
+    ]
   },
   {
-    "org": "Encode Club — UXMaxx Hackathon",
+    "org": "Encode Club, UXMaxx Hackathon",
     "role": "Builder, 3-person team",
     "role_id": "Developer, Tim 3 Orang",
     "start": "2026",
@@ -39,7 +45,12 @@
       "Buku besar hibrida: perhitungan per-detik off-chain, penyelesaian batch on-chain",
       "Peluncuran MVP testnet langsung dengan katalog film berlisensi aman"
     ],
-    "stack": ["React", "TypeScript", "Solidity", "Postgres"]
+    "stack": [
+      "React",
+      "TypeScript",
+      "Solidity",
+      "Postgres"
+    ]
   },
   {
     "org": "University team projects",
@@ -51,14 +62,19 @@
     "summary": "Team-built products across coursework: an NLP chatbot service and an ML nutrition app.",
     "summary_id": "Produk berbasis tim selama perkuliahan: layanan chatbot NLP dan aplikasi nutrisi ML.",
     "highlights": [
-      "AILY — intent-routed e-commerce chatbot (FastAPI NLP + JavaFX client)",
-      "Nutrify — food-recognition ML pipeline in a Flutter app"
+      "AILY, intent-routed e-commerce chatbot (FastAPI NLP + JavaFX client)",
+      "Nutrify, food-recognition ML pipeline in a Flutter app"
     ],
     "highlights_id": [
-      "AILY — chatbot e-commerce perutean niat (FastAPI NLP + klien JavaFX)",
-      "Nutrify — alur ML pengenalan makanan dalam aplikasi Flutter"
+      "AILY, chatbot e-commerce perutean niat (FastAPI NLP + klien JavaFX)",
+      "Nutrify, alur ML pengenalan makanan dalam aplikasi Flutter"
     ],
-    "stack": ["Python", "FastAPI", "Java", "Flutter"]
+    "stack": [
+      "Python",
+      "FastAPI",
+      "Java",
+      "Flutter"
+    ]
   },
   {
     "org": "IoT smart lighting (freelance)",
@@ -79,10 +95,15 @@
       "Mengintegrasikan Sinric Pro untuk konektivitas awan dan sinkronisasi status perangkat",
       "Menghubungkan Google Assistant agar lampu merespons perintah suara bebas genggam"
     ],
-    "stack": ["ESP32", "C++", "Arduino", "Sinric Pro"]
+    "stack": [
+      "ESP32",
+      "C++",
+      "Arduino",
+      "Sinric Pro"
+    ]
   },
   {
-    "org": "Smart Eco Wave — PKM 2025 (UKDW)",
+    "org": "Smart Eco Wave, PKM 2025 (UKDW)",
     "role": "Web Developer",
     "role_id": "Pengembang Web",
     "start": "2025",
@@ -100,6 +121,8 @@
       "Menampilkan pencapaian riset PKM, info tim, dan dokumentasi proyek untuk ulasan publik",
       "Merancang tata letak utamakan-seluler agar mudah dibaca di ponsel maupun desktop"
     ],
-    "stack": ["Vue"]
+    "stack": [
+      "Vue"
+    ]
   }
 ]

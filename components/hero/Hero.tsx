@@ -1,12 +1,44 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getProfile } from "@/lib/profile";
+import { getProfile, profile } from "@/lib/profile";
+import { useTranslation } from "@/hooks/useTranslation";
 import { animate } from "animejs";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { KineticText } from "../ui/kinetic-text";
 import { Garland } from "@/components/seasonal/Garland";
 import { HeroTree } from "@/components/seasonal/Seasonal3D";
+
+function HeroIntro({ align = "center" }: { align?: "center" | "left" }) {
+  const { t } = useTranslation();
+  const center = align === "center";
+  return (
+    <>
+      <p className={`text-base leading-relaxed text-text [text-wrap:pretty] ${center ? "text-center" : ""}`}>{t("heroIntro")}</p>
+      <p className={`mt-3 text-sm leading-relaxed text-text-2 [text-wrap:pretty] ${center ? "text-center" : ""}`}>{t("heroProof")}</p>
+      <div className={`mt-5 flex flex-wrap items-center gap-2 ${center ? "justify-center" : ""}`}>
+        <a
+          href="#work"
+          className="inline-flex min-h-11 items-center rounded-full bg-accent px-5 text-sm font-semibold text-bg transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        >
+          {t("ctaProjects")}
+        </a>
+        <a
+          href="#experience"
+          className="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm text-text transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
+        >
+          {t("ctaExperience")}
+        </a>
+        <a
+          href={`mailto:${profile.email}`}
+          className="inline-flex min-h-11 items-center px-3 text-sm text-text-2 underline-offset-4 transition-colors duration-200 hover:text-accent hover:underline focus-visible:outline-2 focus-visible:outline-accent"
+        >
+          {t("ctaEmail")}
+        </a>
+      </div>
+    </>
+  );
+}
 
 export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
   const { lang } = useLanguage();
@@ -42,7 +74,7 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
       <Garland />
 
       {/* Heading, subtitle, and (mobile) bio — kept above the figure so nothing overlaps the face */}
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-5 pt-32 text-center lg:pt-28">
+      <div className="relative z-30 flex flex-1 flex-col items-center justify-start px-5 pt-32 text-center lg:pt-28">
         {/* Big "Hi, I'm Kiya" heading, slides in via anime.js */}
         <KineticText
           key={lang}
@@ -55,10 +87,10 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
           {profile.title}
         </p>
 
-        {/* Mobile bio */}
-        <p className="relative z-30 mt-5 max-w-[440px] text-base leading-relaxed text-text [text-wrap:pretty] lg:hidden">
-          {profile.bio}
-        </p>
+        {/* Mobile intro */}
+        <div className="relative z-30 mt-5 max-w-[440px] lg:hidden">
+          <HeroIntro />
+        </div>
       </div>
 
       <HeroTree />
@@ -72,7 +104,7 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
           <img
             src={portraitSrc}
             alt={`Portrait of ${profile.name}`}
-            className="h-[48vh] sm:h-[52vh] md:h-[56vh] lg:h-[60vh] max-h-[680px] w-auto max-w-[90vw] object-contain object-bottom drop-shadow-2xl"
+            className="h-[38vh] sm:h-[52vh] md:h-[56vh] lg:h-[60vh] max-h-[680px] w-auto max-w-[90vw] object-contain object-bottom drop-shadow-2xl"
           />
         </div>
       ) : (
@@ -88,10 +120,10 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
         className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-40 bg-gradient-to-t from-bg to-transparent"
       />
 
-      {/* Desktop bio */}
-      <p className="absolute bottom-12 left-12 z-30 hidden max-w-sm text-left text-base leading-relaxed text-text [text-wrap:pretty] lg:block">
-        {profile.bio}
-      </p>
+      {/* Desktop intro */}
+      <div className="absolute bottom-12 left-12 z-30 hidden max-w-md text-left lg:block">
+        <HeroIntro align="left" />
+      </div>
 
       {/* Scroll cue */}
       <a

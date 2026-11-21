@@ -2,8 +2,8 @@
   "name": "Kiya",
   "title": "Product Engineer",
   "title_id": "Product Engineer",
-  "bio": "I build complete products — the interface people touch, the systems underneath, and the complexity hidden in between. From a streaming platform that meters payment by the second to a canvas tool that exports real React code, I care most about making hard systems feel simple.",
-  "bio_id": "Saya membangun produk lengkap — antarmuka yang digunakan pengguna, sistem di baliknya, dan kompleksitas di antaranya. Dari platform streaming dengan pembayaran per detik hingga alat kanvas yang mengekspor kode React nyata, fokus utama saya adalah membuat sistem rumit terasa sederhana.",
+  "bio": "I build products end to end: the interface, the backend, and the data model under both. Recent work includes a streaming site that bills by the second watched and a canvas tool that exports a runnable React project.",
+  "bio_id": "Aku membangun produk dari ujung ke ujung: antarmuka, backend, dan model data di bawahnya. Karya terbaru termasuk situs streaming yang menagih per detik tontonan dan alat kanvas yang mengekspor proyek React siap jalan.",
   "pills": [
     "TypeScript",
     "React",
@@ -34,10 +34,30 @@
   ],
   "resume": null,
   "sections": [
-    { "id": "work", "label": "Work", "label_id": "Karya" },
-    { "id": "lab", "label": "Lab", "label_id": "Lab" },
-    { "id": "experience", "label": "Experience", "label_id": "Pengalaman" },
-    { "id": "about", "label": "About", "label_id": "Tentang" },
-    { "id": "contact", "label": "Contact", "label_id": "Kontak" }
+    {
+      "id": "work",
+      "label": "Projects",
+      "label_id": "Proyek"
+    },
+    {
+      "id": "skills",
+      "label": "Skills",
+      "label_id": "Keahlian"
+    },
+    {
+      "id": "experience",
+      "label": "Experience",
+      "label_id": "Pengalaman"
+    },
+    {
+      "id": "lab",
+      "label": "Lab",
+      "label_id": "Lab"
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "label_id": "Kontak"
+    }
   ]
 }

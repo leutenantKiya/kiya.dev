@@ -3,10 +3,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Sidebar } from "@/components/sidebar/Sidebar";
-import { safeGet, safeSet } from "@/lib/storage";
-
-const SIDEBAR_KEY = "kiya.dev:sidebar";
 import { CursorJet } from "@/components/ui/CursorJet";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { LangToggle } from "@/components/ui/LangToggle";
@@ -14,6 +10,7 @@ import { getSections } from "@/lib/profile";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { SantaHat } from "@/components/seasonal/Garland";
 import { MusicToggle, SeasonToggle } from "@/components/seasonal/SeasonToggles";
+import { Footer } from "@/components/shell/Footer";
 
 export function Shell({
   portraitSrc,
@@ -27,20 +24,6 @@ export function Shell({
   const pathname = usePathname();
   const { lang } = useLanguage();
   const sections = getSections(lang);
-  const [pastHero, setPastHero] = useState(pathname !== "/");
-  const [sidebarHidden, setSidebarHidden] = useState(false);
-  const sidebarVisible = pastHero && !sidebarHidden;
-
-  useEffect(() => {
-    setSidebarHidden(safeGet(SIDEBAR_KEY) === "hidden");
-  }, []);
-
-  const toggleSidebar = () => {
-    setSidebarHidden((hidden) => {
-      safeSet(SIDEBAR_KEY, hidden ? "shown" : "hidden");
-      return !hidden;
-    });
-  };
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -55,42 +38,13 @@ export function Shell({
     setMenuOpen(false);
   }, [pathname]);
 
-  useEffect(() => {
-    const hero = document.getElementById("hero");
-    if (!hero) {
-      setPastHero(true);
-      return;
-    }
-    const update = () => {
-      const bottom = hero.getBoundingClientRect().bottom;
-      setPastHero(bottom < window.innerHeight * 0.5);
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, [pathname]);
 
   return (
     <>
-      <aside
-        aria-hidden={!sidebarVisible}
-        inert={!sidebarVisible}
-        className={`fixed left-0 top-0 z-40 hidden h-dvh w-[340px] overflow-y-auto border-r border-line bg-bg transition-transform duration-300 ease-out lg:block ${
-          sidebarVisible ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <Sidebar portraitSrc={portraitSrc} onHide={toggleSidebar} />
-      </aside>
 
       {/* One floating pill navbar, sticky on every page and width. */}
       <header
-        className={`pointer-events-none fixed inset-x-0 top-3 z-50 flex justify-center px-3 transition-[padding] duration-300 ease-out lg:top-4 ${
-          sidebarVisible ? "lg:pl-[352px]" : ""
-        }`}
+        className="pointer-events-none fixed inset-x-0 top-3 z-50 flex justify-center px-3 lg:top-4"
       >
         <div
           className={`pointer-events-auto flex w-full max-w-[1040px] items-center justify-between gap-3 rounded-full border border-line py-1.5 pl-2 pr-1.5 backdrop-blur-md transition-[background-color,box-shadow] duration-300 ${
@@ -140,23 +94,6 @@ export function Shell({
             <div className="hidden lg:block">
               <SeasonToggle />
             </div>
-            {pastHero && (
-              <button
-                type="button"
-                onClick={toggleSidebar}
-                aria-pressed={!sidebarHidden}
-                title={sidebarHidden ? "Show sidebar" : "Hide sidebar"}
-                aria-label={sidebarHidden ? "Show sidebar" : "Hide sidebar"}
-                className={`hidden h-9 w-9 items-center justify-center rounded-full border border-line transition-colors duration-150 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-accent lg:flex ${
-                  sidebarHidden ? "text-text-2" : "bg-surface-2 text-accent"
-                }`}
-              >
-                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                  <rect x="3" y="4" width="18" height="16" rx="2" />
-                  <path d="M9 4v16" />
-                </svg>
-              </button>
-            )}
 
             <button
               type="button"
@@ -264,13 +201,10 @@ export function Shell({
         </div>
       )}
 
-      <main
-        className={`transition-[margin-left] duration-300 ease-out ${pathname === "/" ? "" : "pt-24"} ${
-          sidebarVisible ? "lg:ml-[340px]" : "lg:ml-0"
-        }`}
-      >
+      <main className={pathname === "/" ? "" : "pt-24"}>
         {children}
       </main>
+      <Footer />
 
       {jetSrc && <CursorJet src={jetSrc} />}
     </>

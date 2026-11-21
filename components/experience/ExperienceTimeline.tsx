@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { getExperiences } from "@/lib/experience";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const VISIBLE = 3;
 
@@ -14,13 +15,16 @@ export function ExperienceTimeline() {
   const { lang } = useLanguage();
   const experience = getExperiences(lang);
   const id = lang === "id";
+  const { t } = useTranslation();
   const [showAll, setShowAll] = useState(false);
   const shown = showAll ? experience : experience.slice(0, VISIBLE);
   const hiddenCount = experience.length - shown.length;
 
   return (
-    <div className="relative mt-6">
-      <span aria-hidden className="absolute bottom-2 left-0 top-2 w-px bg-line" />
+    <div className="mt-4">
+      <p className="mb-8 max-w-[60ch] text-base text-text-2">{t("sectionExperience")}</p>
+      <div className="relative">
+        <span aria-hidden className="absolute bottom-2 left-0 top-2 w-px bg-line" />
 
       <ol className="flex flex-col gap-6">
         {shown.map((entry) => (
@@ -75,6 +79,7 @@ export function ExperienceTimeline() {
             : id ? `Tampilkan ${hiddenCount} lagi` : `Show ${hiddenCount} earlier`}
         </button>
       )}
+      </div>
     </div>
   );
 }
