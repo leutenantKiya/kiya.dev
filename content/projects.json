@@ -18,7 +18,7 @@
     "repo": "https://github.com/leutenantKiya/Genesis-Town",
     "demo": null,
     "role": "3-person team · NEAR Hackathon",
-    "preview": null,
+    "preview": "/genesis-town.png",
     "files": [
       {
         "name": "engine.js",
