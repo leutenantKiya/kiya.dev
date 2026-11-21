@@ -16,22 +16,24 @@ function HeroIntro({ align = "center" }: { align?: "center" | "left" }) {
     <>
       <p className={`text-base leading-relaxed text-text [text-wrap:pretty] ${center ? "text-center" : ""}`}>{t("heroIntro")}</p>
       <p className={`mt-3 text-sm leading-relaxed text-text-2 [text-wrap:pretty] ${center ? "text-center" : ""}`}>{t("heroProof")}</p>
-      <div className={`mt-5 flex flex-wrap items-center gap-2 ${center ? "justify-center" : ""}`}>
+      <div className={`mt-5 ${center ? "grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center" : "flex flex-wrap items-center gap-2"}`}>
         <a
           href="#work"
-          className="inline-flex min-h-11 items-center rounded-full bg-accent px-5 text-sm font-semibold text-bg transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          className="col-span-2 inline-flex min-h-11 items-center justify-center rounded-full bg-accent px-5 text-sm font-semibold text-bg transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
           {t("ctaProjects")}
         </a>
         <a
           href="#experience"
-          className="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm text-text transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
+          className="inline-flex min-h-11 items-center justify-center rounded-full border border-line px-4 text-sm text-text transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
         >
           {t("ctaExperience")}
         </a>
         <a
           href={`mailto:${profile.email}`}
-          className="inline-flex min-h-11 items-center px-3 text-sm text-text-2 underline-offset-4 transition-colors duration-200 hover:text-accent hover:underline focus-visible:outline-2 focus-visible:outline-accent"
+          className={`inline-flex min-h-11 items-center justify-center text-sm transition-colors duration-200 hover:text-accent focus-visible:outline-2 focus-visible:outline-accent ${
+            center ? "rounded-full border border-line px-4 text-text sm:border-0 sm:px-3 sm:text-text-2 sm:underline-offset-4 sm:hover:underline" : "px-3 text-text-2 underline-offset-4 hover:underline"
+          }`}
         >
           {t("ctaEmail")}
         </a>
@@ -99,7 +101,7 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
       {portraitSrc ? (
         <div
           ref={imageRef}
-          className="absolute bottom-0 left-1/2 z-20 -translate-x-1/2 pointer-events-none flex items-end justify-center"
+          className="absolute bottom-0 left-2/5 z-20 -translate-x-1/2 pointer-events-none flex items-end justify-center sm:left-1/2"
         >
           <img
             src={portraitSrc}

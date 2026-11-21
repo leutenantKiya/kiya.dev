@@ -67,7 +67,7 @@ export function HeroTree() {
       initial={{ opacity: 0, y: 60 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="absolute bottom-0 right-0 z-10 h-[36vh] w-[58vw] sm:h-[46vh] sm:w-[38vw] lg:right-[10%] lg:h-[58vh] lg:w-[min(32vw,480px)]"
+      className="absolute bottom-0 right-0 z-10 h-[34vh] w-[56vw] sm:h-[46vh] sm:w-[38vw] lg:right-[10%] lg:h-[58vh] lg:w-[min(32vw,480px)]"
     >
       {hasWebGL() ? <ChristmasTree /> : <TreeFallback />}
     </motion.div>
