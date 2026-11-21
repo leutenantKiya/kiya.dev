@@ -1,40 +1,39 @@
 [
   {
-    "slug": "arbor",
-    "title": "Arbor",
-    "tagline": "Pay-per-second streaming for independent cinema",
-    "tagline_id": "Layanan streaming bayar-per-detik untuk bioskop independen",
-    "summary": "Streaming subscriptions charge for time you never watch. Arbor sells prepaid viewing hours that only tick down while a film plays, filmmakers get paid per second watched, settled on-chain.",
-    "summary_id": "Langganan streaming biasa menagih waktu yang tidak pernah Anda tonton. Arbor menjual jam menonton prabayar yang hanya berkurang saat film diputar, pembuat film dibayar per detik tontonan secara on-chain.",
+    "slug": "genesis-town",
+    "title": "Genesis Town",
+    "tagline": "A pixel-art market town where the economy is the game",
+    "tagline_id": "Kota pasar pixel-art yang ekonominya adalah permainannya",
+    "summary": "Players gather, craft and trade with AI merchants who set their own prices from stock, demand and cash. Items and coins live on a NEAR contract, but players sign in with Google and never see a wallet, seed phrase or gas prompt.",
+    "summary_id": "Pemain mengumpulkan bahan, membuat barang, dan berdagang dengan pedagang AI yang menentukan harga sendiri dari stok, permintaan, dan kas. Item dan koin ada di kontrak NEAR, tapi pemain cukup masuk dengan Google tanpa pernah melihat dompet, seed phrase, atau biaya gas.",
     "year": "2026",
-    "status": "Live MVP · testnet",
+    "status": "NEAR testnet · in development",
     "stack": [
-      "React",
       "TypeScript",
-      "Solidity",
-      "Postgres",
-      "Particle Network"
+      "JavaScript",
+      "Rust",
+      "NEAR",
+      "Docker"
     ],
-    "repo": "https://github.com/leutenantKiya/Arbor",
-    "demo": "https://arbor-watch.vercel.app",
-    "role": "3-person team · 7 days · Encode Club UXMaxx Hackathon",
-    "preview": "/arbor.png",
-    "video": "https://www.youtube.com/embed/A1_m2YBdv2Y",
+    "repo": "https://github.com/leutenantKiya/Genesis-Town",
+    "demo": null,
+    "role": "3-person team · NEAR Hackathon",
+    "preview": null,
     "files": [
       {
-        "name": "SESSION_BILLING.md",
-        "kind": "Billing spec",
-        "size": "11 KB"
+        "name": "engine.js",
+        "kind": "Game client",
+        "size": "176 KB"
       },
       {
-        "name": "settlement.service.ts",
-        "kind": "TypeScript",
-        "size": "10 KB"
+        "name": "chain.js",
+        "kind": "NEAR bridge",
+        "size": "143 KB"
       },
       {
-        "name": "upload-film.tsx",
-        "kind": "React",
-        "size": "19 KB"
+        "name": "residents.ts",
+        "kind": "Server",
+        "size": "51 KB"
       }
     ]
   },
@@ -156,6 +155,45 @@
         "name": "ChatController.java",
         "kind": "JavaFX",
         "size": "44 KB"
+      }
+    ]
+  },
+  {
+    "slug": "arbor",
+    "title": "Arbor",
+    "tagline": "Pay-per-second streaming for independent cinema",
+    "tagline_id": "Layanan streaming bayar-per-detik untuk bioskop independen",
+    "summary": "Streaming subscriptions charge for time you never watch. Arbor sells prepaid viewing hours that only tick down while a film plays, filmmakers get paid per second watched, settled on-chain.",
+    "summary_id": "Langganan streaming biasa menagih waktu yang tidak pernah Anda tonton. Arbor menjual jam menonton prabayar yang hanya berkurang saat film diputar, pembuat film dibayar per detik tontonan secara on-chain.",
+    "year": "2026",
+    "status": "Live MVP · testnet",
+    "stack": [
+      "React",
+      "TypeScript",
+      "Solidity",
+      "Postgres",
+      "Particle Network"
+    ],
+    "repo": "https://github.com/leutenantKiya/Arbor",
+    "demo": "https://arbor-watch.vercel.app",
+    "role": "3-person team · 7 days · Encode Club UXMaxx Hackathon",
+    "preview": "/arbor.png",
+    "video": "https://www.youtube.com/embed/A1_m2YBdv2Y",
+    "files": [
+      {
+        "name": "SESSION_BILLING.md",
+        "kind": "Billing spec",
+        "size": "11 KB"
+      },
+      {
+        "name": "settlement.service.ts",
+        "kind": "TypeScript",
+        "size": "10 KB"
+      },
+      {
+        "name": "upload-film.tsx",
+        "kind": "React",
+        "size": "19 KB"
       }
     ]
   }

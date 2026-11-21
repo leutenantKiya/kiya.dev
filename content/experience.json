@@ -1,5 +1,30 @@
 [
   {
+    "org": "NEAR Hackathon",
+    "role": "Builder, 3-person team",
+    "role_id": "Developer, tim 3 orang",
+    "start": "2026",
+    "end": "2026",
+    "type": "hackathon",
+    "summary": "Built Genesis Town, a browser market-town game with an on-chain economy, for the Games With Real Economies track.",
+    "summary_id": "Membangun Genesis Town, game kota pasar di browser dengan ekonomi on-chain, untuk track Games With Real Economies.",
+    "highlights": [
+      "AI merchants that price from their own stock, recent demand and cash",
+      "Items and coins as NEP-245 tokens, settled on chain once per game day",
+      "Google or email sign-in with gas paid by a relayer, so players never see a wallet"
+    ],
+    "highlights_id": [
+      "Pedagang AI yang menentukan harga dari stok, permintaan terbaru, dan kas mereka",
+      "Item dan koin sebagai token NEP-245, diselesaikan on-chain sekali per hari game",
+      "Masuk dengan Google atau email dan gas dibayar relayer, jadi pemain tidak pernah melihat dompet"
+    ],
+    "stack": [
+      "TypeScript",
+      "Rust",
+      "NEAR"
+    ]
+  },
+  {
     "org": "Practicum Teaching Assistant",
     "role": "Teaching Assistant",
     "role_id": "Asisten Praktikum",
