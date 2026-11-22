@@ -19,7 +19,7 @@ export const dictionary = {
     stackLabel: "Tools I work with",
     sectionWork: "Five products I built or co-built. Open a folder for the screenshots and the full case study.",
     sectionSkills: "What I can take on, and the projects where I already did it.",
-    sectionExperience: "Roles, a hackathon, and the team projects behind the work above.",
+    sectionExperience: "Roles, two hackathons, and the team projects behind the work above.",
     folderOpen: "Open case study",
     folderLive: "Live site",
     folderDemo: "Watch the demo",

@@ -175,6 +175,11 @@ a,
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-fraunces), Georgia, serif;
+}
+
+h1, h2, h3, .hero-name-row, .hero-greeting {
+  font-family: var(--font-serif);
 }
 
 html {
@@ -215,62 +220,6 @@ body {
 
 .animate-rise {
   animation: rise 400ms ease both;
-}
-
-/* Lab marquee — two rows drifting in opposite directions, pause on hover */
-@keyframes marquee-left {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-@keyframes marquee-right {
-  from {
-    transform: translateX(-50%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 24s linear infinite;
-}
-
-.marquee-track {
-  display: flex;
-  width: max-content;
-}
-
-.marquee-track:hover,
-.group:hover > .marquee-track {
-  animation-play-state: paused !important;
-}
-
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin-slow {
-  animation: spin-slow 15s linear infinite;
 }
 
 /* Hero scenery: day in the light theme, night in the dark theme. */
@@ -558,8 +507,6 @@ html[data-theme="light"] {
 }
 
 @theme inline {
-  --font-heading: var(--font-sans);
-  --font-sans: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);

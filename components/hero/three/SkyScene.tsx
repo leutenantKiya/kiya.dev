@@ -15,8 +15,6 @@ import { useFrameloop } from "@/components/seasonal/three/useFrameloop";
 
 const TRANSITION_S = 4.2;
 
-// ---------- noise and helpers ----------
-
 function hash(x: number, y: number) {
   const s = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
   return s - Math.floor(s);
@@ -60,8 +58,6 @@ function heightAt(x: number, z: number) {
   const valley = -2.5 * Math.exp(-(x * x) / (2 * 22 * 22));
   return hills * (0.5 + 0.5 * far) + mountains + valley - 3;
 }
-
-// ---------- the day/night palette ----------
 
 const C = (hex: string) => new THREE.Color(hex);
 const PALETTE = {
@@ -136,8 +132,6 @@ function moonTexture() {
   tex.colorSpace = THREE.SRGBColorSpace;
   return tex;
 }
-
-// ---------- scene pieces ----------
 
 const skyVertex = /* glsl */ `
   varying vec3 vDir;

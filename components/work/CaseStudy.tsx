@@ -53,15 +53,15 @@ export function CaseStudy({
 
         <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-3 font-mono text-xs sm:grid-cols-4">
           <div>
-            <dt className="uppercase tracking-widest text-text-2">{t.year}</dt>
+            <dt className="text-text-2">{t.year}</dt>
             <dd className="mt-1">{project.year}</dd>
           </div>
           <div>
-            <dt className="uppercase tracking-widest text-text-2">{t.status}</dt>
+            <dt className="text-text-2">{t.status}</dt>
             <dd className="mt-1 text-accent">{project.status}</dd>
           </div>
           <div className="col-span-2">
-            <dt className="uppercase tracking-widest text-text-2">{t.context}</dt>
+            <dt className="text-text-2">{t.context}</dt>
             <dd className="mt-1">{project.role}</dd>
           </div>
         </dl>

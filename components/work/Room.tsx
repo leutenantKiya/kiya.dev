@@ -79,9 +79,7 @@ export function Room({ title, children }: { title: string; children: ReactNode }
 
   // Extra scroll after the content so the hold is 30% of the room's scroll (0.3 / 0.7 of the content).
   const holdSpace = size.content * (0.3 / 0.7);
-  // Progress runs from the room's top meeting the screen's bottom to its bottom meeting the screen's
-  // bottom. At 70% the room's top sits at viewport - 0.7 * height: pin the content right there, so it
-  // stays still for the last 30%. Never above the navbar.
+  // Pin where the room's top sits at 70% progress, so it holds still for the last 30% (clear of the navbar).
   const top = Math.max(96, size.viewport - 0.7 * (size.content + holdSpace));
 
   return (

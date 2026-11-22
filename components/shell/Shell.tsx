@@ -3,7 +3,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { CursorJet } from "@/components/ui/CursorJet";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { LangToggle } from "@/components/ui/LangToggle";
 import { getSections } from "@/lib/profile";
@@ -14,11 +13,9 @@ import { Footer } from "@/components/shell/Footer";
 
 export function Shell({
   portraitSrc,
-  jetSrc,
   children,
 }: {
   portraitSrc: string | null;
-  jetSrc: string | null;
   children: ReactNode;
 }) {
   const pathname = usePathname();
@@ -127,7 +124,7 @@ export function Shell({
       {menuOpen && (
         <div className="fixed inset-x-3 top-[72px] z-40 max-h-[calc(100dvh-84px)] overflow-y-auto rounded-3xl border border-line bg-bg/95 px-5 py-5 shadow-2xl backdrop-blur-md lg:hidden">
           <nav aria-label="Mobile Navigation">
-            <p className="font-mono text-xs uppercase tracking-widest text-text-2 mb-2">
+            <p className="font-mono text-xs text-text-2 mb-2">
               {lang === "id" ? "Navigasi" : "Navigation"}
             </p>
             <ul className="flex flex-col gap-1">
@@ -155,7 +152,7 @@ export function Shell({
             </div>
 
             <div className="mt-4 border-t border-line pt-4">
-              <p className="font-mono text-xs uppercase tracking-widest text-text-2 mb-2">
+              <p className="font-mono text-xs text-text-2 mb-2">
                 {lang === "id" ? "Studi Kasus" : "Case Studies"}
               </p>
               <ul className="flex flex-col gap-1 text-sm text-text-2">
@@ -206,7 +203,6 @@ export function Shell({
       </main>
       <Footer />
 
-      {jetSrc && <CursorJet src={jetSrc} />}
     </>
   );
 }

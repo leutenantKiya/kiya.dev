@@ -5,7 +5,6 @@ import { motion, useAnimationControls } from "motion/react";
 import { useTranslation } from "@/hooks/useTranslation";
 
 const FLIGHT_SECONDS = 16;
-const GAP_SECONDS = 22;
 
 function Reindeer({ x, nose }: { x: number; nose?: boolean }) {
   return (
@@ -78,7 +77,6 @@ export function SantaSleigh() {
         y: [top, top - 40, top + 10, top - 30, top],
         transition: { duration: FLIGHT_SECONDS, ease: "linear" },
       });
-      if (!cancelled) timer = setTimeout(fly, GAP_SECONDS * 1000);
     };
 
     timer = setTimeout(fly, 3500);

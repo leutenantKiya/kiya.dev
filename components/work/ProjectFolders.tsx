@@ -112,9 +112,9 @@ function Folder({ project }: { project: Project }) {
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-10 items-center rounded-full border border-line px-4 text-sm text-text transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
+                className="inline-flex min-h-10 items-center rounded-lg border border-line px-4 text-sm text-text transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
               >
-                {t("folderLive")} ↗
+                {t("folderLive")}
               </a>
             )}
             {!project.demo && project.video && (
@@ -122,9 +122,9 @@ function Folder({ project }: { project: Project }) {
                 href={project.video}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-10 items-center rounded-full border border-line px-4 text-sm text-text transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
+                className="inline-flex min-h-10 items-center rounded-lg border border-line px-4 text-sm text-text transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
               >
-                {t("folderDemo")} ↗
+                {t("folderDemo")}
               </a>
             )}
             <span className="ml-auto hidden font-mono text-xs text-text-2 sm:block">

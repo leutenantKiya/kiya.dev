@@ -24,14 +24,14 @@ function HeroIntro({ align = "center" }: { align?: "center" | "left" }) {
         </a>
         <a
           href="#experience"
-          className="inline-flex min-h-11 items-center justify-center rounded-full border border-line px-4 text-sm text-text transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
+          className="inline-flex min-h-11 items-center justify-center rounded-lg border border-line px-4 text-sm text-text transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
         >
           {t("ctaExperience")}
         </a>
         <a
           href={`mailto:${profile.email}`}
           className={`inline-flex min-h-11 items-center justify-center text-sm transition-colors duration-200 hover:text-accent focus-visible:outline-2 focus-visible:outline-accent ${
-            center ? "rounded-full border border-line px-4 text-text sm:border-0 sm:px-3 sm:text-text-2 sm:underline-offset-4 sm:hover:underline" : "px-3 text-text-2 underline-offset-4 hover:underline"
+            center ? "rounded-lg border border-line px-4 text-text sm:border-0 sm:px-3 sm:text-text-2 sm:underline-offset-4 sm:hover:underline" : "px-3 text-text-2 underline-offset-4 hover:underline"
           }`}
         >
           {t("ctaEmail")}
@@ -119,8 +119,7 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
           {profile.title}
         </p>
 
-        {/* Mobile intro */}
-        <div className="relative z-30 mt-5 max-w-[460px] rounded-2xl bg-bg/70 px-3 py-3 backdrop-blur-sm lg:hidden">
+        <div className="relative z-30 mt-5 max-w-[460px] rounded-2xl bg-bg/90 px-3 py-3 lg:hidden">
           <HeroIntro />
         </div>
       </div>
@@ -142,7 +141,6 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
         </span>
       </div>
 
-      {/* Portrait */}
       {portraitSrc ? (
         <div
           ref={imageRef}
@@ -150,6 +148,7 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
         >
           <img
             src={portraitSrc}
+            fetchPriority="high"
             alt={`Portrait of ${profile.name}`}
             className="hero-portrait h-[38vh] sm:h-[52vh] md:h-[56vh] lg:h-[60vh] max-h-[680px] w-auto max-w-[90vw] object-contain object-bottom drop-shadow-2xl"
           />
@@ -161,22 +160,19 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
         </div>
       )}
 
-      {/* Bottom scrim */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-48 bg-gradient-to-t from-bg via-bg/60 to-transparent"
       />
 
-      {/* Desktop intro */}
-      <div className="absolute bottom-12 left-12 z-30 hidden max-w-md rounded-2xl bg-bg/75 p-5 text-left backdrop-blur-sm lg:block">
+      <div className="absolute bottom-12 left-12 z-30 hidden max-w-md rounded-2xl bg-bg/90 p-5 text-left lg:block">
         <HeroIntro align="left" />
       </div>
 
-      {/* Scroll cue */}
       <a
         href="#work"
         aria-label="Scroll to work"
-        className="absolute bottom-6 left-1/2 z-30 -translate-x-1/2 font-mono text-xs text-text-2 transition-colors duration-150 hover:text-accent motion-safe:animate-bounce"
+        className="absolute bottom-6 left-1/2 z-30 -translate-x-1/2 font-mono text-xs text-text-2 transition-colors duration-150 hover:text-accent"
       >
         ↓
       </a>

@@ -83,18 +83,15 @@ export default function FeedbackJar() {
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
-  // Form states
   const [category, setCategory] = useState<string>("Apresiasi");
   const [author, setAuthor] = useState<string>("");
   const [message, setMessage] = useState<string>("");
 
-  // Drawing Pad states
   const [selectedColor, setSelectedColor] = useState<string>("#38bdf8");
   const [brushSize, setBrushSize] = useState<number>(4);
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
   const [hasDrawn, setHasDrawn] = useState<boolean>(false);
 
-  // Physics engine refs
   const engineRef = useRef<Matter.Engine | null>(null);
   const runnerRef = useRef<Matter.Runner | null>(null);
   const cardBodiesRef = useRef<CustomBody[]>([]);
@@ -104,9 +101,7 @@ export default function FeedbackJar() {
   const [totalNotes, setTotalNotes] = useState<number>(0);
   const [isShuffling, setIsShuffling] = useState<boolean>(false);
 
-  // How many cards actually fit on the board. The old fixed 6/10 overflowed:
-  // at 439x478 only ~6 cards fit, so a batch of 10 piled up past the top edge.
-  // Fill ratio 0.55 leaves gaps so it reads as a pile, not a tetris wall.
+  // Batch size from the board's area; 0.55 fill leaves gaps so it reads as a pile.
   const getBatchLimit = () => {
     const canvas = canvasRef.current;
     const w = canvas?.width || containerRef.current?.clientWidth || 440;
@@ -154,7 +149,6 @@ export default function FeedbackJar() {
     fetchBatch();
   }, []);
 
-  // Modal animation sync
   useEffect(() => {
     if (selectedCard) {
       const timer = requestAnimationFrame(() => {
@@ -166,7 +160,6 @@ export default function FeedbackJar() {
     }
   }, [selectedCard]);
 
-  // Drawing Pad Canvas setup when modal opens
   useEffect(() => {
     if (isFormOpen && drawingCanvasRef.current) {
       const canvas = drawingCanvasRef.current;
@@ -199,7 +192,7 @@ export default function FeedbackJar() {
     }, 360);
   };
 
-  // Helper to load / cache images for 60fps canvas rendering
+  // Decoded images are cached so the canvas redraw stays at 60fps
   const getCachedImage = (dataUrl?: string): HTMLImageElement | null => {
     if (!dataUrl) return null;
     if (imageCache.current.has(dataUrl)) {
@@ -212,7 +205,6 @@ export default function FeedbackJar() {
     return null;
   };
 
-  // Main Matter.js Physics setup
   useEffect(() => {
     if (!canvasRef.current || !containerRef.current) return;
 
@@ -278,9 +270,7 @@ export default function FeedbackJar() {
       }
     });
 
-    // The API fetch is the only source of cards; it calls showBatch once it
-    // resolves. Seeding from localStorage here raced with it and could show
-    // notes that were never actually stored.
+    // Cards come only from the API (showBatch); seeding from localStorage raced with it.
     loadCardsIntoPhysics(cards, canvas.width, canvas.height, engine);
 
     const runner = Runner.create();
@@ -291,10 +281,8 @@ export default function FeedbackJar() {
     const renderLoop = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw dark grid background
       drawGridBackground(ctx, canvas.width, canvas.height);
 
-      // Render physics card bodies
       const allBodies = Composite.allBodies(engine.world) as CustomBody[];
       allBodies.forEach((body) => {
         if (body.label === "card") {
@@ -302,7 +290,6 @@ export default function FeedbackJar() {
         }
       });
 
-      // Render elastic drag spring line
       if (mouseConstraint.body) {
         ctx.save();
         ctx.beginPath();
@@ -344,9 +331,7 @@ export default function FeedbackJar() {
     const floor = Bodies.rectangle(w / 2, h + 25, w * 2, 50, { isStatic: true, friction: 0.9 });
     const leftWall = Bodies.rectangle(-25, h / 2, 50, h * 2, { isStatic: true });
     const rightWall = Bodies.rectangle(w + 25, h / 2, 50, h * 2, { isStatic: true });
-    // Ceiling sits a card's height above the frame: new notes still fall in
-    // from off-screen, but a squeezed card can no longer escape upward and
-    // disappear for good.
+    // Ceiling a card's height above the frame: notes fall in, but can't escape upward.
     const ceiling = Bodies.rectangle(w / 2, -CARD_H - 25, w * 2, 50, { isStatic: true });
 
     const boundaries = [floor, leftWall, rightWall, ceiling];
@@ -383,7 +368,6 @@ export default function FeedbackJar() {
     Composite.add(targetEngine.world, cardBody);
   };
 
-  // Drawing Pad Canvas Handlers
   const startDrawing = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
     setIsDrawing(true);
     setHasDrawn(true);
@@ -496,9 +480,7 @@ export default function FeedbackJar() {
     return () => clearTimeout(timer);
   }, [justPosted]);
 
-  // The board is a corkboard, not a bottomless jar: it holds a fixed number of
-  // notes, so pinning a new one takes the oldest one down first. Without this
-  // the new card materialised inside an already-full pile and got squeezed out.
+  // The board holds a fixed number of notes: pinning a new one takes the oldest down.
   const dropNewCardOntoBoard = (card: FeedbackCardData) => {
     const canvas = canvasRef.current;
     const engine = engineRef.current;
@@ -552,7 +534,6 @@ export default function FeedbackJar() {
     ctx.fillStyle = "#0c0c0e";
     ctx.fillRect(0, 0, w, h);
 
-    // Subtle grid lines
     ctx.strokeStyle = "rgba(255, 255, 255, 0.04)";
     ctx.lineWidth = 1;
     const gridSize = 24;
@@ -572,7 +553,6 @@ export default function FeedbackJar() {
     ctx.restore();
   };
 
-  // Polaroid Style Physics Card Renderer (Matching user's attached screenshot)
   const drawPolaroidCardBody = (ctx: CanvasRenderingContext2D, body: CustomBody) => {
     const card = body.cardData;
     if (!card) return;
@@ -584,12 +564,10 @@ export default function FeedbackJar() {
     ctx.translate(body.position.x, body.position.y);
     ctx.rotate(body.angle);
 
-    // Card Box Shadow
     ctx.shadowColor = "rgba(0, 0, 0, 0.6)";
     ctx.shadowBlur = 12;
     ctx.shadowOffsetY = 4;
 
-    // Card Main Container (Dark Polaroid Frame)
     ctx.fillStyle = "#1a1a1e";
     ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
     ctx.lineWidth = 1.5;
@@ -626,7 +604,6 @@ export default function FeedbackJar() {
       }
     }
 
-    // Top Square Doodle Image Canvas Box
     const imageSize = 119;
     const imageX = -imageSize / 2;
     const imageY = -height / 2 + 8;
@@ -640,7 +617,6 @@ export default function FeedbackJar() {
     }
     ctx.fill();
 
-    // Render User's Hand-Drawn Doodle if present
     if (card.drawingDataUrl) {
       const img = getCachedImage(card.drawingDataUrl);
       if (img) {
@@ -657,7 +633,6 @@ export default function FeedbackJar() {
       }
     }
 
-    // Bottom Metadata Area
     const categoryColor =
       card.category === "Kritik"
         ? "#f43f5e"
@@ -691,7 +666,7 @@ export default function FeedbackJar() {
       {/* Masthead */}
       <div className="mb-4 flex flex-wrap items-end justify-between gap-4 border-b border-line pb-4">
         <div>
-          <p className="font-mono text-xs uppercase tracking-widest text-accent">
+          <p className="font-mono text-xs text-accent">
             {lang === "id" ? "Papan Apresiasi" : "Wall of Fame"}
           </p>
           <h3 className="mt-1.5 text-lg font-semibold tracking-tight text-text">

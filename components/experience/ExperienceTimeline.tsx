@@ -49,7 +49,7 @@ function Details({ entry, span }: { entry: Entry; span: string }) {
   return (
     <div className="animate-rise grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] md:gap-10">
       <div>
-        <p className="font-mono text-[11px] uppercase tracking-[0.2em]" style={{ color: laneOf(entry).tone }}>
+        <p className="font-mono text-xs" style={{ color: laneOf(entry).tone }}>
           {KIND[entry.type][lang === "id" ? 1 : 0]} · {span}
         </p>
         <h3 className="mt-2 text-2xl font-semibold tracking-tight text-text sm:text-3xl [text-wrap:balance]">{entry.org}</h3>
@@ -67,7 +67,7 @@ function Details({ entry, span }: { entry: Entry; span: string }) {
         </ol>
         <ul className="mt-5 flex flex-wrap gap-1.5" aria-label={lang === "id" ? "Teknologi" : "Stack"}>
           {entry.stack.map((tech) => (
-            <li key={tech} className="rounded-full border border-line bg-bg px-2.5 py-0.5 font-mono text-xs text-text-2">
+            <li key={tech} className="rounded-md border border-line bg-bg px-2 py-0.5 font-mono text-xs text-text-2">
               {tech}
             </li>
           ))}
@@ -119,11 +119,8 @@ export function ExperienceTimeline() {
             >
               {y}
               {y === now && (
-                <span className="flex items-center gap-1 text-[10px] uppercase tracking-widest">
-                  <span aria-hidden className="relative flex size-1.5">
-                    <span className="absolute inline-flex size-full rounded-full bg-accent opacity-60 motion-safe:animate-ping" />
-                    <span className="relative inline-flex size-1.5 rounded-full bg-accent" />
-                  </span>
+                <span className="flex items-center gap-1 text-[11px]">
+                  <span aria-hidden className="size-1.5 rounded-full bg-accent" />
                   {nowLabel}
                 </span>
               )}
@@ -164,7 +161,7 @@ export function ExperienceTimeline() {
                         } ${e.ongoing ? "is-ongoing" : ""}`}
                       >
                         <span>
-                          <span className="hidden font-mono text-[10px] uppercase tracking-widest text-[color:var(--tone)] sm:block">
+                          <span className="hidden font-mono text-[11px] text-[color:var(--tone)] sm:block">
                             {KIND[e.type][lang === "id" ? 1 : 0]}
                           </span>
                           <span className="line-clamp-3 block text-xs font-semibold leading-snug text-text [overflow-wrap:anywhere] sm:mt-0.5 sm:text-sm">{e.org}</span>
@@ -187,7 +184,6 @@ export function ExperienceTimeline() {
           <div
             id="experience-details"
             className="relative mt-8 overflow-hidden rounded-2xl border border-line bg-surface p-5 sm:p-8"
-            style={{ boxShadow: `inset 4px 0 0 ${laneOf(current).tone}` }}
           >
             <div className="mb-5 flex items-center justify-between gap-4 border-b border-line pb-4">
               <p className="font-mono text-xs text-text-2" aria-live="polite">
