@@ -6,7 +6,6 @@ import { useTranslation } from "@/hooks/useTranslation";
 import { animate } from "animejs";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { Garland } from "@/components/seasonal/Garland";
-import { HeroTree } from "@/components/seasonal/Seasonal3D";
 import { HeroScene } from "./HeroScene";
 
 function HeroIntro({ align = "center" }: { align?: "center" | "left" }) {
@@ -126,10 +125,8 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
         </div>
       </div>
 
-      <HeroTree />
-
       {/* The name, split around the portrait's head so every letter shows, between the back layer
-          (tree, garland) and the front layer (portrait) */}
+          (scenery, garland) and the front layer (portrait) */}
       <div ref={nameRef} aria-hidden className="hero-name pointer-events-none absolute z-[15] hidden sm:block">
         <span className="hero-greeting absolute bottom-full left-1/2 mb-[0.35em] -translate-x-1/2 whitespace-nowrap text-5xl font-semibold tracking-tight text-text">
           {greeting}

@@ -57,20 +57,15 @@ function SnowmanFallback() {
   );
 }
 
-export function HeroTree() {
+/** The tree stands beside the snowman in the contact section. */
+export function ContactTree() {
   const { mounted, festive } = useSeasonal();
   if (!mounted || !festive) return null;
 
   return (
-    <motion.div
-      aria-hidden
-      initial={{ opacity: 0, y: 60 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1.1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      className="absolute bottom-0 right-0 z-10 h-[34vh] w-[56vw] sm:h-[46vh] sm:w-[38vw] lg:right-[10%] lg:h-[58vh] lg:w-[min(32vw,480px)]"
-    >
+    <div aria-hidden className="h-48 w-36 shrink-0 sm:h-64 sm:w-44">
       {hasWebGL() ? <ChristmasTree /> : <TreeFallback />}
-    </motion.div>
+    </div>
   );
 }
 
