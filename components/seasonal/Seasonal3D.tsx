@@ -11,7 +11,7 @@ const ChristmasTree = dynamic(() => import("./three/ChristmasTree"), { ssr: fals
 const Snowman = dynamic(() => import("./three/Snowman"), { ssr: false });
 
 let webglCache: boolean | null = null;
-function hasWebGL() {
+export function hasWebGL() {
   if (webglCache !== null) return webglCache;
   try {
     const canvas = document.createElement("canvas");
@@ -57,20 +57,19 @@ function SnowmanFallback() {
   );
 }
 
-export function HeroTree() {
+/** The tree on the case-study pages: in the bottom-right corner of wide screens, after the story on
+ *  narrower ones. One element either way, so there is only ever one WebGL tree. */
+export function CaseStudyTree() {
   const { mounted, festive } = useSeasonal();
   if (!mounted || !festive) return null;
 
   return (
-    <motion.div
+    <div
       aria-hidden
-      initial={{ opacity: 0, y: 60 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="absolute bottom-0 right-0 z-10 h-[36vh] w-[58vw] sm:h-[46vh] sm:w-[38vw] lg:right-[10%] lg:h-[58vh] lg:w-[min(32vw,480px)]"
+      className="pointer-events-none ml-auto mr-5 -mt-24 h-48 w-36 xl:fixed xl:bottom-4 xl:right-8 xl:m-0 xl:h-72 xl:w-52"
     >
       {hasWebGL() ? <ChristmasTree /> : <TreeFallback />}
-    </motion.div>
+    </div>
   );
 }
 

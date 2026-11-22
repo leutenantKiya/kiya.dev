@@ -1,4 +1,5 @@
 import { CaseStudy, En, Id } from "@/components/work/CaseStudy";
+import { Room } from "@/components/work/Room";
 
 export const metadata = {
   title: "Nutrify — Food recognition & nutrition scheduler | Kiya",
@@ -14,12 +15,17 @@ meal from a photo, estimates the portion, computes calories and macros, and tell
 whether it fits your goal — cut, bulk, or maintain. Flutter app, FastAPI backend,
 multi-model ML pipeline running locally.
 
-## Problem
+<Room title="Problem">
+
 
 Calorie tracking works — if you do it. Manual logging is tedious enough that most
 people quit within weeks. The friction isn't knowledge; it's data entry.
 
-## Solution
+
+</Room>
+
+<Room title="Solution">
+
 
 Point the camera at your food. Nutrify detects what's on the plate, classifies it,
 estimates the portion size, and computes calories and macronutrients. It then compares
@@ -29,7 +35,11 @@ those numbers against your daily target and answers the question you actually ha
 A Gemini-powered chat assistant handles follow-up questions; the recognition pipeline
 itself runs locally and needs no API key.
 
-## Architecture
+
+</Room>
+
+<Room title="Architecture">
+
 
 ```text
 Flutter app (camera + UI)
@@ -48,7 +58,11 @@ orchestration, and the pipeline composes multiple specialized models rather than
 betting everything on one end-to-end network. Trained on three public Kaggle food
 datasets; notebooks in the repo are generated from the Python training scripts.
 
-## Decisions & tradeoffs
+
+</Room>
+
+<Room title="Decisions & tradeoffs">
+
 
 - **Pipeline over monolith.** Detection, classification, and portion estimation are
   separate stages — each can be improved or swapped independently, and failures are
@@ -60,26 +74,42 @@ datasets; notebooks in the repo are generated from the Python training scripts.
   user's goal, not a wall of numbers — the product insight is that people want an
   answer, not a spreadsheet.
 
-## Status
+
+</Room>
+
+<Room title="Status">
+
 
 University team project at capstone scale. Functional pipeline end-to-end; no
 published accuracy benchmarks or usage metrics, and it's presented as exactly that.
+
+</Room>
+
 </En>
 
 <Id>
 **Dalam sepuluh detik:** mencatat makanan secara manual membuat aplikasi diet sering ditinggalkan. Nutrify mengenali hidangan dari foto, mengestimasi porsi, menghitung kalori & makro, serta memberi tahu apakah hidangan tersebut sesuai target Anda — cut, bulk, atau maintain. Aplikasi Flutter, backend FastAPI, alur ML multi-model yang berjalan secara lokal.
 
-## Masalah
+<Room title="Masalah">
+
 
 Pelacakan kalori terbukti efektif — jika dilakukan secara konsisten. Pencatatan manual cukup menyita waktu sehingga kebanyakan orang menyerah dalam hitungan minggu.
 
-## Solusi
+
+</Room>
+
+<Room title="Solusi">
+
 
 Arahkan kamera ke makanan Anda. Nutrify mendeteksi objek di piring, mengklasifikasikannya, mengestimasi ukuran porsi, serta menghitung kalori dan nutrisi makro. Kemudian membandingkannya dengan target harian Anda untuk menjawab pertanyaan utama: *apakah makanan ini sesuai dengan target saya?*
 
 Asisten percakapan berbasis Gemini menangani pertanyaan lanjutan; alur pengenalan utama berjalan secara lokal tanpa memerlukan API key eksternal.
 
-## Arsitektur
+
+</Room>
+
+<Room title="Arsitektur">
+
 
 ```text
 Aplikasi Flutter (kamera + UI)
@@ -93,15 +123,26 @@ Backend FastAPI — Orkestrasi ML
 └─ mesin rekomendasi     analisis vs. target harian (cut / bulk / maintain)
 ```
 
-## Keputusan & Kompromi
+
+</Room>
+
+<Room title="Keputusan & Kompromi">
+
 
 - **Alur terpisah dibanding monolith.** Deteksi, klasifikasi, dan porsi adalah tahap terpisah yang mudah diperbarui secara independen.
 - **Inferensi lokal.** Proses pengenalan utama tidak memiliki ketergantungan API eksternal, sehingga fitur inti bekerja tanpa batas kuota.
 - **Keputusan langsung, bukan sekadar dasbor.** Hasil akhir memberikan saran konkret sesuai target pengguna, bukan sekadar tumpukan angka.
 
-## Status
+
+</Room>
+
+<Room title="Status">
+
 
 Proyek tim universitas skala tugas akhir. Alur berfungsi penuh dari hulu ke hilir.
+
+</Room>
+
 </Id>
 
 </CaseStudy>

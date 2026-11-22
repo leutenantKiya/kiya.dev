@@ -1,19 +1,42 @@
 [
   {
-    "slug": "arbor",
-    "title": "Arbor",
-    "tagline": "Pay-per-second streaming for independent cinema",
-    "tagline_id": "Layanan streaming bayar-per-detik untuk bioskop independen",
-    "summary": "Streaming subscriptions charge for time you never watch. Arbor sells prepaid viewing hours that only tick down while a film plays — filmmakers get paid per second watched, settled on-chain.",
-    "summary_id": "Langganan streaming biasa menagih waktu yang tidak pernah Anda tonton. Arbor menjual jam menonton prabayar yang hanya berkurang saat film diputar — pembuat film dibayar per detik tontonan secara on-chain.",
+    "slug": "genesis-town",
+    "title": "Genesis Town",
+    "tagline": "A pixel-art market town where the economy is the game",
+    "tagline_id": "Kota pasar pixel-art yang ekonominya adalah permainannya",
+    "summary": "Players gather, craft and trade with AI merchants who set their own prices from stock, demand and cash. Items and coins live on a NEAR contract, but players sign in with Google and never see a wallet, seed phrase or gas prompt.",
+    "summary_id": "Pemain mengumpulkan bahan, membuat barang, dan berdagang dengan pedagang AI yang menentukan harga sendiri dari stok, permintaan, dan kas. Item dan koin ada di kontrak NEAR, tapi pemain cukup masuk dengan Google tanpa pernah melihat dompet, seed phrase, atau biaya gas.",
     "year": "2026",
-    "status": "Live MVP · testnet",
-    "stack": ["React", "TypeScript", "Solidity", "Postgres", "Particle Network"],
-    "repo": "https://github.com/leutenantKiya/Arbor",
-    "demo": "https://arbor-watch.vercel.app",
-    "role": "3-person team · 7 days · Encode Club UXMaxx Hackathon",
-    "preview": "/arbor.png",
-    "video": "https://www.youtube.com/embed/A1_m2YBdv2Y"
+    "status": "NEAR testnet · in development",
+    "stack": [
+      "TypeScript",
+      "JavaScript",
+      "Rust",
+      "NEAR",
+      "Docker"
+    ],
+    "repo": "https://github.com/leutenantKiya/Genesis-Town",
+    "demo": null,
+    "role": "3-person team · NEAR Hackathon",
+    "preview": "/genesis-town.png",
+    "files": [
+      {
+        "name": "engine.js",
+        "kind": "Game client",
+        "size": "176 KB"
+      },
+      {
+        "name": "chain.js",
+        "kind": "NEAR bridge",
+        "size": "143 KB"
+      },
+      {
+        "name": "residents.ts",
+        "kind": "Server",
+        "size": "51 KB"
+      }
+    ],
+    "video": "https://x.com/GentownX/status/2121732930133467200"
   },
   {
     "slug": "lazy-builder",
@@ -24,38 +47,89 @@
     "summary_id": "Alat desain dan kode berada di dunia yang terpisah. Lazy Builder menghubungkan kanvas tak terbatas dengan editor dokumen rich-text dan mengekspor proyek React + Vite yang siap dijalankan.",
     "year": "2026",
     "status": "Working prototype",
-    "stack": ["React 19", "TypeScript", "Yjs CRDT", "TipTap", "WebSockets"],
+    "stack": [
+      "React 19",
+      "TypeScript",
+      "Yjs CRDT",
+      "TipTap",
+      "WebSockets"
+    ],
     "repo": "https://github.com/leutenantKiya/lazy_builder",
     "demo": null,
     "role": "Solo project",
-    "preview": "/lazybuilder.png"
+    "preview": "/lazybuilder.png",
+    "files": [
+      {
+        "name": "Canvas.tsx",
+        "kind": "React",
+        "size": "41 KB"
+      },
+      {
+        "name": "DOCS.md",
+        "kind": "Docs",
+        "size": "17 KB"
+      },
+      {
+        "name": "SlashCommand.ts",
+        "kind": "TipTap",
+        "size": "2 KB"
+      }
+    ]
   },
   {
     "slug": "nutrify",
     "title": "Nutrify",
     "tagline": "Point a camera at food, get calories, macros, and a verdict",
     "tagline_id": "Arahkan kamera ke makanan, dapatkan estimasi kalori, makro, dan analisis",
-    "summary": "Logging food by hand is why diet apps fail. Nutrify identifies a meal from a photo, estimates the portion, computes calories and macros, and says whether it fits your goal — cut, bulk, or maintain.",
+    "summary": "Logging food by hand is why diet apps fail. Nutrify identifies a meal from a photo, estimates the portion, computes calories and macros, and says whether it fits your goal, cut, bulk, or maintain.",
     "summary_id": "Pencatatan makanan secara manual membuat aplikasi diet sering ditinggalkan. Nutrify mengenali hidangan dari foto, mengestimasi porsi, menghitung kalori & makro, serta memberi saran sesuai target nutrisi Anda.",
     "year": "2026",
     "status": "Functional ML pipeline",
-    "stack": ["Flutter", "FastAPI", "Python", "Multi-model ML"],
+    "stack": [
+      "Flutter",
+      "FastAPI",
+      "Python",
+      "Multi-model ML"
+    ],
     "repo": "https://github.com/leutenantKiya/Nutrify-Food-Recognition-And-Daily-Food-Scheduler",
     "demo": null,
     "role": "University team project",
     "preview": "/nutrify.png",
-    "video" : "https://www.youtube.com/embed/wYNaFmtoohQ?si=8Qwdrf_caLgc57WZ"
+    "video": "https://www.youtube.com/embed/wYNaFmtoohQ?si=8Qwdrf_caLgc57WZ",
+    "files": [
+      {
+        "name": "pipeline.py",
+        "kind": "ML pipeline",
+        "size": "23 KB"
+      },
+      {
+        "name": "nutrition.py",
+        "kind": "Python",
+        "size": "25 KB"
+      },
+      {
+        "name": "photo_screen.dart",
+        "kind": "Flutter",
+        "size": "63 KB"
+      }
+    ]
   },
   {
     "slug": "aily",
     "title": "AILY",
     "tagline": "Intent-routed chatbot service for e-commerce",
     "tagline_id": "Layanan chatbot e-commerce dengan perutean niat otomatis",
-    "summary": "Most store questions are routine, but answering them still takes staff. AILY parses natural-language messages and routes them to one of eleven handlers — search, cart, checkout, tracking — automatically.",
-    "summary_id": "Sebagian besar pertanyaan toko bersifat rutin. AILY menganalisis pesan bahasa alami pengguna dan mengarahkannya ke salah satu dari 11 handler otomatis — pencarian, keranjang, pembayaran, hingga lacak pesanan.",
+    "summary": "Most store questions are routine, but answering them still takes staff. AILY parses natural-language messages and routes them to one of eleven handlers, search, cart, checkout, tracking, automatically.",
+    "summary_id": "Sebagian besar pertanyaan toko bersifat rutin. AILY menganalisis pesan bahasa alami pengguna dan mengarahkannya ke salah satu dari 11 handler otomatis, pencarian, keranjang, pembayaran, hingga lacak pesanan.",
     "year": "2026",
     "status": "Team project · architecture-focused",
-    "stack": ["Python", "FastAPI", "Java", "JavaFX", "SQL"],
+    "stack": [
+      "Python",
+      "FastAPI",
+      "Java",
+      "JavaFX",
+      "SQL"
+    ],
     "repo": "https://github.com/leutenantKiya/AILY-Ecommerce-chatbotService",
     "demo": null,
     "role": "University team project",
@@ -66,6 +140,62 @@
       "/AILY3.png",
       "/AILY4.png",
       "/AILY5.png"
+    ],
+    "files": [
+      {
+        "name": "NLPHandler.py",
+        "kind": "Intent router",
+        "size": "17 KB"
+      },
+      {
+        "name": "conversationRouter.py",
+        "kind": "FastAPI",
+        "size": "27 KB"
+      },
+      {
+        "name": "ChatController.java",
+        "kind": "JavaFX",
+        "size": "44 KB"
+      }
+    ]
+  },
+  {
+    "slug": "arbor",
+    "title": "Arbor",
+    "tagline": "Pay-per-second streaming for independent cinema",
+    "tagline_id": "Layanan streaming bayar-per-detik untuk bioskop independen",
+    "summary": "Streaming subscriptions charge for time you never watch. Arbor sells prepaid viewing hours that only tick down while a film plays, filmmakers get paid per second watched, settled on-chain.",
+    "summary_id": "Langganan streaming biasa menagih waktu yang tidak pernah Anda tonton. Arbor menjual jam menonton prabayar yang hanya berkurang saat film diputar, pembuat film dibayar per detik tontonan secara on-chain.",
+    "year": "2026",
+    "status": "Live MVP · testnet",
+    "stack": [
+      "React",
+      "TypeScript",
+      "Solidity",
+      "Postgres",
+      "Particle Network"
+    ],
+    "repo": "https://github.com/leutenantKiya/Arbor",
+    "demo": "https://arbor-watch.vercel.app",
+    "role": "3-person team · 7 days · Encode Club UXMaxx Hackathon",
+    "preview": "/arbor.png",
+    "video": "https://www.youtube.com/embed/A1_m2YBdv2Y",
+    "files": [
+      {
+        "name": "SESSION_BILLING.md",
+        "kind": "Billing spec",
+        "size": "11 KB"
+      },
+      {
+        "name": "settlement.service.ts",
+        "kind": "TypeScript",
+        "size": "10 KB"
+      },
+      {
+        "name": "upload-film.tsx",
+        "kind": "React",
+        "size": "19 KB"
+      }
     ]
   }
 ]

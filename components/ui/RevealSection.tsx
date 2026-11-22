@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
-import { animate, utils } from "animejs";
 
-/** Scroll-driven reveal, one consistent stream across every section:
- *  enters from the bottom, dissipates to the top on leave. Driven by anime.js.
- *  Honors prefers-reduced-motion (content just stays visible). */
+/** Each section rises into place once, the first time it scrolls into view, and then stays put.
+ *  The motion lives in CSS (.reveal in globals.css) so every section shares one duration and easing;
+ *  reduced motion shows everything at once. */
 export function RevealSection({
   id,
   className,
@@ -20,47 +19,21 @@ export function RevealSection({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      el.style.opacity = "1";
-      el.style.transform = "none";
-      return;
-    }
-
-    let shown = false;
+    // Any overlap counts (not a share of the section), so sections taller than the screen still reveal.
     const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting && !shown) {
-            shown = true;
-            // Cancel any in-flight leave so the two don't fight over opacity
-            utils.remove(el);
-            animate(el, {
-              y: [40, 0],
-              opacity: [0, 1],
-              duration: 700,
-              ease: "outExpo",
-            });
-          } else if (!entry.isIntersecting && shown) {
-            shown = false;
-            utils.remove(el);
-            animate(el, {
-              y: [0, -40],
-              opacity: [1, 0],
-              duration: 450,
-              ease: "inQuad",
-            });
-          }
-        }
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        el.dataset.shown = "";
+        observer.disconnect();
       },
-      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+      { rootMargin: "0px 0px -12% 0px" },
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section ref={ref} id={id} className={className} style={{ opacity: 0 }}>
+    <section ref={ref} id={id} className={`reveal ${className ?? ""}`}>
       {children}
     </section>
   );

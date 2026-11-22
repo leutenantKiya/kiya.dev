@@ -1,4 +1,5 @@
 import { CaseStudy, En, Id } from "@/components/work/CaseStudy";
+import { Room } from "@/components/work/Room";
 
 export const metadata = {
   title: "Arbor — Pay-per-second streaming | Kiya",
@@ -15,7 +16,8 @@ viewing hours that only tick down during playback, then settles filmmakers on-ch
 pro-rata by seconds watched. React + TypeScript, Solidity, Postgres. Built in 7 days
 by a 3-person team for the Encode Club UXMaxx Hackathon — [live demo](https://arbor-watch.vercel.app).
 
-## Problem
+<Room title="Problem">
+
 
 Subscriptions punish light viewers: you pay for a month whether you watch two films or
 twenty. The obvious alternative — pay per view — breaks on traditional payment rails,
@@ -23,7 +25,11 @@ because processor fees exceed a micro-charge. And independent filmmakers, whose 
 the big platforms mostly ignore, get opaque, delayed, aggregated payouts with no
 visibility into what actually earned.
 
-## Solution
+
+</Room>
+
+<Room title="Solution">
+
 
 Think *prepaid mobile data, but for cinema*. Viewers buy flexible time packages
 (2.5h / 5h / 10h) and the meter runs **only while the film plays**. Pausing, browsing,
@@ -35,7 +41,11 @@ Account is created silently; every transaction is gasless. No seed phrases, no
 "connect wallet", no crypto vocabulary anywhere in the interface. Crypto is the
 enabler, never the product.
 
-## Architecture
+
+</Room>
+
+<Room title="Architecture">
+
 
 The core design decision is a hybrid ledger — on-chain is reserved for the money
 moments, everything in between lives in Postgres:
@@ -55,7 +65,11 @@ gift claims, and settlements; `ArborVault.sol` handles package purchases in and 
 filmmaker settlements out. Filmmakers get a Studio view with live per-second earnings
 and an on-chain settlement proof they can verify on a block explorer.
 
-## Decisions & tradeoffs
+
+</Room>
+
+<Room title="Decisions & tradeoffs">
+
 
 - **Why a blockchain at all?** A prepaid balance with programmable micro-debits and
   instant multi-party payouts is only economical with account abstraction. If a card
@@ -68,11 +82,18 @@ and an on-chain settlement proof they can verify on a block explorer.
   Foundation open movies and public-domain classics — so the demo can actually stream
   real films.
 
-## Status
+
+</Room>
+
+<Room title="Status">
+
 
 Hackathon MVP, deployed on testnet with mock USDC. The live demo streams the real
 catalog with the full purchase → watch → settle loop. No production usage metrics —
 it was built in seven days and is presented as exactly that.
+
+</Room>
+
 </En>
 
 <Id>
@@ -82,13 +103,18 @@ prabayar yang hanya berkurang saat film diputar, lalu menyelesaikan pembayaran p
 proporsional per detik tontonan. React + TypeScript, Solidity, Postgres. Dibangun dalam 7 hari oleh tim 3 orang untuk
 Encode Club UXMaxx Hackathon — [demo langsung](https://arbor-watch.vercel.app).
 
-## Masalah
+<Room title="Masalah">
+
 
 Sistem langganan merugikan penonton kasual: Anda membayar penuh sebulan baik menonton 2 film maupun 20 film.
 Alternatif bayar-per-tonton gagal pada jaringan pembayaran tradisional karena biaya transaksi melampaui mikro-biaya.
 Selain itu, pembuat film independen menerima pembayaran yang buram, tertunda, dan tanpa transparansi.
 
-## Solusi
+
+</Room>
+
+<Room title="Solusi">
+
 
 Bayangkan *kuota data seluler, tetapi untuk bioskop*. Penonton membeli paket jam menonton (2.5j / 5j / 10j)
 dan durasi **hanya berkurang saat film diputar**. Menjeda, menjelajah, dan menonton trailer selalu gratis.
@@ -97,7 +123,11 @@ Saat sesi berakhir, setiap pembuat film yang karyanya ditonton menerima pembayar
 Teknologi blockchain dibuat sepenuhnya transparan. Masuk dengan Google; Universal Account Particle dibuat secara otomatis;
 setiap transaksi bebas biaya gas. Tanpa seed phrase, tanpa "connect wallet", dan tanpa istilah kripto di antarmuka.
 
-## Arsitektur
+
+</Room>
+
+<Room title="Arsitektur">
+
 
 Keputusan desain utama adalah buku besar hibrida — on-chain hanya untuk transaksi keuangan, sisanya berjalan di Postgres:
 
@@ -110,15 +140,26 @@ Sesi selesai          →  Penyelesaian batch: pembuat film dibayar on-chain
 Kado jam tonton       →  Jam menonton dikirim via tautan klaim sekali pakai
 ```
 
-## Keputusan & Kompromi
+
+</Room>
+
+<Room title="Keputusan & Kompromi">
+
 
 - **Mengapa butuh blockchain?** Saldo prabayar dengan pemotongan mikro hanya ekonomis menggunakan Account Abstraction.
 - **Pengukur ramah pengguna.** Pengukur waktu dibuat tenang agar waktu prabayar terasa aman dan nyaman.
 - **Katalog berlisensi aman.** Semua konten demo dapat didistribusikan secara legal — film terbuka Blender Foundation & domain publik.
 
-## Status
+
+</Room>
+
+<Room title="Status">
+
 
 MVP Hackathon, dideploy pada testnet dengan mock USDC. Demo langsung menampilkan alur penuh pembelian → tonton → penyelesaian.
+
+</Room>
+
 </Id>
 
 </CaseStudy>

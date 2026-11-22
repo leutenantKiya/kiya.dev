@@ -14,8 +14,14 @@ export type Experience = {
 
 export const experience: Experience[] = experienceJson as Experience[];
 
+// Newest first by the year each role started; within a year, ongoing roles first, then the latest to end.
+function byRecency(a: { start: string; end: string }, b: { start: string; end: string }) {
+  const end = (e: string) => (e === "present" ? Infinity : Number(e));
+  return Number(b.start) - Number(a.start) || end(b.end) - end(a.end);
+}
+
 export function getExperiences(lang: Lang): Experience[] {
-  return experienceJson.map((e) => {
+  return [...experienceJson].sort(byRecency).map((e) => {
     const raw = e as Record<string, unknown>;
     return {
       org: e.org,

@@ -1,4 +1,5 @@
 import { CaseStudy, En, Id } from "@/components/work/CaseStudy";
+import { Room } from "@/components/work/Room";
 
 export const metadata = {
   title: "Lazy Builder — Visual builder that exports real React | Kiya",
@@ -14,7 +15,8 @@ between them loses information. Lazy Builder is a Figma-style infinite canvas gl
 a Notion-style rich-text editor — cross-linked both ways — that exports a clean,
 runnable React + Vite project. React 19, TypeScript, Yjs CRDT sync over WebSockets.
 
-## Problem
+<Room title="Problem">
+
 
 Three separate frictions, one root cause:
 
@@ -25,7 +27,11 @@ Three separate frictions, one root cause:
 3. **Docs live somewhere else.** The *why* behind a component sits in Notion or
    Confluence, disconnected from the thing it describes.
 
-## Solution
+
+</Room>
+
+<Room title="Solution">
+
 
 Two linked surfaces in one workspace:
 
@@ -39,7 +45,11 @@ Two linked surfaces in one workspace:
 When you're done: **export** → `src/components/*.tsx`, `App.tsx`, `vite.config.ts`,
 `package.json`. A real project you own, not an embed.
 
-## Architecture
+
+</Room>
+
+<Room title="Architecture">
+
 
 ```text
 client (React 19 + Vite)
@@ -55,7 +65,11 @@ Both surfaces share one collaboration layer: Yjs CRDTs synced through a delibera
 thin WebSocket relay. The canvas node model doubles as an intermediate representation —
 the same data that renders the canvas compiles to React source at export time.
 
-## Decisions & tradeoffs
+
+</Room>
+
+<Room title="Decisions & tradeoffs">
+
 
 - **CRDTs over server state.** Yjs makes multi-user editing conflict-free without the
   server understanding the document at all — the relay just moves bytes, which keeps
@@ -65,24 +79,36 @@ the same data that renders the canvas compiles to React source at export time.
 - **Docs as a first-class surface.** The editor isn't a side panel; it's half the
   product, because the missing context between design and code is the actual problem.
 
-## Status
+
+</Room>
+
+<Room title="Status">
+
 
 Working prototype, solo project. Canvas, editor, cross-linking, collaboration, and
 export all function; file-by-file documentation lives in the repo's `DOCS.md`.
+
+</Room>
+
 </En>
 
 <Id>
 **Dalam sepuluh detik:** alat desain dan kode berada di dunia terpisah, dan penerjemahan di antaranya sering kehilangan informasi.
 Lazy Builder adalah kanvas tak terbatas bergaya Figma yang terhubung dengan editor teks bergaya Notion — terhubung dua arah — yang mengekspor proyek React + Vite yang bersih dan siap dijalankan. React 19, TypeScript, sinkronisasi Yjs CRDT melalui WebSockets.
 
-## Masalah
+<Room title="Masalah">
+
 
 Tiga kendala utama:
 1. **Figma → Kode tidak presisi.** Desainer memberikan maket; pengembang menafsirkan ulang; konteks hilang di tengah jalan.
 2. **Builder Low-code tertutup.** Menghasilkan output proprietary yang sulit dikembangkan di luar alat tersebut.
 3. **Dokumentasi terpisah.** Alasan di balik suatu komponen tersimpan di platform terpisah.
 
-## Solusi
+
+</Room>
+
+<Room title="Solusi">
+
 
 Dua area kerja terhubung dalam satu tampilan:
 - **Kanvas (bergaya Figma):** kanvas tak terbatas dengan fitur pan, zoom, drag, resize, grouping, dan layer.
@@ -90,7 +116,11 @@ Dua area kerja terhubung dalam satu tampilan:
 
 Setelah selesai: **ekspor** → `src/components/*.tsx`, `App.tsx`, `vite.config.ts`, `package.json`. Proyek nyata yang sepenuhnya Anda miliki.
 
-## Arsitektur
+
+</Room>
+
+<Room title="Arsitektur">
+
 
 ```text
 klien (React 19 + Vite)
@@ -102,14 +132,25 @@ server (Node + tsx)
 └─ y-websocket relay — server WebSocket minimal untuk sinkronisasi dokumen Yjs
 ```
 
-## Keputusan & Kompromi
+
+</Room>
+
+<Room title="Keputusan & Kompromi">
+
 
 - **CRDT dibanding state server.** Yjs membuat pengeditan multi-pengguna bebas konflik tanpa beban server.
 - **IR nyata, bukan sekadar gambar.** Mengimpor kode nyata membutuhkan kanvas yang memang berstruktur pohon komponen sejak awal.
 
-## Status
+
+</Room>
+
+<Room title="Status">
+
 
 Prototip berfungsi penuh, proyek solo. Kanvas, editor, tautan silang, kolaborasi, dan ekspor berfungsi penuh.
+
+</Room>
+
 </Id>
 
 </CaseStudy>

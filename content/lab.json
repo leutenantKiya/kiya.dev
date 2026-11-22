@@ -3,46 +3,58 @@
     "name": "JustPush-Refactory",
     "type": "tool",
     "year": "2025",
-    "stack": ["TypeScript", "Docker"],
+    "stack": [
+      "TypeScript",
+      "Docker"
+    ],
     "purpose": "Deployment automation focused on making pushing code reliable and simple",
     "purpose_id": "Otomasi deployment dengan fokus membuat proses push kode andal dan mudah",
     "status": "done",
     "repo": "https://github.com/leutenantKiya/JustPush-Refactory",
     "demo": null,
-    "insight": "Deployment tooling is UX design — the happy path has to be one action",
-    "insight_id": "Perkakas deployment adalah desain UX — alur ideal harus selesai dalam satu aksi"
+    "insight": "Deployment tooling is UX design, the happy path has to be one action",
+    "insight_id": "Perkakas deployment adalah desain UX, alur ideal harus selesai dalam satu aksi"
   },
   {
     "name": "Aily Telegram Bot",
     "type": "bot",
     "year": "2026",
-    "stack": ["Python", "Docker"],
+    "stack": [
+      "Python",
+      "Docker"
+    ],
     "purpose": "Containerized Telegram bot automation",
     "purpose_id": "Otomasi bot Telegram yang ter-containerize",
     "status": "done",
     "repo": "https://github.com/leutenantKiya/telegramBot",
     "demo": null,
-    "insight": "Bots are conversational UIs — flow design matters more than the API calls",
-    "insight_id": "Bot adalah UI percakapan — desain alur jauh lebih penting daripada pemanggilan API"
+    "insight": "Bots are conversational UIs, flow design matters more than the API calls",
+    "insight_id": "Bot adalah UI percakapan, desain alur jauh lebih penting daripada pemanggilan API"
   },
   {
     "name": "PaxPatronage",
     "type": "site",
     "year": "2026",
-    "stack": ["PHP", "JavaScript", "CSS"],
+    "stack": [
+      "PHP",
+      "JavaScript",
+      "CSS"
+    ],
     "purpose": "Crowd-fundraising platform built LAMP-style from scratch",
     "purpose_id": "Platform penggalangan dana publik yang dibangun bergaya LAMP dari nol",
     "status": "done",
     "repo": "https://github.com/leutenantKiya/PaxPatronage-crowd-fundraising",
     "demo": null,
-    "insight": "No framework — auth, campaigns, and payments modeled by hand",
-    "insight_id": "Tanpa framework — autentikasi, kampanye, dan pembayaran dirancang manual"
+    "insight": "No framework, auth, campaigns, and payments modeled by hand",
+    "insight_id": "Tanpa framework, autentikasi, kampanye, dan pembayaran dirancang manual"
   },
   {
     "name": "Banker's Algorithm Visualizer",
     "type": "visualization",
     "year": "2025",
-    "stack": ["JavaScript"],
+    "stack": [
+      "JavaScript"
+    ],
     "purpose": "Interactive visualization of the OS deadlock-avoidance algorithm",
     "purpose_id": "Visualisasi interaktif algoritma pencegahan deadlock pada Sistem Operasi",
     "status": "done",
@@ -55,7 +67,10 @@
     "name": "Hydrostatic Pressure Prediction",
     "type": "experiment",
     "year": "2025",
-    "stack": ["Python", "Jupyter"],
+    "stack": [
+      "Python",
+      "Jupyter"
+    ],
     "purpose": "ML regression modeling of a physical system",
     "purpose_id": "Pemodelan regresi ML untuk sistem fisik",
     "status": "done",
@@ -68,7 +83,10 @@
     "name": "Face Recognition",
     "type": "experiment",
     "year": "2025",
-    "stack": ["Python", "OpenCV"],
+    "stack": [
+      "Python",
+      "OpenCV"
+    ],
     "purpose": "Classical face detection with Haar cascades, before deep learning",
     "purpose_id": "Deteksi wajah klasik dengan Haar cascades sebelum era deep learning",
     "status": "archived",
@@ -81,7 +99,9 @@
     "name": "PKM Company Profile",
     "type": "site",
     "year": "2025",
-    "stack": ["Vue"],
+    "stack": [
+      "Vue"
+    ],
     "purpose": "Company-profile website build",
     "purpose_id": "Pembuatan website profil perusahaan",
     "status": "done",
@@ -89,5 +109,59 @@
     "demo": null,
     "insight": "Client-style work: the constraint is their content, not your stack",
     "insight_id": "Proyek gaya klien: batasan utamanya adalah konten mereka, bukan stack Anda"
+  },
+  {
+    "name": "Duta Comic",
+    "type": "site",
+    "year": "2025",
+    "stack": [
+      "Python",
+      "Streamlit",
+      "BeautifulSoup",
+      "Pandas"
+    ],
+    "purpose": "A comic reading site built as a class team project, with chapters scraped and served through Streamlit",
+    "purpose_id": "Situs baca komik dari proyek tim kuliah, dengan chapter yang di-scrape dan ditampilkan lewat Streamlit",
+    "status": "done",
+    "repo": "https://github.com/leutenantKiya/project-akhir-kelompok-kpk-kita-percaya-kiya",
+    "demo": "https://project-akhir-kelompok-kpk-kita-per.vercel.app",
+    "insight": "Scraping is the easy part; keeping the pages fast when the source is slow is the real work",
+    "insight_id": "Scraping itu bagian gampangnya; menjaga halaman tetap cepat saat sumbernya lambat itu kerja sebenarnya"
+  },
+  {
+    "name": "Birthday website",
+    "type": "site",
+    "year": "2026",
+    "stack": [
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Node.js"
+    ],
+    "purpose": "A personal birthday page with animations, a live count of days since birth and a prize wheel",
+    "purpose_id": "Halaman ulang tahun personal dengan animasi, hitungan hari sejak lahir secara live, dan roda hadiah",
+    "status": "done",
+    "repo": "https://github.com/leutenantKiya/Birthday-Celebration",
+    "demo": "https://birthday-celebration-ten-kohl.vercel.app",
+    "insight": "A gift made of code still has to be easy for a non-developer to set up",
+    "insight_id": "Hadiah berupa kode tetap harus gampang dipasang oleh orang yang bukan developer"
+  },
+  {
+    "name": "RobinFilms",
+    "type": "site",
+    "year": "2026",
+    "stack": [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "TMDB API"
+    ],
+    "purpose": "Film discovery built around people and context instead of an endless scroll, rendered on the server",
+    "purpose_id": "Penemuan film yang dibangun dari orang dan konteks, bukan scroll tanpa akhir, dirender di server",
+    "status": "active",
+    "repo": "https://github.com/leutenantKiya/robinfilms",
+    "demo": null,
+    "insight": "In progress: the trending page works, the film detail page is next",
+    "insight_id": "Sedang dikerjakan: halaman trending sudah jalan, halaman detail film berikutnya"
   }
 ]

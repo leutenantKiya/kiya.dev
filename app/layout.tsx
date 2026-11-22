@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fraunces, Geist, Geist_Mono } from "next/font/google";
 import { LanguageProvider } from "@/components/providers/LanguageProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { SeasonalProvider } from "@/components/providers/SeasonalProvider";
@@ -17,6 +17,12 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+// A soft, warm serif for headings and the name: it carries the cozy side of the site.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
 });
 
@@ -63,23 +69,20 @@ export default function RootLayout({
     ? "/me.png"
     : null;
 
-  const jetSrc = fs.existsSync(path.join(process.cwd(), "public", "jet.png"))
-    ? "/jet.png"
-    : null;
-
+  // Font variables go on <html>: the theme's --font-* tokens resolve there, so on <body> they came out empty.
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable}`} suppressHydrationWarning>
       <head>
         <script
           id="theme-script"
           dangerouslySetInnerHTML={{ __html: themeScript }}
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
+      <body className="font-sans antialiased">
         <ThemeProvider>
           <LanguageProvider>
             <SeasonalProvider>
-              <Shell portraitSrc={portraitSrc} jetSrc={jetSrc}>
+              <Shell portraitSrc={portraitSrc}>
                 {children}
               </Shell>
               <SeasonalLayer />

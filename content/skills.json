@@ -1,0 +1,125 @@
+[
+  {
+    "id": "product",
+    "title": {
+      "en": "Product and frontend",
+      "id": "Produk dan frontend"
+    },
+    "summary": {
+      "en": "I turn an idea into screens people can use on day one: web apps in React and Next.js, a mobile app in Flutter, and an editor with an infinite canvas.",
+      "id": "Aku mengubah ide jadi layar yang langsung bisa dipakai: aplikasi web dengan React dan Next.js, aplikasi mobile dengan Flutter, dan editor dengan kanvas tak terbatas."
+    },
+    "tools": [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Flutter",
+      "Tailwind CSS",
+      "TipTap"
+    ],
+    "proof": {
+      "en": [
+        "Lazy Builder: a Figma-like canvas linked to a Notion-like editor that exports a runnable React + Vite project.",
+        "Arbor: the viewer and filmmaker web app, with Google login in front of a blockchain wallet.",
+        "Nutrify: the Flutter app that turns a food photo into calories and macros."
+      ],
+      "id": [
+        "Lazy Builder: kanvas mirip Figma yang terhubung ke editor mirip Notion dan mengekspor proyek React + Vite siap jalan.",
+        "Arbor: aplikasi web untuk penonton dan pembuat film, dengan login Google di depan dompet blockchain.",
+        "Nutrify: aplikasi Flutter yang mengubah foto makanan jadi kalori dan makro."
+      ]
+    }
+  },
+  {
+    "id": "backend",
+    "title": {
+      "en": "Backend and data",
+      "id": "Backend dan data"
+    },
+    "summary": {
+      "en": "I design the APIs and data models behind the screens, and I keep two people's edits in sync in real time.",
+      "id": "Aku merancang API dan model data di balik layar, dan menjaga suntingan dua orang tetap sinkron secara real-time."
+    },
+    "tools": [
+      "FastAPI",
+      "Postgres",
+      "SQL",
+      "WebSockets",
+      "Yjs CRDT",
+      "Docker"
+    ],
+    "proof": {
+      "en": [
+        "Genesis Town: a game server where AI merchants price from stock, demand and cash, tested with a fast-forward economy simulator.",
+        "AILY: a FastAPI service that routes each chat message to one of eleven handlers, from search to order tracking.",
+        "Arbor: per-second viewing metered off-chain in Postgres, then settled on-chain in batches.",
+        "Lazy Builder: real-time collaboration over WebSockets with a Yjs CRDT."
+      ],
+      "id": [
+        "Genesis Town: server game tempat pedagang AI menentukan harga dari stok, permintaan, dan kas, diuji dengan simulator ekonomi percepatan.",
+        "AILY: layanan FastAPI yang mengarahkan tiap pesan chat ke salah satu dari sebelas handler, dari pencarian sampai lacak pesanan.",
+        "Arbor: tontonan per detik dihitung off-chain di Postgres, lalu diselesaikan on-chain secara batch.",
+        "Lazy Builder: kolaborasi real-time lewat WebSockets dengan Yjs CRDT."
+      ]
+    }
+  },
+  {
+    "id": "ml",
+    "title": {
+      "en": "Applied machine learning",
+      "id": "Machine learning terapan"
+    },
+    "summary": {
+      "en": "I put models inside products, where a photo or a message has to become a useful answer in seconds.",
+      "id": "Aku memasang model di dalam produk, tempat sebuah foto atau pesan harus jadi jawaban yang berguna dalam hitungan detik."
+    },
+    "tools": [
+      "Python",
+      "Multi-model pipelines",
+      "OpenCV",
+      "NLP intent routing",
+      "Jupyter"
+    ],
+    "proof": {
+      "en": [
+        "Nutrify: a pipeline that identifies a meal from a photo, estimates the portion and computes calories and macros.",
+        "AILY: natural-language intent routing for an e-commerce chatbot.",
+        "Lab: a regression model of hydrostatic pressure, and face detection with Haar cascades."
+      ],
+      "id": [
+        "Nutrify: pipeline yang mengenali makanan dari foto, mengestimasi porsi, lalu menghitung kalori dan makro.",
+        "AILY: perutean niat bahasa alami untuk chatbot e-commerce.",
+        "Lab: model regresi tekanan hidrostatis, dan deteksi wajah dengan Haar cascades."
+      ]
+    }
+  },
+  {
+    "id": "web3",
+    "title": {
+      "en": "Web3 without the friction",
+      "id": "Web3 tanpa ribet"
+    },
+    "summary": {
+      "en": "I hide the blockchain from people who just want to use the product: no seed phrase, no wallet popup, no gas fees on their side. I've done it twice, for a streaming site and for a game.",
+      "id": "Aku menyembunyikan blockchain dari orang yang cuma ingin memakai produknya: tanpa seed phrase, tanpa popup dompet, tanpa biaya gas di sisi mereka. Sudah kulakukan dua kali, untuk situs streaming dan untuk game."
+    },
+    "tools": [
+      "NEAR",
+      "Rust contracts",
+      "Solidity",
+      "Particle Network",
+      "Account abstraction",
+      "Gas relayers"
+    ],
+    "proof": {
+      "en": [
+        "Genesis Town: items and coins as NEAR tokens, one settlement per game day, and a relayer that pays every player's gas.",
+        "Arbor: Google login that silently creates a wallet, gasless transactions, and filmmakers paid per second watched."
+      ],
+      "id": [
+        "Genesis Town: item dan koin sebagai token NEAR, satu settlement per hari game, dan relayer yang membayar gas semua pemain.",
+        "Arbor: login Google yang diam-diam membuat dompet, transaksi tanpa gas, dan pembuat film dibayar per detik tontonan."
+      ]
+    }
+  }
+]

@@ -66,7 +66,7 @@ export function LabIndex() {
         setType(value);
         setShowAll(false);
       }}
-      className={`rounded-full border px-3 py-1 font-mono text-xs transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-accent ${
+      className={`rounded-md border px-3 py-1 font-mono text-xs transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-accent ${
         type === value ? "border-accent bg-surface-2 text-accent" : "border-line text-text-2 hover:text-text"
       }`}
     >
@@ -94,7 +94,7 @@ export function LabIndex() {
           type="button"
           onClick={() => setShowAll((v) => !v)}
           aria-expanded={showAll}
-          className="mt-4 rounded-full border border-line px-4 py-2 font-mono text-xs text-text-2 transition-colors duration-150 hover:border-accent hover:text-accent"
+          className="mt-4 rounded-lg border border-line px-4 py-2 font-mono text-xs text-text-2 transition-colors duration-150 hover:border-accent hover:text-accent"
         >
           {showAll
             ? id ? "Tampilkan lebih sedikit" : "Show fewer"

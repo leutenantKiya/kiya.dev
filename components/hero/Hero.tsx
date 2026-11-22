@@ -1,69 +1,145 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getProfile } from "@/lib/profile";
+import { getProfile, profile } from "@/lib/profile";
+import { useTranslation } from "@/hooks/useTranslation";
 import { animate } from "animejs";
 import { useLanguage } from "@/components/providers/LanguageProvider";
-import { KineticText } from "../ui/kinetic-text";
 import { Garland } from "@/components/seasonal/Garland";
-import { HeroTree } from "@/components/seasonal/Seasonal3D";
+import { HeroScene } from "./HeroScene";
+
+function HeroIntro({ align = "center" }: { align?: "center" | "left" }) {
+  const { t } = useTranslation();
+  const center = align === "center";
+  return (
+    <>
+      <p className={`text-base leading-relaxed text-text [text-wrap:pretty] ${center ? "text-center" : ""}`}>{t("heroIntro")}</p>
+      <p className={`mt-3 text-sm leading-relaxed text-text-2 [text-wrap:pretty] ${center ? "text-center" : ""}`}>{t("heroProof")}</p>
+      <div className={`mt-5 ${center ? "grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center" : "flex flex-wrap items-center gap-2"}`}>
+        <a
+          href="#work"
+          className="col-span-2 inline-flex min-h-11 items-center justify-center rounded-full bg-accent px-5 text-sm font-semibold text-bg transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        >
+          {t("ctaProjects")}
+        </a>
+        <a
+          href="#experience"
+          className="inline-flex min-h-11 items-center justify-center rounded-lg border border-line px-4 text-sm text-text transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
+        >
+          {t("ctaExperience")}
+        </a>
+        <a
+          href={`mailto:${profile.email}`}
+          className={`inline-flex min-h-11 items-center justify-center text-sm transition-colors duration-200 hover:text-accent focus-visible:outline-2 focus-visible:outline-accent ${
+            center ? "rounded-lg border border-line px-4 text-text sm:border-0 sm:px-3 sm:text-text-2 sm:underline-offset-4 sm:hover:underline" : "px-3 text-text-2 underline-offset-4 hover:underline"
+          }`}
+        >
+          {t("ctaEmail")}
+        </a>
+      </div>
+    </>
+  );
+}
 
 export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
   const { lang } = useLanguage();
   const profile = getProfile(lang);
 
-  const headingRef = useRef<HTMLHeadingElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const nameRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef(null);
+  const greeting = lang === "id" ? "Halo, saya" : "Hi, I'm";
+  const half = Math.ceil(profile.name.length / 2);
+  const halves = [profile.name.slice(0, half), profile.name.slice(half)];
+
+  // As the hero scrolls away, the two halves of the name drift apart.
+  // One CSS variable (--hp, 0 to 1) drives it; reduced motion leaves it at 0.
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const p = Math.min(1, Math.max(0, window.scrollY / (el.offsetHeight * 0.8)));
+      el.style.setProperty("--hp", p.toFixed(3));
+    };
+    const schedule = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", schedule);
+    };
+  }, []);
 
   useEffect(() => {
-    if (headingRef.current) {
-      animate(headingRef.current, {
-        x: [-1080, 0],
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (nameRef.current) {
+      animate(nameRef.current, {
+        y: [120, 0],
         opacity: [0, 1],
-        duration: 1200,
-        ease: "outExpo",
+        duration: 1100,
+        ease: "outQuint",
       });
     }
     if (imageRef.current) {
       animate(imageRef.current, {
-        y: [200, -35],
+        y: [200, 0],
         opacity: [0, 1],
-        duration: 1200,
-        ease: "outExpo",
+        duration: 1100,
+        delay: 80,
+        ease: "outQuint",
       });
     }
   }, []);
 
   return (
+    <>
+    {/* Below lg the scene holds only the name and the portrait (a bit shorter than the screen, so the
+        intro peeks in below); the intro sits under it instead of over the photo. */}
     <section
+      ref={heroRef}
       id="hero"
-      className="relative flex h-dvh min-h-[720px] w-full flex-col justify-between border-b border-line bg-bg overflow-hidden select-none"
+      className="hero-layers relative flex h-[88dvh] min-h-[600px] w-full flex-col justify-between bg-bg overflow-hidden select-none lg:h-dvh lg:min-h-[720px] lg:border-b lg:border-line"
     >
+      <HeroScene />
       <Garland />
 
-      {/* Heading, subtitle, and (mobile) bio — kept above the figure so nothing overlaps the face */}
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-start px-5 pt-32 text-center lg:pt-28">
-        {/* Big "Hi, I'm Kiya" heading, slides in via anime.js */}
-        <KineticText
-          key={lang}
-          ref={headingRef}
-          className="relative z-10 text-5xl sm:text-8xl md:text-9xl lg:text-[11rem] font-extrabold tracking-tighter text-text leading-none"
-          text={lang === "id" ? `Halo, Saya ${profile.name}` : `Hi, I'm ${profile.name}`}
-        />
+      <div className="relative z-30 flex flex-1 flex-col items-center justify-start px-5 pt-28 text-center lg:pt-24">
+        {/* Phones and tablets: greeting and name together in the flow. From lg the visible pair moves to
+            the layered name below, and this heading stays for screen readers only. */}
+        <h1 className="flex flex-col items-center lg:sr-only">
+          <span className="text-3xl font-semibold tracking-tight text-text">{greeting}</span>
+          <span className="mt-1 text-[22vw] sm:text-[7.5rem] font-extrabold uppercase leading-[0.8] tracking-[-0.04em] text-text">
+            {profile.name}
+          </span>
+        </h1>
 
         <p className="relative z-30 mt-4 font-mono text-sm sm:text-base lg:text-lg uppercase tracking-[0.25em] text-accent font-semibold">
           {profile.title}
         </p>
 
-        {/* Mobile bio */}
-        <p className="relative z-30 mt-5 max-w-[440px] text-base leading-relaxed text-text [text-wrap:pretty] lg:hidden">
-          {profile.bio}
-        </p>
       </div>
 
-      <HeroTree />
+      {/* The name, split around the portrait's head so every letter shows, between the back layer
+          (scenery, garland) and the front layer (portrait) */}
+      <div ref={nameRef} aria-hidden className="hero-name pointer-events-none absolute z-[15] hidden lg:block">
+        <span className="hero-greeting absolute bottom-full left-1/2 mb-[0.35em] -translate-x-1/2 whitespace-nowrap text-5xl font-semibold tracking-tight text-text">
+          {greeting}
+        </span>
+        <span className="hero-name-row text-text">
+          <span className="hero-half hero-half-left">{halves[0]}</span>
+          <span className="hero-half hero-half-right">{halves[1]}</span>
+        </span>
+        {/* On the ice: a blurred, fading mirror of the name, holiday mode only */}
+        <span className="hero-name-row hero-name-reflect absolute left-0 top-full text-text">
+          <span className="hero-half hero-half-left">{halves[0]}</span>
+          <span className="hero-half hero-half-right">{halves[1]}</span>
+        </span>
+      </div>
 
-      {/* Portrait */}
       {portraitSrc ? (
         <div
           ref={imageRef}
@@ -71,8 +147,9 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
         >
           <img
             src={portraitSrc}
+            fetchPriority="high"
             alt={`Portrait of ${profile.name}`}
-            className="h-[48vh] sm:h-[52vh] md:h-[56vh] lg:h-[60vh] max-h-[680px] w-auto max-w-[90vw] object-contain object-bottom drop-shadow-2xl"
+            className="hero-portrait h-[min(54vh,calc(88dvh-19rem))] sm:h-[min(58vh,calc(88dvh-19rem))] lg:h-[60vh] max-h-[680px] w-auto max-w-[90vw] object-contain object-bottom drop-shadow-2xl"
           />
         </div>
       ) : (
@@ -82,25 +159,29 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
         </div>
       )}
 
-      {/* Bottom scrim */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-40 bg-gradient-to-t from-bg to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-48 bg-gradient-to-t from-bg via-bg/60 to-transparent"
       />
 
-      {/* Desktop bio */}
-      <p className="absolute bottom-12 left-12 z-30 hidden max-w-sm text-left text-base leading-relaxed text-text [text-wrap:pretty] lg:block">
-        {profile.bio}
-      </p>
+      <div className="absolute bottom-12 left-12 z-30 hidden max-w-md rounded-2xl bg-bg/90 p-5 text-left lg:block">
+        <HeroIntro align="left" />
+      </div>
 
-      {/* Scroll cue */}
       <a
         href="#work"
         aria-label="Scroll to work"
-        className="absolute bottom-6 left-1/2 z-30 -translate-x-1/2 font-mono text-xs text-text-2 transition-colors duration-150 hover:text-accent motion-safe:animate-bounce"
+        className="absolute bottom-6 left-1/2 z-30 hidden -translate-x-1/2 font-mono text-xs lg:block text-text-2 transition-colors duration-150 hover:text-accent"
       >
         ↓
       </a>
     </section>
+
+    <div className="border-b border-line px-5 pb-12 pt-4 lg:hidden">
+      <div className="mx-auto max-w-[460px]">
+        <HeroIntro />
+      </div>
+    </div>
+    </>
   );
 }
