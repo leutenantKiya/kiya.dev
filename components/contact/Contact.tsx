@@ -6,7 +6,7 @@ import { about } from "@/lib/about";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { useTranslation } from "@/hooks/useTranslation";
 import FeedbackJar from "./FeedbackJar";
-import { ContactSnowman, ContactTree } from "@/components/seasonal/Seasonal3D";
+import { ContactSnowman } from "@/components/seasonal/Seasonal3D";
 
 export function Contact() {
   const [copied, setCopied] = useState(false);
@@ -22,7 +22,7 @@ export function Contact() {
 
   return (
     <div className="mt-6 flex flex-col gap-8">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+      <div className="flex items-end gap-4">
         <div className="min-w-0 flex-1">
           <p className="max-w-[48ch] text-xl font-semibold leading-snug tracking-tight text-text [text-wrap:balance]">{t("contactLooking")}</p>
           <p className="mt-3 text-base leading-relaxed text-text-2">{contactLine}</p>
@@ -65,11 +65,7 @@ export function Contact() {
             )}
           </div>
         </div>
-        {/* holiday corner: the tree and the snowman side by side (renders nothing out of season) */}
-        <div className="flex items-end justify-end gap-1">
-          <ContactTree />
-          <ContactSnowman />
-        </div>
+        <ContactSnowman />
       </div>
 
       <div className="pt-4">

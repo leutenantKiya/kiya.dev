@@ -57,13 +57,17 @@ function SnowmanFallback() {
   );
 }
 
-/** The tree stands beside the snowman in the contact section. */
-export function ContactTree() {
+/** The tree on the case-study pages: in the bottom-right corner of wide screens, after the story on
+ *  narrower ones. One element either way, so there is only ever one WebGL tree. */
+export function CaseStudyTree() {
   const { mounted, festive } = useSeasonal();
   if (!mounted || !festive) return null;
 
   return (
-    <div aria-hidden className="h-48 w-36 shrink-0 sm:h-64 sm:w-44">
+    <div
+      aria-hidden
+      className="pointer-events-none ml-auto mr-5 -mt-24 h-48 w-36 xl:fixed xl:bottom-4 xl:right-8 xl:m-0 xl:h-72 xl:w-52"
+    >
       {hasWebGL() ? <ChristmasTree /> : <TreeFallback />}
     </div>
   );

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { getProject } from "@/lib/projects";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { dictionary } from "@/lib/dictionary";
+import { CaseStudyTree } from "@/components/seasonal/Seasonal3D";
 
 export function En({ children }: { children: ReactNode }) {
   const { lang } = useLanguage();
@@ -36,6 +37,7 @@ export function CaseStudy({
   return (
     // Same view-transition names as the project's folder on the home page: the folder grows into this page,
     // and its screenshot lands as the image below the header. Back navigation plays it in reverse.
+    <>
     <ViewTransition name={`folder-${slug}`}>
     <div className="mx-auto max-w-[720px] px-5 py-12 lg:px-12">
       <Link
@@ -147,5 +149,8 @@ export function CaseStudy({
       </footer>
     </div>
     </ViewTransition>
+    {/* outside the folder's view transition, so the tree doesn't morph with the page */}
+    <CaseStudyTree />
+    </>
   );
 }
