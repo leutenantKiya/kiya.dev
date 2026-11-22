@@ -96,21 +96,23 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
   }, []);
 
   return (
+    <>
+    {/* Below lg the scene holds only the name and the portrait (a bit shorter than the screen, so the
+        intro peeks in below); the intro sits under it instead of over the photo. */}
     <section
       ref={heroRef}
       id="hero"
-      className="hero-layers relative flex h-dvh min-h-[1000px] lg:min-h-[720px] w-full flex-col justify-between border-b border-line bg-bg overflow-hidden select-none"
+      className="hero-layers relative flex h-[88dvh] min-h-[600px] w-full flex-col justify-between bg-bg overflow-hidden select-none lg:h-dvh lg:min-h-[720px] lg:border-b lg:border-line"
     >
       <HeroScene />
       <Garland />
 
-      {/* Greeting and intro sit in front of everything; the name itself stands behind the portrait */}
       <div className="relative z-30 flex flex-1 flex-col items-center justify-start px-5 pt-28 text-center lg:pt-24">
         {/* Phones and tablets: greeting and name together in the flow. From lg the visible pair moves to
             the layered name below, and this heading stays for screen readers only. */}
         <h1 className="flex flex-col items-center lg:sr-only">
           <span className="text-3xl font-semibold tracking-tight text-text">{greeting}</span>
-          <span className="mt-1 text-[22vw] sm:text-[9rem] font-extrabold uppercase leading-[0.8] tracking-[-0.04em] text-text">
+          <span className="mt-1 text-[22vw] sm:text-[7.5rem] font-extrabold uppercase leading-[0.8] tracking-[-0.04em] text-text">
             {profile.name}
           </span>
         </h1>
@@ -119,9 +121,6 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
           {profile.title}
         </p>
 
-        <div className="relative z-30 mt-5 max-w-[460px] rounded-2xl bg-bg/90 px-3 py-3 lg:hidden">
-          <HeroIntro />
-        </div>
       </div>
 
       {/* The name, split around the portrait's head so every letter shows, between the back layer
@@ -150,7 +149,7 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
             src={portraitSrc}
             fetchPriority="high"
             alt={`Portrait of ${profile.name}`}
-            className="hero-portrait h-[38vh] sm:h-[52vh] md:h-[56vh] lg:h-[60vh] max-h-[680px] w-auto max-w-[90vw] object-contain object-bottom drop-shadow-2xl"
+            className="hero-portrait h-[min(54vh,calc(88dvh-19rem))] sm:h-[min(58vh,calc(88dvh-19rem))] lg:h-[60vh] max-h-[680px] w-auto max-w-[90vw] object-contain object-bottom drop-shadow-2xl"
           />
         </div>
       ) : (
@@ -172,10 +171,17 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
       <a
         href="#work"
         aria-label="Scroll to work"
-        className="absolute bottom-6 left-1/2 z-30 -translate-x-1/2 font-mono text-xs text-text-2 transition-colors duration-150 hover:text-accent"
+        className="absolute bottom-6 left-1/2 z-30 hidden -translate-x-1/2 font-mono text-xs lg:block text-text-2 transition-colors duration-150 hover:text-accent"
       >
         ↓
       </a>
     </section>
+
+    <div className="border-b border-line px-5 pb-12 pt-4 lg:hidden">
+      <div className="mx-auto max-w-[460px]">
+        <HeroIntro />
+      </div>
+    </div>
+    </>
   );
 }

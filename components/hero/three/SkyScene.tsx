@@ -451,10 +451,12 @@ function Sky({ night, glow }: { night: React.RefObject<number>; glow: THREE.Text
 
   useFrame(({ clock, size }) => {
     const ph = phase(night.current);
-    // Narrow (phone) screens see less sky sideways: pull the sun and moon in toward the middle.
+    // Narrow (phone) screens see less sky sideways: pull the sun and moon in toward the middle, and
+    // lower them beside the portrait instead of behind the name.
     const spread = Math.min(1, size.width / size.height / 1.7);
-    const sunDir = direction(SUN_AZ * spread, ph.sunEl);
-    const moonDir = direction(MOON_AZ * spread, ph.moonEl);
+    const lift = (1 - spread) * 0.16;
+    const sunDir = direction(SUN_AZ * spread, ph.sunEl - lift);
+    const moonDir = direction(MOON_AZ * spread, ph.moonEl - lift * 0.5);
     const sunLow = 1 - smoothstep(0.02, 0.28, ph.sunEl);
     const sunColor = PALETTE.sunHigh.clone().lerp(PALETTE.sunLow, sunLow);
 
