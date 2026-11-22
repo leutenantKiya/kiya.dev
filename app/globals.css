@@ -273,6 +273,70 @@ body {
   animation: spin-slow 15s linear infinite;
 }
 
+/* Hero layers: the name sits at half the portrait's height, so the head and shoulders cover its lower half.
+   --ph mirrors the portrait's height classes in Hero.tsx. */
+.hero-layers {
+  --ph: 38vh;
+  --name-at: 0.74; /* phones: the name rises behind the head, so it isn't lost behind the shoulders */
+}
+
+@media (min-width: 640px) {
+  .hero-layers {
+    --ph: 52vh;
+    --name-at: 0.52;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-layers {
+    --ph: 56vh;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-layers {
+    --ph: min(60vh, 680px);
+  }
+}
+
+.hero-name {
+  bottom: calc(var(--ph) * var(--name-at));
+}
+
+.hero-name-reflect {
+  display: none;
+  transform: scaleY(-1);
+  opacity: 0.35;
+  filter: blur(2px);
+  /* fades out within a third of its height, before it reaches the intro text */
+  -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 32%);
+  mask-image: linear-gradient(to top, #000 0%, transparent 32%);
+  user-select: none;
+}
+
+html[data-season="christmas"] .hero-name-reflect {
+  display: block;
+}
+
+/* Folder to case study: the shared folder and screenshot morph; the rest of the page crossfades. */
+::view-transition-group(*) {
+  animation-duration: 560ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 320ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 /* Experience timeline: one year row is tall enough for a name, a role and the dates. */
 .exp-grid {
   --row: 7.5rem;

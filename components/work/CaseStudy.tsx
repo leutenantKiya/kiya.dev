@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { ViewTransition, type ReactNode } from "react";
 import Link from "next/link";
 import { getProject } from "@/lib/projects";
 import { useLanguage } from "@/components/providers/LanguageProvider";
@@ -28,8 +28,12 @@ export function CaseStudy({
   const { lang } = useLanguage();
   const project = getProject(slug, lang);
   const t = dictionary[lang];
+  const still = project.previews?.[0] ?? (Array.isArray(project.preview) ? project.preview[0] : project.preview);
 
   return (
+    // Same view-transition names as the project's folder on the home page: the folder grows into this page,
+    // and its screenshot lands as the image below the header. Back navigation plays it in reverse.
+    <ViewTransition name={`folder-${slug}`}>
     <div className="mx-auto max-w-[720px] px-5 py-12 lg:px-12">
       <Link
         href="/#work"
@@ -90,6 +94,14 @@ export function CaseStudy({
         </div>
       </header>
 
+      {still && (
+        <ViewTransition name={`still-${slug}`}>
+          <figure className="mt-8 overflow-hidden rounded-xl border border-line bg-surface">
+            <img src={still} alt={`${project.title}: ${project.tagline}`} width={1280} height={800} className="aspect-[8/5] w-full object-cover object-top" />
+          </figure>
+        </ViewTransition>
+      )}
+
       {project.video && (
         <div className="my-6 overflow-hidden rounded-xl border border-line shadow-2xl">
           <iframe
@@ -121,5 +133,6 @@ export function CaseStudy({
         </Link>
       </footer>
     </div>
+    </ViewTransition>
   );
 }

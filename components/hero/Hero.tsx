@@ -5,7 +5,6 @@ import { getProfile, profile } from "@/lib/profile";
 import { useTranslation } from "@/hooks/useTranslation";
 import { animate } from "animejs";
 import { useLanguage } from "@/components/providers/LanguageProvider";
-import { KineticText } from "../ui/kinetic-text";
 import { Garland } from "@/components/seasonal/Garland";
 import { HeroTree } from "@/components/seasonal/Seasonal3D";
 
@@ -46,15 +45,16 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
   const { lang } = useLanguage();
   const profile = getProfile(lang);
 
-  const headingRef = useRef<HTMLHeadingElement>(null);
+  const nameRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef(null);
 
   useEffect(() => {
-    if (headingRef.current) {
-      animate(headingRef.current, {
-        x: [-1080, 0],
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (nameRef.current) {
+      animate(nameRef.current, {
+        y: [120, 0],
         opacity: [0, 1],
-        duration: 1200,
+        duration: 1400,
         ease: "outExpo",
       });
     }
@@ -71,19 +71,16 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
   return (
     <section
       id="hero"
-      className="relative flex h-dvh min-h-[720px] w-full flex-col justify-between border-b border-line bg-bg overflow-hidden select-none"
+      className="hero-layers relative flex h-dvh min-h-[720px] w-full flex-col justify-between border-b border-line bg-bg overflow-hidden select-none"
     >
       <Garland />
 
-      {/* Heading, subtitle, and (mobile) bio — kept above the figure so nothing overlaps the face */}
-      <div className="relative z-30 flex flex-1 flex-col items-center justify-start px-5 pt-32 text-center lg:pt-28">
-        {/* Big "Hi, I'm Kiya" heading, slides in via anime.js */}
-        <KineticText
-          key={lang}
-          ref={headingRef}
-          className="relative z-10 text-5xl sm:text-8xl md:text-9xl lg:text-[11rem] font-extrabold tracking-tighter text-text leading-none"
-          text={lang === "id" ? `Halo, Saya ${profile.name}` : `Hi, I'm ${profile.name}`}
-        />
+      {/* Greeting and intro sit in front of everything; the name itself stands behind the portrait */}
+      <div className="relative z-30 flex flex-1 flex-col items-center justify-start px-5 pt-28 text-center lg:pt-24">
+        <h1 className="text-3xl font-semibold tracking-tight text-text sm:text-5xl">
+          <span>{lang === "id" ? "Halo, saya" : "Hi, I'm"}</span>
+          <span className="sr-only"> {profile.name}</span>
+        </h1>
 
         <p className="relative z-30 mt-4 font-mono text-sm sm:text-base lg:text-lg uppercase tracking-[0.25em] text-accent font-semibold">
           {profile.title}
@@ -96,6 +93,17 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
       </div>
 
       <HeroTree />
+
+      {/* The name, between the back layer (tree, garland) and the front layer (portrait) */}
+      <div ref={nameRef} aria-hidden className="hero-name pointer-events-none absolute left-1/2 z-[15] -translate-x-1/2">
+        <span className="block whitespace-nowrap text-[clamp(5.5rem,27vw,22rem)] font-extrabold uppercase leading-[0.8] tracking-[-0.04em] text-text">
+          {profile.name}
+        </span>
+        {/* On the ice: a blurred, fading mirror of the name, holiday mode only */}
+        <span className="hero-name-reflect absolute left-0 top-full block whitespace-nowrap text-[clamp(5.5rem,27vw,22rem)] font-extrabold uppercase leading-[0.8] tracking-[-0.04em] text-text">
+          {profile.name}
+        </span>
+      </div>
 
       {/* Portrait */}
       {portraitSrc ? (

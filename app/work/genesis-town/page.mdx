@@ -1,4 +1,5 @@
 import { CaseStudy, En, Id } from "@/components/work/CaseStudy";
+import { Room } from "@/components/work/Room";
 
 export const metadata = {
   title: "Genesis Town, a market town with an on-chain economy | Kiya",
@@ -16,13 +17,18 @@ sign in with Google or email and never see a seed phrase, a wallet popup or a ga
 Built by a team of three for the NEAR Hackathon (November 1 to 14, 2026), Games With Real
 Economies track.
 
-## Problem
+<Room title="Problem">
+
 
 Most on-chain games either put a token on top of a static game, or make players fight
 wallets and gas before they can play. Either way the chain is in the way, and the
 economy is decoration.
 
-## Solution
+
+</Room>
+
+<Room title="Solution">
+
 
 Make the economy the game, and keep the chain out of sight:
 
@@ -40,7 +46,11 @@ player-to-player trades, shares   → on-chain immediately
 gas                               → paid by a relayer, never by the player
 ```
 
-## Decisions and tradeoffs
+
+</Room>
+
+<Room title="Decisions and tradeoffs">
+
 
 - **Settle once a day, not every action.** Gathering and crafting stay instant. The chain
   receives each day's net changes in one transaction, with a hash of the published
@@ -52,11 +62,18 @@ gas                               → paid by a relayer, never by the player
   fast-forward simulator, so economy changes are tested over many simulated days
   before players feel them.
 
-## Status
+
+</Room>
+
+<Room title="Status">
+
 
 In development. The game contract, relayer and settlement keys are deployed on NEAR
 testnet, and the repository holds the design docs: game loop, economy, architecture and
 threat model.
+
+</Room>
+
 </En>
 
 <Id>
@@ -67,13 +84,18 @@ di kontrak NEAR, tapi pemain cukup masuk dengan Google atau email tanpa pernah m
 seed phrase, popup dompet, atau biaya gas. Dibangun oleh tim bertiga untuk NEAR Hackathon
 (1 sampai 14 November 2026), track Games With Real Economies.
 
-## Masalah
+<Room title="Masalah">
+
 
 Kebanyakan game on-chain hanya menempelkan token di atas game yang statis, atau memaksa
 pemain berurusan dengan dompet dan gas sebelum bisa bermain. Akhirnya blockchain
 menghalangi, dan ekonominya cuma hiasan.
 
-## Solusi
+
+</Room>
+
+<Room title="Solusi">
+
 
 Jadikan ekonomi sebagai permainannya, dan sembunyikan blockchain-nya:
 
@@ -91,7 +113,11 @@ dagang antarpemain, saham                → langsung on-chain
 gas                                      → dibayar relayer, bukan pemain
 ```
 
-## Keputusan & Kompromi
+
+</Room>
+
+<Room title="Keputusan & Kompromi">
+
 
 - **Settlement sekali sehari, bukan tiap aksi.** Mengumpulkan dan membuat barang tetap
   instan. Blockchain menerima perubahan bersih tiap hari dalam satu transaksi, beserta
@@ -104,11 +130,18 @@ gas                                      → dibayar relayer, bukan pemain
   dan di simulator percepatan, jadi perubahan ekonomi diuji selama banyak hari simulasi
   sebelum pemain merasakannya.
 
-## Status
+
+</Room>
+
+<Room title="Status">
+
 
 Masih dalam pengembangan. Kontrak game, relayer, dan kunci settlement sudah terpasang di
 NEAR testnet, dan repositori berisi dokumen desain: alur permainan, ekonomi, arsitektur,
 dan model ancaman.
+
+</Room>
+
 </Id>
 
 </CaseStudy>

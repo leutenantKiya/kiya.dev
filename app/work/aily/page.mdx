@@ -1,4 +1,5 @@
 import { CaseStudy, En, Id } from "@/components/work/CaseStudy";
+import { Room } from "@/components/work/Room";
 
 export const metadata = {
   title: "AILY — Intent-routed e-commerce chatbot | Kiya",
@@ -14,13 +15,18 @@ staff. AILY parses natural-language messages and routes each one to the right
 handler — product search, cart, checkout, order tracking — and answers automatically.
 Python NLP service, Java desktop client, SQL storage.
 
-## Problem
+<Room title="Problem">
+
 
 E-commerce support is dominated by a small set of repetitive intents: where is my
 order, do you have X, how do I pay. Humans answering those don't scale, and generic
 chatbots that try to handle everything in one blob fail unpredictably.
 
-## Solution
+
+</Room>
+
+<Room title="Solution">
+
 
 A pipeline with one job per stage:
 
@@ -40,7 +46,11 @@ store profile, admin product CRUD, and a fallback for anything unparseable. User
 admin traffic enter through separate authenticated endpoints — an admin managing the
 catalog goes through the same NLP front door as a customer asking about shipping.
 
-## Decisions & tradeoffs
+
+</Room>
+
+<Room title="Decisions & tradeoffs">
+
 
 - **Router + handlers over one model.** Decomposing by intent makes each handler
   small, testable, and independently replaceable — and the fallback handler makes the
@@ -51,21 +61,33 @@ catalog goes through the same NLP front door as a customer asking about shipping
 - **Key-per-role auth.** Simple id + public-key validation separates user and admin
   capabilities at the entry point, before any intent logic runs.
 
-## Status
+
+</Room>
+
+<Room title="Status">
+
 
 University team project, presented architecture-first: the intent-router design is the
 substance here. The repo shows a staged build plan with substantial Java and Python
 implementation; no deployment or usage metrics.
+
+</Room>
+
 </En>
 
 <Id>
 **Dalam sepuluh detik:** sebagian besar pertanyaan pelanggan toko bersifat rutin, tetapi tetap membutuhkan staf untuk menjawabnya. AILY menganalisis pesan bahasa alami dan mengarahkan masing-masing pesan ke handler yang tepat — pencarian produk, keranjang, pembayaran, hingga pelacakan pesanan — dan menjawab secara otomatis. Layanan NLP Python, klien desktop Java, penyimpanan SQL.
 
-## Masalah
+<Room title="Masalah">
+
 
 Dukungan e-commerce didominasi oleh sekumpulan niat yang berulang: di mana pesanan saya, apakah stok X ada, bagaimana cara bayar. Penanganan manual oleh manusia kurang efisien, sementara chatbot generik serba-bisa sering kali tidak akurat.
 
-## Solusi
+
+</Room>
+
+<Room title="Solusi">
+
 
 Alur kerja dengan satu tugas khusus per tahap:
 
@@ -81,14 +103,25 @@ Input Pengguna / Admin
 
 Sebelas handler khusus menangani kelompok niat tertentu: FAQ, pencarian produk, detail produk, keranjang, pembayaran, status pesanan, pemrosesan pesanan, pelacakan logistik, profil toko, CRUD produk admin, serta fallback untuk pesan yang tak terurai.
 
-## Keputusan & Kompromi
+
+</Room>
+
+<Room title="Keputusan & Kompromi">
+
 
 - **Router + handler dibanding satu model tunggal.** Memecah niat membuat setiap handler berukuran kecil, teruji, dan dapat diperbarui secara independen.
 - **Antar-bahasa berdasarkan kontrak API.** Layanan NLP Python dan klien JavaFX terhubung melalui HTTP API sederhana.
 
-## Status
+
+</Room>
+
+<Room title="Status">
+
 
 Proyek tim universitas dengan fokus utama pada arsitektur sistem.
+
+</Room>
+
 </Id>
 
 </CaseStudy>
