@@ -247,7 +247,8 @@ export default function ChristmasTree() {
       <Canvas
         frameloop={frameloop}
         dpr={[1, 1.5]}
-        camera={{ position: [0, 1.0, 7.6], fov: 36 }}
+        // framed with room above the star, which bobs with the Float
+        camera={{ position: [0, 1.35, 8.6], fov: 36 }}
         gl={{ alpha: true, antialias: true }}
       >
         <StudioLights />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { getExperiences, type Experience } from "@/lib/experience";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -23,8 +23,6 @@ const KIND: Record<Experience["type"], [string, string]> = {
   organization: ["Organization", "Organisasi"],
 };
 
-// Row height comes from --row so phones get shorter years than desktop.
-const ROW = "var(--row)";
 
 type Entry = Experience & { key: string; from: number; to: number; ongoing: boolean };
 type Placed = Entry & { slot: number };
@@ -107,76 +105,81 @@ export function ExperienceTimeline() {
     <div className="mt-4">
       <p className="mb-8 max-w-[60ch] text-base text-text-2">{t("sectionExperience")}</p>
 
-      {/* the rundown grid on every width: time running down, lanes across */}
-      <div className="exp-grid">
-        <div className="grid gap-x-1.5 sm:gap-x-3" style={{ gridTemplateColumns: `2.5rem ${lanes.map((l) => `minmax(0, ${l.slotCount}fr)`).join(" ")}` }}>
+      {/* time runs left to right, one row per lane; bars stretch across the years they cover */}
+      <div>
+        <div
+          className="grid gap-x-2 gap-y-3 sm:gap-x-4"
+          style={{ gridTemplateColumns: `minmax(4.25rem, auto) repeat(${years.length}, minmax(0, 1fr))` }}
+        >
           <div />
-          {lanes.map(({ lane, placed }) => (
-            <p key={lane.id} className="flex items-center gap-1.5 pb-3 font-mono text-[11px] text-text-2 sm:text-xs">
-              <span aria-hidden className="size-2 shrink-0 rounded-full" style={{ background: lane.tone }} />
-              <span className="sm:hidden">{lane.short[lang === "id" ? 1 : 0]}</span>
-              <span className="hidden sm:inline">{label(lane)}</span>
-              <span className="hidden text-text-2/60 sm:inline">{placed.length}</span>
+          {years.map((y) => (
+            <p
+              key={y}
+              className={`flex items-center gap-2 border-l pl-2 font-mono text-xs sm:text-sm ${y === now ? "border-accent text-accent" : "border-line text-text-2"}`}
+            >
+              {y}
+              {y === now && (
+                <span className="flex items-center gap-1 text-[10px] uppercase tracking-widest">
+                  <span aria-hidden className="relative flex size-1.5">
+                    <span className="absolute inline-flex size-full rounded-full bg-accent opacity-60 motion-safe:animate-ping" />
+                    <span className="relative inline-flex size-1.5 rounded-full bg-accent" />
+                  </span>
+                  {nowLabel}
+                </span>
+              )}
             </p>
           ))}
 
-          <div className="grid" style={{ gridTemplateRows: `repeat(${years.length}, ${ROW})` }}>
-            {years.map((y) => (
-              <p key={y} className={`border-t pt-1.5 font-mono text-[11px] sm:text-sm ${y === now ? "border-accent text-accent" : "border-line text-text-2"}`}>
-                {y}
-                {y === now && (
-                  <span className="mt-1 flex items-center gap-1 text-[10px] uppercase tracking-widest">
-                    <span aria-hidden className="relative flex size-1.5">
-                      <span className="absolute inline-flex size-full rounded-full bg-accent opacity-60 motion-safe:animate-ping" />
-                      <span className="relative inline-flex size-1.5 rounded-full bg-accent" />
-                    </span>
-                    {nowLabel}
-                  </span>
-                )}
-              </p>
-            ))}
-          </div>
-
           {lanes.map(({ lane, placed, slotCount }) => (
-            <ul
-              key={lane.id}
-              aria-label={label(lane)}
-              className="grid gap-1 border-t border-line pt-1.5 sm:gap-1.5"
-              style={{
-                gridTemplateRows: `repeat(${years.length}, ${ROW})`,
-                gridTemplateColumns: `repeat(${slotCount}, minmax(0, 1fr))`,
-              }}
-            >
-              {placed.map((e) => {
-                const active = current?.key === e.key;
-                return (
-                  <li key={e.key} style={{ gridRow: `${e.from - first + 1} / ${e.to - first + 2}`, gridColumn: e.slot + 1 }}>
-                    <button
-                      type="button"
-                      aria-pressed={active}
-                      aria-controls="experience-details"
-                      onClick={() => setSelected(e.key)}
-                      style={{ ["--tone" as string]: lane.tone }}
-                      className={`exp-bar flex h-full w-full flex-col justify-between overflow-hidden rounded-lg border border-l-[3px] p-2 text-left sm:p-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
-                        active ? "is-active" : ""
-                      } ${e.ongoing ? "is-ongoing" : ""}`}
-                    >
-                      <span>
-                        <span className="hidden font-mono text-[10px] uppercase tracking-widest text-[color:var(--tone)] sm:block">
-                          {KIND[e.type][lang === "id" ? 1 : 0]}
+            <Fragment key={lane.id}>
+              <p className="flex items-start gap-1.5 border-t border-line pt-3 font-mono text-[11px] text-text-2 sm:text-xs">
+                <span aria-hidden className="mt-1 size-2 shrink-0 rounded-full" style={{ background: lane.tone }} />
+                <span>
+                  <span className="sm:hidden">{lane.short[lang === "id" ? 1 : 0]}</span>
+                  <span className="hidden sm:inline">{label(lane)}</span>
+                  <span className="ml-1.5 hidden text-text-2/60 sm:inline">{placed.length}</span>
+                </span>
+              </p>
+              <ul
+                aria-label={label(lane)}
+                className="grid gap-1.5 border-t border-line pt-3"
+                style={{
+                  gridColumn: `2 / span ${years.length}`,
+                  gridTemplateColumns: `repeat(${years.length}, minmax(0, 1fr))`,
+                  gridTemplateRows: `repeat(${slotCount}, auto)`,
+                }}
+              >
+                {placed.map((e) => {
+                  const active = current?.key === e.key;
+                  return (
+                    <li key={e.key} style={{ gridColumn: `${e.from - first + 1} / ${e.to - first + 2}`, gridRow: e.slot + 1 }}>
+                      <button
+                        type="button"
+                        aria-pressed={active}
+                        aria-controls="experience-details"
+                        onClick={() => setSelected(e.key)}
+                        style={{ ["--tone" as string]: lane.tone }}
+                        className={`exp-bar flex h-full min-h-[4.75rem] w-full flex-col justify-between gap-2 overflow-hidden rounded-lg border border-l-[3px] p-2.5 text-left sm:p-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                          active ? "is-active" : ""
+                        } ${e.ongoing ? "is-ongoing" : ""}`}
+                      >
+                        <span>
+                          <span className="hidden font-mono text-[10px] uppercase tracking-widest text-[color:var(--tone)] sm:block">
+                            {KIND[e.type][lang === "id" ? 1 : 0]}
+                          </span>
+                          <span className="line-clamp-3 block text-xs font-semibold leading-snug text-text [overflow-wrap:anywhere] sm:mt-0.5 sm:text-sm">{e.org}</span>
+                          <span className="mt-0.5 hidden text-xs text-text-2 md:line-clamp-1">{e.role}</span>
                         </span>
-                        <span className="line-clamp-4 block text-xs font-semibold leading-snug text-text [overflow-wrap:anywhere] sm:mt-0.5 sm:text-sm">{e.org}</span>
-                        <span className="mt-0.5 hidden text-xs text-text-2 lg:line-clamp-2">{e.role}</span>
-                      </span>
-                      <span className="font-mono text-[10px] leading-tight text-text-2 sm:text-[11px]">
-                        {span(e)}
-                        {e.ongoing && " ↓"}
-                      </span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
+                        <span className="font-mono text-[10px] leading-tight text-text-2 sm:text-[11px]">
+                          {span(e)}
+                          {e.ongoing && " →"}
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </Fragment>
           ))}
         </div>
 

@@ -52,7 +52,7 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
   const half = Math.ceil(profile.name.length / 2);
   const halves = [profile.name.slice(0, half), profile.name.slice(half)];
 
-  // As the hero scrolls away, the two halves of the name drift apart and the portrait rises.
+  // As the hero scrolls away, the two halves of the name drift apart.
   // One CSS variable (--hp, 0 to 1) drives it; reduced motion leaves it at 0.
   useEffect(() => {
     const el = heroRef.current;
@@ -86,7 +86,7 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
     }
     if (imageRef.current) {
       animate(imageRef.current, {
-        y: [200, -35],
+        y: [200, 0],
         opacity: [0, 1],
         duration: 1100,
         delay: 80,
@@ -99,18 +99,18 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
     <section
       ref={heroRef}
       id="hero"
-      className="hero-layers relative flex h-dvh min-h-[1000px] sm:min-h-[720px] w-full flex-col justify-between border-b border-line bg-bg overflow-hidden select-none"
+      className="hero-layers relative flex h-dvh min-h-[1000px] lg:min-h-[720px] w-full flex-col justify-between border-b border-line bg-bg overflow-hidden select-none"
     >
       <HeroScene />
       <Garland />
 
       {/* Greeting and intro sit in front of everything; the name itself stands behind the portrait */}
       <div className="relative z-30 flex flex-1 flex-col items-center justify-start px-5 pt-28 text-center lg:pt-24">
-        {/* Phones: greeting and name together in the flow. From sm the visible pair moves to the layered
-            name below, and this heading stays for screen readers only. */}
-        <h1 className="flex flex-col items-center sm:sr-only">
+        {/* Phones and tablets: greeting and name together in the flow. From lg the visible pair moves to
+            the layered name below, and this heading stays for screen readers only. */}
+        <h1 className="flex flex-col items-center lg:sr-only">
           <span className="text-3xl font-semibold tracking-tight text-text">{greeting}</span>
-          <span className="mt-1 text-[22vw] font-extrabold uppercase leading-[0.8] tracking-[-0.04em] text-text">
+          <span className="mt-1 text-[22vw] sm:text-[9rem] font-extrabold uppercase leading-[0.8] tracking-[-0.04em] text-text">
             {profile.name}
           </span>
         </h1>
@@ -127,7 +127,7 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
 
       {/* The name, split around the portrait's head so every letter shows, between the back layer
           (scenery, garland) and the front layer (portrait) */}
-      <div ref={nameRef} aria-hidden className="hero-name pointer-events-none absolute z-[15] hidden sm:block">
+      <div ref={nameRef} aria-hidden className="hero-name pointer-events-none absolute z-[15] hidden lg:block">
         <span className="hero-greeting absolute bottom-full left-1/2 mb-[0.35em] -translate-x-1/2 whitespace-nowrap text-5xl font-semibold tracking-tight text-text">
           {greeting}
         </span>
@@ -146,7 +146,7 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
       {portraitSrc ? (
         <div
           ref={imageRef}
-          className="absolute bottom-0 left-2/5 z-20 -translate-x-1/2 pointer-events-none flex items-end justify-center sm:left-1/2"
+          className="absolute bottom-0 left-1/2 z-20 -translate-x-1/2 pointer-events-none flex items-end justify-center"
         >
           <img
             src={portraitSrc}

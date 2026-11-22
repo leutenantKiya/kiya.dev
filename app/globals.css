@@ -413,8 +413,11 @@ html[data-season="christmas"] .scene-roof-snow { opacity: 0.95; }
   translate: calc(var(--hp, 0) * 32vw) 0;
 }
 
+/* The photo is cropped at the waist: it stays planted on the ground and its bottom edge fades out,
+   so the cut never shows, however far the hero has scrolled. */
 .hero-portrait {
-  translate: 0 calc(var(--hp, 0) * -7vh);
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 16%);
+  mask-image: linear-gradient(to top, transparent 0%, #000 16%);
 }
 
 .hero-name-reflect {
@@ -473,16 +476,6 @@ html[data-season="christmas"] .hero-name-reflect {
   }
 }
 
-/* Experience timeline: one year row is tall enough for a name, a role and the dates. */
-.exp-grid {
-  --row: 7.5rem;
-}
-
-@media (min-width: 640px) {
-  .exp-grid {
-    --row: 9rem;
-  }
-}
 
 /* Lane colours for the timeline; darker in the light theme so the small labels stay readable. */
 :root {
@@ -509,9 +502,10 @@ html[data-theme="light"] {
   background: color-mix(in oklab, var(--tone) 20%, var(--color-surface));
   box-shadow: 0 0 0 2px var(--tone);
 }
+/* still going: the bar runs off the right edge */
 .exp-bar.is-ongoing {
-  border-bottom-style: dashed;
-  border-bottom-left-radius: 0;
+  border-right-style: dashed;
+  border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 @media (prefers-reduced-motion: reduce) {
