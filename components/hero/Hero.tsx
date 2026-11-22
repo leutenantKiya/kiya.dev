@@ -7,6 +7,7 @@ import { animate } from "animejs";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { Garland } from "@/components/seasonal/Garland";
 import { HeroTree } from "@/components/seasonal/Seasonal3D";
+import { HeroScene } from "./HeroScene";
 
 function HeroIntro({ align = "center" }: { align?: "center" | "left" }) {
   const { t } = useTranslation();
@@ -45,8 +46,34 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
   const { lang } = useLanguage();
   const profile = getProfile(lang);
 
+  const heroRef = useRef<HTMLElement>(null);
   const nameRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef(null);
+  const greeting = lang === "id" ? "Halo, saya" : "Hi, I'm";
+  const half = Math.ceil(profile.name.length / 2);
+  const halves = [profile.name.slice(0, half), profile.name.slice(half)];
+
+  // As the hero scrolls away, the two halves of the name drift apart and the portrait rises.
+  // One CSS variable (--hp, 0 to 1) drives it; reduced motion leaves it at 0.
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const p = Math.min(1, Math.max(0, window.scrollY / (el.offsetHeight * 0.8)));
+      el.style.setProperty("--hp", p.toFixed(3));
+    };
+    const schedule = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", schedule);
+    };
+  }, []);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -54,32 +81,39 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
       animate(nameRef.current, {
         y: [120, 0],
         opacity: [0, 1],
-        duration: 1400,
-        ease: "outExpo",
+        duration: 1100,
+        ease: "outQuint",
       });
     }
     if (imageRef.current) {
       animate(imageRef.current, {
         y: [200, -35],
         opacity: [0, 1],
-        duration: 1200,
-        ease: "outExpo",
+        duration: 1100,
+        delay: 80,
+        ease: "outQuint",
       });
     }
   }, []);
 
   return (
     <section
+      ref={heroRef}
       id="hero"
-      className="hero-layers relative flex h-dvh min-h-[720px] w-full flex-col justify-between border-b border-line bg-bg overflow-hidden select-none"
+      className="hero-layers relative flex h-dvh min-h-[1000px] sm:min-h-[720px] w-full flex-col justify-between border-b border-line bg-bg overflow-hidden select-none"
     >
+      <HeroScene />
       <Garland />
 
       {/* Greeting and intro sit in front of everything; the name itself stands behind the portrait */}
       <div className="relative z-30 flex flex-1 flex-col items-center justify-start px-5 pt-28 text-center lg:pt-24">
-        <h1 className="text-3xl font-semibold tracking-tight text-text sm:text-5xl">
-          <span>{lang === "id" ? "Halo, saya" : "Hi, I'm"}</span>
-          <span className="sr-only"> {profile.name}</span>
+        {/* Phones: greeting and name together in the flow. From sm the visible pair moves to the layered
+            name below, and this heading stays for screen readers only. */}
+        <h1 className="flex flex-col items-center sm:sr-only">
+          <span className="text-3xl font-semibold tracking-tight text-text">{greeting}</span>
+          <span className="mt-1 text-[22vw] font-extrabold uppercase leading-[0.8] tracking-[-0.04em] text-text">
+            {profile.name}
+          </span>
         </h1>
 
         <p className="relative z-30 mt-4 font-mono text-sm sm:text-base lg:text-lg uppercase tracking-[0.25em] text-accent font-semibold">
@@ -87,21 +121,27 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
         </p>
 
         {/* Mobile intro */}
-        <div className="relative z-30 mt-5 max-w-[440px] lg:hidden">
+        <div className="relative z-30 mt-5 max-w-[460px] rounded-2xl bg-bg/70 px-3 py-3 backdrop-blur-sm lg:hidden">
           <HeroIntro />
         </div>
       </div>
 
       <HeroTree />
 
-      {/* The name, between the back layer (tree, garland) and the front layer (portrait) */}
-      <div ref={nameRef} aria-hidden className="hero-name pointer-events-none absolute left-1/2 z-[15] -translate-x-1/2">
-        <span className="block whitespace-nowrap text-[clamp(5.5rem,27vw,22rem)] font-extrabold uppercase leading-[0.8] tracking-[-0.04em] text-text">
-          {profile.name}
+      {/* The name, split around the portrait's head so every letter shows, between the back layer
+          (tree, garland) and the front layer (portrait) */}
+      <div ref={nameRef} aria-hidden className="hero-name pointer-events-none absolute z-[15] hidden sm:block">
+        <span className="hero-greeting absolute bottom-full left-1/2 mb-[0.35em] -translate-x-1/2 whitespace-nowrap text-5xl font-semibold tracking-tight text-text">
+          {greeting}
+        </span>
+        <span className="hero-name-row text-text">
+          <span className="hero-half hero-half-left">{halves[0]}</span>
+          <span className="hero-half hero-half-right">{halves[1]}</span>
         </span>
         {/* On the ice: a blurred, fading mirror of the name, holiday mode only */}
-        <span className="hero-name-reflect absolute left-0 top-full block whitespace-nowrap text-[clamp(5.5rem,27vw,22rem)] font-extrabold uppercase leading-[0.8] tracking-[-0.04em] text-text">
-          {profile.name}
+        <span className="hero-name-row hero-name-reflect absolute left-0 top-full text-text">
+          <span className="hero-half hero-half-left">{halves[0]}</span>
+          <span className="hero-half hero-half-right">{halves[1]}</span>
         </span>
       </div>
 
@@ -114,7 +154,7 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
           <img
             src={portraitSrc}
             alt={`Portrait of ${profile.name}`}
-            className="h-[38vh] sm:h-[52vh] md:h-[56vh] lg:h-[60vh] max-h-[680px] w-auto max-w-[90vw] object-contain object-bottom drop-shadow-2xl"
+            className="hero-portrait h-[38vh] sm:h-[52vh] md:h-[56vh] lg:h-[60vh] max-h-[680px] w-auto max-w-[90vw] object-contain object-bottom drop-shadow-2xl"
           />
         </div>
       ) : (
@@ -127,11 +167,11 @@ export function Hero({ portraitSrc }: { portraitSrc: string | null }) {
       {/* Bottom scrim */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-40 bg-gradient-to-t from-bg to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-48 bg-gradient-to-t from-bg via-bg/60 to-transparent"
       />
 
       {/* Desktop intro */}
-      <div className="absolute bottom-12 left-12 z-30 hidden max-w-md text-left lg:block">
+      <div className="absolute bottom-12 left-12 z-30 hidden max-w-md rounded-2xl bg-bg/75 p-5 text-left backdrop-blur-sm lg:block">
         <HeroIntro align="left" />
       </div>
 

@@ -273,17 +273,100 @@ body {
   animation: spin-slow 15s linear infinite;
 }
 
+/* Hero scenery: day in the light theme, night in the dark theme. */
+.hero-scene {
+  --scene-mountain-far: #9db3c8;
+  --scene-hill-back: #8fb27f;
+  --scene-hill-front: #6f9a5f;
+  --scene-pine: #3f6b43;
+  --scene-house: #f1e4cc;
+  --scene-roof: #b5523b;
+  --scene-window: #5b6b7a;
+  --scene-cloud: #ffffff;
+  --scene-day-op: 1;
+  --scene-night-op: 0;
+}
+
+html[data-theme="dark"] .hero-scene {
+  --scene-mountain-far: #1c2140;
+  --scene-hill-back: #171a2c;
+  --scene-hill-front: #121422;
+  --scene-pine: #0c0e18;
+  --scene-house: #2a2333;
+  --scene-roof: #3b2430;
+  --scene-window: #ffc865;
+  --scene-cloud: #2b2d4a;
+  --scene-day-op: 0;
+  --scene-night-op: 1;
+}
+
+.hero-scene .scene-day,
+.hero-scene .scene-night {
+  transition: opacity 900ms var(--ease-out, ease);
+}
+.hero-scene .scene-day { opacity: var(--scene-day-op); }
+.hero-scene .scene-night { opacity: var(--scene-night-op); }
+
+.scene-mountain-far { fill: var(--scene-mountain-far); transition: fill 900ms; }
+.scene-hill-back { fill: var(--scene-hill-back); transition: fill 900ms; }
+.scene-hill-front { fill: var(--scene-hill-front); transition: fill 900ms; }
+.scene-pine { fill: var(--scene-pine); transition: fill 900ms; }
+.scene-house { fill: var(--scene-house); transition: fill 900ms; }
+.scene-roof, .scene-chimney { fill: var(--scene-roof); transition: fill 900ms; }
+.scene-window { fill: var(--scene-window); transition: fill 900ms; }
+.scene-clouds { fill: var(--scene-cloud); opacity: 0.85; transition: fill 900ms; }
+
+/* snow on the peaks and roofs only in holiday mode */
+.scene-snowcap, .scene-roof-snow { fill: #f8fbff; opacity: 0; transition: opacity 900ms; }
+html[data-season="christmas"] .scene-snowcap,
+html[data-season="christmas"] .scene-roof-snow { opacity: 0.95; }
+
+/* depth: far layers drift least as the hero scrolls away */
+.scene-far { transform: translateY(calc(var(--hp, 0) * 40px)); }
+.scene-mid { transform: translateY(calc(var(--hp, 0) * 80px)); }
+.scene-near { transform: translateY(calc(var(--hp, 0) * 130px)); }
+
+@keyframes cloud-drift {
+  from { transform: translateX(-200px); }
+  to { transform: translateX(1800px); }
+}
+.scene-cloud { animation: cloud-drift linear infinite; }
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.scene-star { animation: star-twinkle 3s ease-in-out infinite; }
+
+@keyframes smoke-rise {
+  from { transform: translate(0, 0) scale(0.6); opacity: 0.55; }
+  to { transform: translate(12px, -46px) scale(1.6); opacity: 0; }
+}
+.scene-smoke {
+  fill: #e9e4dc;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: smoke-rise 3.2s ease-out infinite;
+}
+
 /* Hero layers: the name sits at half the portrait's height, so the head and shoulders cover its lower half.
    --ph mirrors the portrait's height classes in Hero.tsx. */
 .hero-layers {
   --ph: 38vh;
-  --name-at: 0.74; /* phones: the name rises behind the head, so it isn't lost behind the shoulders */
+  /* phones: too narrow to split around the head, so the whole name sits just above it */
+  --name-at: 1.03;
+  --name-x: 50%;
+  --name-gap: 0.05em;
+  --name-size: 17vw;
 }
 
 @media (min-width: 640px) {
   .hero-layers {
     --ph: 52vh;
-    --name-at: 0.52;
+    /* the halves sit level with the head, the gap as wide as the head */
+    --name-at: 0.66;
+    --name-gap: calc(var(--ph) * 0.42);
+    --name-size: 21vw;
   }
 }
 
@@ -300,7 +383,38 @@ body {
 }
 
 .hero-name {
+  /* centred on the screen, over the portrait */
+  left: var(--name-x);
+  translate: -50% 0;
   bottom: calc(var(--ph) * var(--name-at));
+}
+
+.hero-name-row {
+  display: flex;
+  gap: var(--name-gap);
+  white-space: nowrap;
+  font-size: clamp(3.5rem, var(--name-size), 20rem);
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.hero-half {
+  will-change: translate, opacity;
+  opacity: calc(1 - var(--hp, 0) * 1.1);
+}
+
+.hero-half-left {
+  translate: calc(var(--hp, 0) * -32vw) 0;
+}
+
+.hero-half-right {
+  translate: calc(var(--hp, 0) * 32vw) 0;
+}
+
+.hero-portrait {
+  translate: 0 calc(var(--hp, 0) * -7vh);
 }
 
 .hero-name-reflect {
@@ -318,10 +432,32 @@ html[data-season="christmas"] .hero-name-reflect {
   display: block;
 }
 
+/* One motion language for the page: sections, folders and page transitions share this curve. */
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal {
+  opacity: 0;
+  translate: 0 32px;
+  transition: opacity 700ms var(--ease-out), translate 700ms var(--ease-out);
+}
+.reveal[data-shown] {
+  opacity: 1;
+  translate: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    translate: none;
+    transition: none;
+  }
+}
+
 /* Folder to case study: the shared folder and screenshot morph; the rest of the page crossfades. */
 ::view-transition-group(*) {
   animation-duration: 560ms;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-timing-function: var(--ease-out);
 }
 
 ::view-transition-old(root),
@@ -346,6 +482,40 @@ html[data-season="christmas"] .hero-name-reflect {
   .exp-grid {
     --row: 9rem;
   }
+}
+
+/* Lane colours for the timeline; darker in the light theme so the small labels stay readable. */
+:root {
+  --lane-study: #5b9bd5;
+  --lane-project: #d4a64a;
+}
+html[data-theme="light"] {
+  --lane-study: #2f6aa8;
+  --lane-project: #94650f;
+}
+
+/* A bar takes its lane's colour (--tone): tinted fill, solid left edge, a lift on hover. */
+.exp-bar {
+  border-color: color-mix(in oklab, var(--tone) 35%, var(--color-line));
+  border-left-color: var(--tone);
+  background: color-mix(in oklab, var(--tone) 9%, var(--color-surface));
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), background-color 220ms, box-shadow 220ms;
+}
+.exp-bar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -14px color-mix(in oklab, var(--tone) 70%, transparent);
+}
+.exp-bar.is-active {
+  background: color-mix(in oklab, var(--tone) 20%, var(--color-surface));
+  box-shadow: 0 0 0 2px var(--tone);
+}
+.exp-bar.is-ongoing {
+  border-bottom-style: dashed;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .exp-bar:hover { transform: none; }
 }
 
 ::selection {

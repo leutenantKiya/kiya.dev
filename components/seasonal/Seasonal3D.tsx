@@ -11,7 +11,7 @@ const ChristmasTree = dynamic(() => import("./three/ChristmasTree"), { ssr: fals
 const Snowman = dynamic(() => import("./three/Snowman"), { ssr: false });
 
 let webglCache: boolean | null = null;
-function hasWebGL() {
+export function hasWebGL() {
   if (webglCache !== null) return webglCache;
   try {
     const canvas = document.createElement("canvas");
@@ -66,7 +66,7 @@ export function HeroTree() {
       aria-hidden
       initial={{ opacity: 0, y: 60 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 1.1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
       className="absolute bottom-0 right-0 z-10 h-[34vh] w-[56vw] sm:h-[46vh] sm:w-[38vw] lg:right-[10%] lg:h-[58vh] lg:w-[min(32vw,480px)]"
     >
       {hasWebGL() ? <ChristmasTree /> : <TreeFallback />}
