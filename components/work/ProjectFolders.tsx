@@ -6,9 +6,10 @@ import { useRouter } from "next/navigation";
 import { getProjects, type Project } from "@/lib/projects";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { useTranslation } from "@/hooks/useTranslation";
+import { ProjectPreview } from "./ProjectPreview";
 
-function still(p: Project) {
-  return p.previews?.[0] ?? (Array.isArray(p.preview) ? p.preview[0] : p.preview) ?? null;
+function hasImage(p: Project) {
+  return Boolean(p.previews?.length || (Array.isArray(p.preview) ? p.preview.length : p.preview));
 }
 
 // Papers rest low inside the folder and rise out of it on hover, keyboard focus, or while the folder opens.
@@ -21,7 +22,9 @@ function Folder({ project }: { project: Project }) {
   const { t } = useTranslation();
   const router = useRouter();
   const [opening, setOpening] = useState(false);
-  const src = still(project);
+  // Hover or keyboard focus anywhere on the folder plays its screenshots; touch screens play them on their own.
+  const [active, setActive] = useState(false);
+  const src = hasImage(project);
   const files = project.files ?? [];
   const href = `/work/${project.slug}`;
 
@@ -36,7 +39,16 @@ function Folder({ project }: { project: Project }) {
   }
 
   return (
-    <article className={`group relative ${opening ? "is-open" : ""}`} aria-labelledby={`folder-${project.slug}`}>
+    <article
+      className={`group relative ${opening ? "is-open" : ""}`}
+      aria-labelledby={`folder-${project.slug}`}
+      onMouseEnter={() => setActive(true)}
+      onMouseLeave={() => setActive(false)}
+      onFocus={() => setActive(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) setActive(false);
+      }}
+    >
       <ViewTransition name={`folder-${project.slug}`}>
       {/* back of the folder, with its tab */}
       <div className="relative h-[23rem] sm:h-[24rem]">
@@ -51,7 +63,13 @@ function Folder({ project }: { project: Project }) {
             >
               <ViewTransition name={`still-${project.slug}`}>
                 <div className="overflow-hidden rounded-lg border border-line bg-surface shadow-lg shadow-black/30">
-                  <img src={src} alt="" width={640} height={400} loading="lazy" className="aspect-[8/5] w-full object-cover object-top" />
+                  <ProjectPreview
+                    preview={project.preview}
+                    previews={project.previews}
+                    alt=""
+                    isHovered={active || opening}
+                    className="aspect-[8/5] w-full"
+                  />
                 </div>
               </ViewTransition>
             </div>
@@ -97,6 +115,16 @@ function Folder({ project }: { project: Project }) {
                 className="inline-flex min-h-10 items-center rounded-full border border-line px-4 text-sm text-text transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
               >
                 {t("folderLive")} ↗
+              </a>
+            )}
+            {!project.demo && project.video && (
+              <a
+                href={project.video}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-10 items-center rounded-full border border-line px-4 text-sm text-text transition-colors duration-200 hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
+              >
+                {t("folderDemo")} ↗
               </a>
             )}
             <span className="ml-auto hidden font-mono text-xs text-text-2 sm:block">
