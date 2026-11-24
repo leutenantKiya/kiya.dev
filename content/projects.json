@@ -2,15 +2,16 @@
   {
     "slug": "genesis-town",
     "title": "Genesis Town",
-    "tagline": "A pixel-art market town where the economy is the game",
-    "tagline_id": "Kota pasar pixel-art yang ekonominya adalah permainannya",
-    "summary": "Players gather, craft and trade with AI merchants who set their own prices from stock, demand and cash. Items and coins live on a NEAR contract, but players sign in with Google and never see a wallet, seed phrase or gas prompt.",
-    "summary_id": "Pemain mengumpulkan bahan, membuat barang, dan berdagang dengan pedagang AI yang menentukan harga sendiri dari stok, permintaan, dan kas. Item dan koin ada di kontrak NEAR, tapi pemain cukup masuk dengan Google tanpa pernah melihat dompet, seed phrase, atau biaya gas.",
+    "tagline": "A living market town where the economy is the game",
+    "tagline_id": "Kota pasar yang hidup, tempat ekonominya adalah permainannya",
+    "summary": "A multiplayer market town in the browser. Five townsfolk fish, cook and shop on their own, four AI merchants set prices from stock and demand, and players trade face to face or build islands together. The economy settles on NEAR once a game day, and players never see a wallet, a token or a gas fee.",
+    "summary_id": "Kota pasar multipemain di browser. Lima warga memancing, memasak, dan berbelanja sendiri, empat pedagang AI menentukan harga dari stok dan permintaan, dan pemain berdagang langsung atau membangun pulau bersama. Ekonominya diselesaikan di NEAR sekali per hari game, dan pemain tidak pernah melihat dompet, token, atau biaya gas.",
     "year": "2026",
-    "status": "NEAR testnet · in development",
+    "status": "Playable · NEAR testnet",
     "stack": [
       "TypeScript",
       "JavaScript",
+      "three.js",
       "Rust",
       "NEAR",
       "Docker"
@@ -23,17 +24,17 @@
       {
         "name": "engine.js",
         "kind": "Game client",
-        "size": "176 KB"
+        "size": "172 KB"
       },
       {
-        "name": "chain.js",
-        "kind": "NEAR bridge",
-        "size": "143 KB"
+        "name": "view3d.js",
+        "kind": "2.5D view",
+        "size": "42 KB"
       },
       {
         "name": "residents.ts",
-        "kind": "Server",
-        "size": "51 KB"
+        "kind": "Townsfolk AI",
+        "size": "49 KB"
       }
     ],
     "video": "https://x.com/GentownX/status/2121732930133467200"
@@ -160,41 +161,40 @@
     ]
   },
   {
-    "slug": "arbor",
-    "title": "Arbor",
-    "tagline": "Pay-per-second streaming for independent cinema",
-    "tagline_id": "Layanan streaming bayar-per-detik untuk bioskop independen",
-    "summary": "Streaming subscriptions charge for time you never watch. Arbor sells prepaid viewing hours that only tick down while a film plays, filmmakers get paid per second watched, settled on-chain.",
-    "summary_id": "Langganan streaming biasa menagih waktu yang tidak pernah Anda tonton. Arbor menjual jam menonton prabayar yang hanya berkurang saat film diputar, pembuat film dibayar per detik tontonan secara on-chain.",
-    "year": "2026",
-    "status": "Live MVP · testnet",
+    "slug": "justpush",
+    "title": "JustPush",
+    "tagline": "Point it at a backend, get its API live behind Kong",
+    "tagline_id": "Arahkan ke sebuah backend, API-nya langsung tayang di balik Kong",
+    "summary": "Putting a backend behind an API gateway usually means finding every route by hand and typing each one in without clashing with what is already there. JustPush reads a repo or a ZIP, finds the endpoints, has Gemini write an OpenAPI spec with clean paths that avoid existing routes, and registers them in Kong with an API key.",
+    "summary_id": "Memasang backend di balik API gateway biasanya berarti mencari setiap route secara manual lalu mengetiknya satu per satu tanpa bentrok dengan yang sudah ada. JustPush membaca repo atau ZIP, menemukan endpoint-nya, meminta Gemini menulis spesifikasi OpenAPI dengan path rapi yang menghindari route yang sudah ada, lalu mendaftarkannya ke Kong lengkap dengan API key.",
+    "year": "2025",
+    "status": "Working prototype",
     "stack": [
-      "React",
       "TypeScript",
-      "Solidity",
-      "Postgres",
-      "Particle Network"
+      "Backstage",
+      "Kong",
+      "Gemini",
+      "PostgreSQL"
     ],
-    "repo": "https://github.com/leutenantKiya/Arbor",
-    "demo": "https://arbor-watch.vercel.app",
-    "role": "3-person team · 7 days · Encode Club UXMaxx Hackathon",
-    "preview": "/arbor.png",
-    "video": "https://www.youtube.com/embed/A1_m2YBdv2Y",
+    "repo": "https://github.com/leutenantKiya/JustPush-Refactory",
+    "demo": null,
+    "role": "3-person team · 2-day build",
+    "preview": "/justpush.png",
     "files": [
       {
-        "name": "SESSION_BILLING.md",
-        "kind": "Billing spec",
+        "name": "ImporterComponent.tsx",
+        "kind": "React",
+        "size": "37 KB"
+      },
+      {
+        "name": "KongService.ts",
+        "kind": "Kong Admin API",
         "size": "11 KB"
       },
       {
-        "name": "settlement.service.ts",
-        "kind": "TypeScript",
-        "size": "10 KB"
-      },
-      {
-        "name": "upload-film.tsx",
-        "kind": "React",
-        "size": "19 KB"
+        "name": "GeminiAnalyzeService.ts",
+        "kind": "Gemini",
+        "size": "9 KB"
       }
     ]
   }

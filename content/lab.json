@@ -1,19 +1,21 @@
 [
   {
-    "name": "JustPush-Refactory",
-    "type": "tool",
-    "year": "2025",
+    "name": "Arbor",
+    "type": "site",
+    "year": "2026",
     "stack": [
+      "React",
       "TypeScript",
-      "Docker"
+      "Solidity",
+      "Particle Network"
     ],
-    "purpose": "Deployment automation focused on making pushing code reliable and simple",
-    "purpose_id": "Otomasi deployment dengan fokus membuat proses push kode andal dan mudah",
+    "purpose": "Pay-per-second streaming for independent cinema, built in 7 days for the Encode Club UXMaxx Hackathon",
+    "purpose_id": "Streaming bayar-per-detik untuk bioskop independen, dibangun dalam 7 hari untuk Encode Club UXMaxx Hackathon",
     "status": "done",
-    "repo": "https://github.com/leutenantKiya/JustPush-Refactory",
-    "demo": null,
-    "insight": "Deployment tooling is UX design, the happy path has to be one action",
-    "insight_id": "Perkakas deployment adalah desain UX, alur ideal harus selesai dalam satu aksi"
+    "repo": "https://github.com/leutenantKiya/Arbor",
+    "demo": "https://arbor-watch.vercel.app",
+    "insight": "Viewing time is metered off-chain and paid to filmmakers on-chain in batches",
+    "insight_id": "Waktu tonton dihitung off-chain lalu dibayarkan ke pembuat film on-chain secara batch"
   },
   {
     "name": "Aily Telegram Bot",

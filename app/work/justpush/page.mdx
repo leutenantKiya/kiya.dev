@@ -1,0 +1,154 @@
+import { CaseStudy, En, Id } from "@/components/work/CaseStudy";
+import { Room } from "@/components/work/Room";
+
+export const metadata = {
+  title: "JustPush, from a backend's code to live Kong routes | Kiya",
+  description:
+    "Case study: a Backstage plugin that finds a backend's API endpoints, has Gemini write a conflict-free OpenAPI spec, and registers the routes in Kong with an API key.",
+};
+
+<CaseStudy slug="justpush">
+
+<En>
+**In ten seconds:** JustPush is a plugin for Backstage, Spotify's developer portal. Give
+it a GitHub repo or a ZIP of a backend, and it finds the API endpoints, writes an OpenAPI
+spec with clean paths that don't clash with routes already on the gateway, and registers
+them in Kong with an API key. Built by a team of three in two days.
+
+<Room title="Problem">
+
+
+Putting a new service behind an API gateway is slow, careful typing. Someone reads the
+code to list every route, picks public paths that are short and consistent, checks none
+of them is already taken by another service, then enters each one into the gateway. Miss
+a route and it's unreachable. Reuse a path and another team's API breaks.
+
+
+</Room>
+
+<Room title="Solution">
+
+
+One screen, four steps, each one shown as it runs:
+
+```text
+GitHub URL + branch, or a ZIP      → cloned or unpacked into a temp folder
+find endpoints                     → known folders (routes/, api/, controllers/ …)
+                                     Express, Fastify, Koa and NestJS patterns
+Gemini 2.5 Flash                   → OpenAPI spec, told the routes Kong already has
+register in Kong                   → service, one route per path, key-auth consumer
+```
+
+- **Detection before AI.** A scanner reads the folders where routes usually live,
+  recognises the framework, and lists each method and path it finds. The model gets that
+  list, not the whole codebase.
+- **Conflicts shown before anything is written.** The detected paths are checked against
+  the gateway's live routes, and any clash is marked in the table ("Conflicts with
+  /users") so the user sees it before registering.
+- **Ready to call.** Registering creates the Kong service and its routes, then a consumer
+  with its own key-auth API key, and the screen confirms how many routes went live.
+
+
+</Room>
+
+<Room title="Decisions and tradeoffs">
+
+
+- **Build on Backstage instead of a separate app.** The tool lives where developers
+  already look up services, and it gets the portal's layout, theming and backend plumbing for free.
+  The cost is Backstage's weight: a monorepo, its plugin system and its build.
+- **Patterns find, the model names.** Regex-style detection is fast, cheap and
+  predictable, but it can't decide good public paths. Gemini does only that part, with
+  the existing routes in its prompt and a rule to add a version prefix or suffix rather
+  than reuse a path.
+- **The gateway is the source of truth.** Conflicts are read from Kong's Admin API at
+  the moment of registering, not from a copy that could be out of date.
+
+
+</Room>
+
+<Room title="Status">
+
+
+A working prototype from a two-day build: upload or GitHub import, endpoint detection,
+the Gemini spec, conflict checks and Kong registration all run end to end against a local
+Kong. Planned next steps were Kubernetes deployment and Postgres in production.
+
+</Room>
+
+</En>
+
+<Id>
+**Dalam sepuluh detik:** JustPush adalah plugin untuk Backstage, portal developer buatan
+Spotify. Berikan repo GitHub atau ZIP sebuah backend, lalu JustPush menemukan endpoint
+API-nya, menulis spesifikasi OpenAPI dengan path rapi yang tidak bentrok dengan route
+yang sudah ada di gateway, dan mendaftarkannya ke Kong lengkap dengan API key. Dibangun
+oleh tim bertiga dalam dua hari.
+
+<Room title="Masalah">
+
+
+Memasang layanan baru di balik API gateway itu pekerjaan mengetik yang lambat dan harus
+teliti. Seseorang membaca kode untuk mendata semua route, memilih path publik yang
+pendek dan konsisten, memastikan tidak ada yang sudah dipakai layanan lain, lalu
+memasukkannya satu per satu ke gateway. Satu route terlewat, route itu tidak bisa
+diakses. Satu path terpakai dua kali, API tim lain rusak.
+
+
+</Room>
+
+<Room title="Solusi">
+
+
+Satu layar, empat langkah, masing-masing ditampilkan saat berjalan:
+
+```text
+URL GitHub + branch, atau ZIP      → di-clone atau diekstrak ke folder sementara
+cari endpoint                      → folder umum (routes/, api/, controllers/ …)
+                                     pola Express, Fastify, Koa, dan NestJS
+Gemini 2.5 Flash                   → spesifikasi OpenAPI, diberi tahu route yang sudah ada di Kong
+daftar ke Kong                     → service, satu route per path, consumer key-auth
+```
+
+- **Deteksi dulu, baru AI.** Pemindai membaca folder tempat route biasanya berada,
+  mengenali framework-nya, dan mendata setiap method dan path. Model hanya menerima
+  daftar itu, bukan seluruh kode.
+- **Bentrok ditampilkan sebelum ada yang ditulis.** Path yang ditemukan dicek terhadap
+  route yang aktif di gateway, dan setiap bentrok ditandai di tabel ("Conflicts with
+  /users") supaya terlihat sebelum didaftarkan.
+- **Siap dipanggil.** Pendaftaran membuat service dan route-nya di Kong, lalu consumer
+  dengan API key key-auth sendiri, dan layar menampilkan berapa route yang sudah aktif.
+
+
+</Room>
+
+<Room title="Keputusan & Kompromi">
+
+
+- **Dibangun di atas Backstage, bukan aplikasi terpisah.** Alatnya ada di tempat
+  developer biasa mencari layanan, dan langsung mendapat tata letak, tema, dan backend
+  portalnya. Harganya adalah bobot Backstage: monorepo, sistem plugin, dan proses
+  build-nya.
+- **Pola yang menemukan, model yang menamai.** Deteksi berbasis pola itu cepat, murah,
+  dan bisa ditebak, tapi tidak bisa memutuskan path publik yang baik. Gemini hanya
+  mengerjakan bagian itu, dengan route yang sudah ada di prompt-nya dan aturan untuk
+  menambah prefiks versi atau sufiks daripada memakai path yang sama.
+- **Gateway sebagai sumber kebenaran.** Bentrok dibaca dari Admin API Kong tepat saat
+  pendaftaran, bukan dari salinan yang bisa sudah basi.
+
+
+</Room>
+
+<Room title="Status">
+
+
+Prototipe yang berjalan dari pengerjaan dua hari: upload atau impor GitHub, deteksi
+endpoint, spesifikasi dari Gemini, cek bentrok, dan pendaftaran ke Kong berjalan dari
+awal sampai akhir dengan Kong lokal. Langkah berikutnya yang direncanakan adalah deploy
+ke Kubernetes dan Postgres di production.
+
+</Room>
+
+</Id>
+
+</CaseStudy>

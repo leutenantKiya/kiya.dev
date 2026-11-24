@@ -158,11 +158,11 @@ export function Shell({
               <ul className="flex flex-col gap-1 text-sm text-text-2">
                 <li>
                   <Link
-                    href="/work/arbor"
+                    href="/work/genesis-town"
                     onClick={() => setMenuOpen(false)}
                     className="block rounded px-3 py-2 hover:bg-surface hover:text-text"
                   >
-                    Arbor — Pay-per-second streaming
+                    Genesis Town — On-chain market town
                   </Link>
                 </li>
                 <li>
@@ -190,6 +190,15 @@ export function Shell({
                     className="block rounded px-3 py-2 hover:bg-surface hover:text-text"
                   >
                     AILY — E-commerce Chatbot
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/work/justpush"
+                    onClick={() => setMenuOpen(false)}
+                    className="block rounded px-3 py-2 hover:bg-surface hover:text-text"
+                  >
+                    JustPush — API routes to Kong
                   </Link>
                 </li>
               </ul>
