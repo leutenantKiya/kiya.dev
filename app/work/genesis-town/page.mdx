@@ -2,27 +2,28 @@ import { CaseStudy, En, Id } from "@/components/work/CaseStudy";
 import { Room } from "@/components/work/Room";
 
 export const metadata = {
-  title: "Genesis Town, a market town with an on-chain economy | Kiya",
+  title: "Genesis Town, a living market town with an on-chain economy | Kiya",
   description:
-    "Case study: a browser pixel-art life sim where AI merchants set prices and items live on NEAR, without players ever seeing a wallet.",
+    "Case study: a multiplayer browser game where AI merchants and townsfolk run the economy, settled on NEAR without players ever seeing a wallet.",
 };
 
 <CaseStudy slug="genesis-town">
 
 <En>
-**In ten seconds:** Genesis Town is a pixel-art market town that runs in the browser.
-Players gather fish, ore, wood and wheat, craft food and tools, and trade with four AI
-merchants who set their own prices. Items and coins live on a NEAR contract, but players
-sign in with Google or email and never see a seed phrase, a wallet popup or a gas prompt.
-Built by a team of three for the NEAR Hackathon (November 1 to 14, 2026), Games With Real
-Economies track.
+**In ten seconds:** Genesis Town is a multiplayer market town that runs in the browser.
+Players gather, craft and trade with four AI merchants who set their own prices, while
+five townsfolk fish, cook, eat and shop on their own. Friends trade face to face and build
+floating islands together. The economy settles on NEAR, but the game never says NEAR,
+wallet, token or gas: players sign in with Google and just play. Built by a team of three
+for the NEAR Hackathon (November 1 to 14, 2026), Games With Real Economies track, and
+still growing after it.
 
 <Room title="Problem">
 
 
 Most on-chain games either put a token on top of a static game, or make players fight
 wallets and gas before they can play. Either way the chain is in the way, and the
-economy is decoration.
+economy is decoration: prices never move, and nobody in the world needs anything.
 
 
 </Room>
@@ -30,19 +31,30 @@ economy is decoration.
 <Room title="Solution">
 
 
-Make the economy the game, and keep the chain out of sight:
+Make the economy the game, fill the town with people who use it, and keep the chain out
+of sight:
 
-- Each merchant prices an item from base price, its own stock and recent demand. A price
-  moves at most 10% per game hour and stays between a quarter and four times the base.
-  Every change comes with a one-sentence reason in a tooltip.
-- Merchants pay daily rent. One that can't pay closes, and players can invest coins to
-  reopen it in exchange for shares that pay part of the shop's daily profit.
-- Seasons of seven game days change what the land yields and what the town buys.
+- **Merchants that price for themselves.** Each one prices an item from its base price,
+  its stock and recent demand. A price moves at most 10% per game hour, stays between a
+  quarter and four times the base, and every change comes with a one-sentence reason.
+  Ask a merchant why bread is dear and it answers from the same numbers.
+- **Townsfolk with real needs.** Five residents walk the same routes on every screen.
+  They fish, chop, mine and cook, eat two meals and burn a log of firewood a day, and
+  buy what they lack. When a merchant charges more for bread or tools than they cost to
+  make, the townsfolk make them and sell them at cost, which pulls the price back down.
+- **Rent that can close a shop.** A merchant owes a base rent plus 8% of the day's sales.
+  One that can't pay closes, and players pledge coins to reopen it for a share of its
+  profit.
+- **Playing together.** Parties of four, live trades where both players fill a window and
+  the goods fly across on a 3-second countdown, and floating-island Homelands where the
+  owner makes friends visitors, helpers or builders.
+- **A 2.5D town.** The 2D tile game is also drawn in three.js with an HD-2D look: sun and
+  shadows, seasons, glowing windows at night, and doors you walk through without a cut.
 
 ```text
 gather / craft / merchant trade   → instant, off-chain
 once per game day (24 real min)   → one settlement transaction on NEAR
-player-to-player trades, shares   → on-chain immediately
+player market, shares, projects   → escrowed on-chain
 gas                               → paid by a relayer, never by the player
 ```
 
@@ -53,14 +65,21 @@ gas                               → paid by a relayer, never by the player
 
 
 - **Settle once a day, not every action.** Gathering and crafting stay instant. The chain
-  receives each day's net changes in one transaction, with a hash of the published
-  ledger so anyone can check it.
-- **A bounded money supply.** The only new coins come from townsfolk buying finished
-  goods, capped per day and throttled as supply nears a cap. Rent, crafting fees, a 5%
-  market fee, eaten food and tool wear take coins back out.
+  receives each day's net changes in one transaction, with the Merkle root of the
+  published ledger so anyone can check it.
+- **Hide the chain completely.** No wallet, testnet or gas wording anywhere in the game,
+  and gifts go to a player's name instead of an account id. The chain is how the books
+  are kept, not something players have to learn.
+- **A bounded money supply.** New coins come only from townsfolk buying finished goods,
+  capped per day. Rent and crafting fees go to the town treasury, which in turn funds the
+  townsfolk, and a 5% fee on player-market sales is burned.
 - **One pricing rule, two users.** The same pricing code runs live play and a
-  fast-forward simulator, so economy changes are tested over many simulated days
-  before players feel them.
+  fast-forward simulator, so economy changes are tested over many simulated days before
+  players feel them.
+- **Draw other players slightly in the past.** Guessing where a player is heading
+  overshot at every corner and snapped back. Now the server keeps a short, time-stamped
+  trail and each client draws other players between two known points, 150 to 900 ms
+  behind. Measured with a scripted second player: no overshoot.
 
 
 </Room>
@@ -68,28 +87,31 @@ gas                               → paid by a relayer, never by the player
 <Room title="Status">
 
 
-In development. The game contract, relayer and settlement keys are deployed on NEAR
-testnet, and the repository holds the design docs: game loop, economy, architecture and
-threat model.
+Playable on NEAR testnet and in active development: 324 commits from three people. The
+game contract, relayer and settlement are deployed on testnet, and the repository holds
+the design docs, a 30-day economy simulation report and a threat model.
 
 </Room>
 
 </En>
 
 <Id>
-**Dalam sepuluh detik:** Genesis Town adalah kota pasar pixel-art yang berjalan di
-browser. Pemain mengumpulkan ikan, bijih, kayu, dan gandum, membuat makanan dan alat,
-lalu berdagang dengan empat pedagang AI yang menentukan harga sendiri. Item dan koin ada
-di kontrak NEAR, tapi pemain cukup masuk dengan Google atau email tanpa pernah melihat
-seed phrase, popup dompet, atau biaya gas. Dibangun oleh tim bertiga untuk NEAR Hackathon
-(1 sampai 14 November 2026), track Games With Real Economies.
+**Dalam sepuluh detik:** Genesis Town adalah kota pasar multipemain yang berjalan di
+browser. Pemain mengumpulkan bahan, membuat barang, dan berdagang dengan empat pedagang
+AI yang menentukan harga sendiri, sementara lima warga memancing, memasak, makan, dan
+berbelanja sendiri. Teman bisa berdagang langsung dan membangun pulau melayang bersama.
+Ekonominya diselesaikan di NEAR, tapi game ini tidak pernah menyebut NEAR, dompet, token,
+atau gas: pemain cukup masuk dengan Google lalu bermain. Dibangun oleh tim bertiga untuk
+NEAR Hackathon (1 sampai 14 November 2026), track Games With Real Economies, dan terus
+dikembangkan setelahnya.
 
 <Room title="Masalah">
 
 
 Kebanyakan game on-chain hanya menempelkan token di atas game yang statis, atau memaksa
 pemain berurusan dengan dompet dan gas sebelum bisa bermain. Akhirnya blockchain
-menghalangi, dan ekonominya cuma hiasan.
+menghalangi, dan ekonominya cuma hiasan: harga tidak pernah bergerak, dan tidak ada
+penghuni dunia yang butuh apa pun.
 
 
 </Room>
@@ -97,19 +119,34 @@ menghalangi, dan ekonominya cuma hiasan.
 <Room title="Solusi">
 
 
-Jadikan ekonomi sebagai permainannya, dan sembunyikan blockchain-nya:
+Jadikan ekonomi sebagai permainannya, isi kotanya dengan penghuni yang memakainya, dan
+sembunyikan blockchain-nya:
 
-- Tiap pedagang menghitung harga dari harga dasar, stoknya sendiri, dan permintaan
-  terbaru. Harga bergerak paling banyak 10% per jam game dan tetap di antara seperempat
-  sampai empat kali harga dasar. Setiap perubahan disertai satu kalimat alasan.
-- Pedagang membayar sewa harian. Yang tidak sanggup membayar akan tutup, dan pemain bisa
-  menanam koin untuk membukanya lagi dengan imbalan saham dari keuntungan harian toko.
-- Musim selama tujuh hari game mengubah hasil bumi dan barang yang dibeli kota.
+- **Pedagang yang menentukan harga sendiri.** Tiap pedagang menghitung harga dari harga
+  dasar, stoknya, dan permintaan terbaru. Harga bergerak paling banyak 10% per jam game,
+  tetap di antara seperempat sampai empat kali harga dasar, dan setiap perubahan
+  disertai satu kalimat alasan. Tanya pedagang kenapa roti mahal, dan ia menjawab dari
+  angka yang sama.
+- **Warga dengan kebutuhan nyata.** Lima warga berjalan di rute yang sama di layar setiap
+  pemain. Mereka memancing, menebang, menambang, dan memasak, makan dua kali dan membakar
+  satu kayu bakar sehari, lalu membeli yang kurang. Kalau pedagang menjual roti atau alat
+  lebih mahal dari biaya membuatnya, warga membuatnya sendiri dan menjualnya seharga
+  modal, sehingga harganya turun lagi.
+- **Sewa yang bisa menutup toko.** Pedagang membayar sewa dasar ditambah 8% penjualan
+  harian. Yang tidak sanggup membayar akan tutup, dan pemain bisa menanam koin untuk
+  membukanya lagi dengan imbalan bagian keuntungannya.
+- **Bermain bersama.** Party berempat, dagang langsung tempat kedua pemain mengisi satu
+  jendela lalu barangnya terbang menyeberang setelah hitung mundur 3 detik, dan Homeland
+  berupa pulau melayang tempat pemiliknya menjadikan teman sebagai pengunjung, pembantu,
+  atau tukang.
+- **Kota 2.5D.** Game tile 2D ini juga digambar dengan three.js bergaya HD-2D: matahari
+  dan bayangan, musim, jendela yang menyala di malam hari, dan pintu yang bisa dimasuki
+  tanpa layar hitam.
 
 ```text
 kumpul / buat / dagang dengan pedagang  → instan, off-chain
 sekali per hari game (24 menit nyata)    → satu transaksi settlement di NEAR
-dagang antarpemain, saham                → langsung on-chain
+pasar pemain, saham, proyek kota         → ditahan di kontrak on-chain
 gas                                      → dibayar relayer, bukan pemain
 ```
 
@@ -121,14 +158,21 @@ gas                                      → dibayar relayer, bukan pemain
 
 - **Settlement sekali sehari, bukan tiap aksi.** Mengumpulkan dan membuat barang tetap
   instan. Blockchain menerima perubahan bersih tiap hari dalam satu transaksi, beserta
-  hash ledger yang dipublikasikan agar siapa pun bisa memeriksanya.
+  Merkle root dari ledger yang dipublikasikan agar siapa pun bisa memeriksanya.
+- **Sembunyikan blockchain sepenuhnya.** Tidak ada kata dompet, testnet, atau gas di dalam
+  game, dan hadiah dikirim ke nama pemain, bukan ke id akun. Blockchain adalah cara
+  pembukuannya dijaga, bukan hal yang harus dipelajari pemain.
 - **Jumlah uang yang terbatas.** Koin baru hanya muncul dari warga yang membeli barang
-  jadi, dibatasi per hari dan diperlambat saat pasokan mendekati batas. Sewa, biaya
-  membuat barang, biaya pasar 5%, makanan yang dimakan, dan alat yang aus menarik koin
-  kembali.
+  jadi, dibatasi per hari. Sewa dan biaya membuat barang masuk ke kas kota, yang lalu
+  membiayai warga, dan biaya 5% di pasar pemain dibakar.
 - **Satu aturan harga, dua pemakai.** Kode harga yang sama dipakai di permainan langsung
   dan di simulator percepatan, jadi perubahan ekonomi diuji selama banyak hari simulasi
   sebelum pemain merasakannya.
+- **Gambar pemain lain sedikit di masa lalu.** Menebak arah pemain selalu kebablasan di
+  setiap tikungan lalu meloncat balik. Sekarang server menyimpan jejak singkat bercap
+  waktu, dan tiap klien menggambar pemain lain di antara dua titik yang sudah diketahui,
+  150 sampai 900 ms di belakang. Diukur dengan pemain kedua yang diskrip: tidak ada lagi
+  yang kebablasan.
 
 
 </Room>
@@ -136,9 +180,9 @@ gas                                      → dibayar relayer, bukan pemain
 <Room title="Status">
 
 
-Masih dalam pengembangan. Kontrak game, relayer, dan kunci settlement sudah terpasang di
-NEAR testnet, dan repositori berisi dokumen desain: alur permainan, ekonomi, arsitektur,
-dan model ancaman.
+Bisa dimainkan di NEAR testnet dan masih aktif dikembangkan: 324 commit dari tiga orang.
+Kontrak game, relayer, dan settlement sudah terpasang di testnet, dan repositori berisi
+dokumen desain, laporan simulasi ekonomi 30 hari, dan model ancaman.
 
 </Room>
 

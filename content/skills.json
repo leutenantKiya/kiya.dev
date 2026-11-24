@@ -50,13 +50,13 @@
     ],
     "proof": {
       "en": [
-        "Genesis Town: a game server where AI merchants price from stock, demand and cash, tested with a fast-forward economy simulator.",
+        "Genesis Town: a game server where AI merchants price from stock, demand and cash and five townsfolk work, eat and trade on their own, tested with a fast-forward economy simulator.",
         "AILY: a FastAPI service that routes each chat message to one of eleven handlers, from search to order tracking.",
         "Arbor: per-second viewing metered off-chain in Postgres, then settled on-chain in batches.",
         "Lazy Builder: real-time collaboration over WebSockets with a Yjs CRDT."
       ],
       "id": [
-        "Genesis Town: server game tempat pedagang AI menentukan harga dari stok, permintaan, dan kas, diuji dengan simulator ekonomi percepatan.",
+        "Genesis Town: server game tempat pedagang AI menentukan harga dari stok, permintaan, dan kas, dan lima warga bekerja, makan, dan berdagang sendiri, diuji dengan simulator ekonomi percepatan.",
         "AILY: layanan FastAPI yang mengarahkan tiap pesan chat ke salah satu dari sebelas handler, dari pencarian sampai lacak pesanan.",
         "Arbor: tontonan per detik dihitung off-chain di Postgres, lalu diselesaikan on-chain secara batch.",
         "Lazy Builder: kolaborasi real-time lewat WebSockets dengan Yjs CRDT."
