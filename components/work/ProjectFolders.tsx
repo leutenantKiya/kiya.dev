@@ -38,10 +38,28 @@ function Folder({ project }: { project: Project }) {
     window.setTimeout(() => router.push(href), 260);
   }
 
+  // A click or tap anywhere on the folder opens it too; its own links (live demo, video) keep theirs.
+  // Keyboard users reach the same page through the "Open case study" link.
+  function openFromFolder(e: MouseEvent<HTMLElement>) {
+    if ((e.target as HTMLElement).closest("a, button")) return;
+    if (e.button !== 0) return;
+    if (e.metaKey || e.ctrlKey) {
+      window.open(href, "_blank", "noopener");
+      return;
+    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("startViewTransition" in document)) {
+      router.push(href);
+      return;
+    }
+    setOpening(true);
+    window.setTimeout(() => router.push(href), 260);
+  }
+
   return (
     <article
-      className={`group relative ${opening ? "is-open" : ""}`}
+      className={`group relative cursor-pointer ${opening ? "is-open" : ""}`}
       aria-labelledby={`folder-${project.slug}`}
+      onClick={openFromFolder}
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
       onFocus={() => setActive(true)}

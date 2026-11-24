@@ -7,6 +7,7 @@ import { LabIndex } from "@/components/lab/LabIndex";
 import { ExperienceTimeline } from "@/components/experience/ExperienceTimeline";
 import { Contact } from "@/components/contact/Contact";
 import { Hero } from "@/components/hero/Hero";
+import { RoomDive } from "@/components/room/RoomDive";
 import { RevealSection } from "@/components/ui/RevealSection";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 
@@ -24,6 +25,7 @@ export default function Home() {
   return (
     <>
       <Hero portraitSrc={portraitSrc} />
+      <RoomDive />
 
       <div className="mx-auto max-w-[1040px] px-5 py-12 lg:px-12">
         {sections.map((section) => {

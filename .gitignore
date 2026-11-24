@@ -18,3 +18,4 @@ npm-debug.log*
 next-env.d.ts
 
 .taste-skill/
+.img2threejs/
